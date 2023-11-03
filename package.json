@@ -1,0 +1,29 @@
+{
+  "name": "venue-web-builder-backend",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "nodemon app.js",
+    "prod": "pm2 start app.js && pm2 logs --lines 100000"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ayushjipatel/Venue-Web-Builder-Backend.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/ayushjipatel/Venue-Web-Builder-Backend/issues"
+  },
+  "homepage": "https://github.com/ayushjipatel/Venue-Web-Builder-Backend#readme",
+  "dependencies": {
+    "cors": "^2.8.5",
+    "dotenv": "^16.3.1",
+    "express": "^4.18.2",
+    "firebase-admin": "^11.11.0",
+    "nodemon": "^3.0.1",
+    "pm2": "^5.3.0"
+  }
+}
