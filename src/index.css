@@ -1,13 +1,185 @@
-body {
-  margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
-    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
-    sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
+html{
+  overflow-y: scroll;
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+}
+html::-webkit-scrollbar{
+  width: 0;
+  height: 0;
 }
 
-code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
-    monospace;
+*{
+  margin: 0px;
+  padding: 0px;
+}
+
+#root { /* selecting root div of react see - public/index.html*/
+  min-height: 99vh;
+  position: relative;
+}
+
+:root{
+  --primary-green: 105,240,174;
+  --primary-light-green:175,288,89;
+  /* --primary-blue: 24, 144, 255; 
+  --primary-dark-blue: 36, 48, 83;
+  --secondry-blue: 49, 112, 126;
+  --secondry-dark-blue:17, 45, 50; 
+  --primary-green:58, 175, 169; 
+  --primary-dark:104, 118, 132;
+  --primary-white: 250,250,250;
+  --primary-grey:240, 240, 240;
+  --primary-yellow: 255, 233, 0;
+  --primary-green-yellow:154, 205, 50; 
+  --primary-orange: 222, 102, 0;
+  --primary-red: 255, 74, 74;
+  --primary-grey-1: 108, 117, 125;
+  --primary-grey-2:33, 37, 41;
+  --primary-grey-3:50, 54, 58;
+  --secondry-grey-1:238, 238, 238;
+  --secondry-grey-2:221, 221, 221;
+
+  --space-from-top:85px;
+  --filterbar-width-desktop:39rem;
+  --filterbar-width-mobile:100vw;
+  --userbar-width-desktop:34rem;
+  --userbar-width-mobile:100vw; */
+}
+
+
+a{
+  text-decoration: none !important;
+  color: black !important;
+}
+
+/* General */
+html {
+  font-size: 62.5%;
+}
+
+body {
+  font-size: 1.6rem;
+}
+
+
+/* typography */
+h1 {
+  font-size: 5rem;
+  font-family: 'Nunito', sans-serif;
+  font-weight: 700;
+  margin-bottom: 0;
+}
+
+h2 {
+  font-size: 4rem;
+  font-family: 'Nunito', sans-serif;
+  font-weight: 400;
+  margin-bottom: 0;
+}
+
+h3 {
+  font-size: 2.8rem;
+  font-family: 'Nunito', sans-serif;
+  font-weight: 400;
+  margin-bottom: 0;
+}
+
+.gradient{
+  background-image: linear-gradient(to right, rgb(var(--primary-green)) , 40% , rgb(var(--primary-blue)));
+  color: transparent;
+  font-weight: 900 !important;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  background-clip: text;
+  -webkit-background-clip: text;
+  margin-bottom: 0;
+}
+
+h4{
+  font-size: 2.2rem;
+  font-family: 'Roboto', sans-serif;
+  letter-spacing: 1px;
+  margin-bottom: 0;
+}
+
+h5{
+  font-size:1.8rem;
+  font-family: 'Roboto', sans-serif;
+  letter-spacing: 1px;
+  margin-bottom: 0;
+}
+
+fieldset{
+  border: none;
+  outline: none;
+}
+
+
+/* Forms */
+form.myform label{
+  width: 100%;
+  text-transform: uppercase;
+}
+
+form.myform input{
+  border:white solid 1px;
+  overflow: none;
+  padding : 0.2rem 0.5rem;
+}
+
+form.myform input:focus{
+  border:blue solid 1px;
+  overflow: none;
+  outline: none;
+}
+
+form.myform input:invalid{
+  border: red solid 1px;
+}
+
+form.myform span{
+  width: 100%;
+  display: inline-block;
+  color:red;
+}
+
+/* Login Page */
+#login {
+  background-color: rgba(var(--primary-light-green),0.6);
+  display: flex;
+  width: 100%;
+  height: 100vh;
+}
+
+#login div{
+  padding: 1rem;
+}
+
+#login div.left{
+  width: 45%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+#login div.left form{
+  background-color: white;
+  padding: 5rem;
+}
+
+#login div.left form:first-child{
+
+}
+
+#login div.left form:last-child{
+  display: none;
+}
+
+
+#login div.right{
+  background-image: url('http://localhost:3000/garden-background.jpg');
+  background-size: cover;
+  width: 55%;
+  border-radius: 1.5rem;
+  margin: 2rem;
 }

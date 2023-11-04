@@ -1,9 +1,17 @@
-import './App.css';
+import React, { useEffect } from 'react';
+import { BrowserRouter, Route, Routes } from 'react-router-dom';
+import Login from './Screens/Login.jsx';
 
 function App() {
+  let app 
+  useEffect(() => { 
+  })
   return (
-    <div className="App">
-    </div>
+    <BrowserRouter>
+      <Routes>
+        <Route exact path="/login" element={<Login />} />
+      </Routes>
+    </BrowserRouter>
   );
 }
 
