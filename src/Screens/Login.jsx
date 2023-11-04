@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { getAuth, signInWithPhoneNumbr, RecaptchaVerifier, onAuthStateChanged, signInWithPhoneNumber } from "firebase/auth";
+import {  RecaptchaVerifier, signInWithPhoneNumber } from "firebase/auth";
 import { auth } from '../firebase.js'
 import { useNavigate } from "react-router-dom";
 

@@ -21,6 +21,7 @@ html::-webkit-scrollbar{
 :root{
   --primary-green: 105,240,174;
   --primary-light-green:175,288,89;
+  --primary-green-yellow:118,255,3;
   /* --primary-blue: 24, 144, 255; 
   --primary-dark-blue: 36, 48, 83;
   --secondry-blue: 49, 112, 126;
@@ -182,4 +183,79 @@ form.myform span{
   width: 55%;
   border-radius: 1.5rem;
   margin: 2rem;
+}
+
+/* Steps */
+#steps{
+  display: flex;
+  height: 99vh;
+  box-sizing: border-box;
+  padding-top:10vh;
+  flex-direction: column;
+}
+
+#steps span.progress{
+  position : absolute;
+  top: 1px;
+  background-color: rgba(var(--primary-green-yellow),0.6);
+  height: 10px;
+  /* width: 100%; */
+  display: inline-block;
+  z-index: 10;
+  transition: width 0.5s;
+}
+
+#steps div.navigation{
+  position: absolute;
+  bottom: 2px;
+  display: flex;
+  justify-content: space-between;
+  margin-left: 10%;
+  width: 80%;
+}
+
+#steps div.navigation i{
+  font-size: 5rem;
+  padding: 2rem;
+}
+
+#steps div.navigation i:hover{
+  color: rgb(var(--primary-green-yellow));
+  cursor: pointer;
+}
+
+#steps div.container div.step{
+  /* animation-name: lefttoright; */
+  animation-duration: 1s;
+  visibility: visible;
+  transform: translateX(5vw);
+  animation-timing-function: ease-in;
+}
+
+#steps div.container div.step.righttoleft{
+  animation-name: righttoleft;
+}
+#steps div.container div.step.lefttoright{
+  animation-name: lefttoright;
+  animation-duration: 0.5s;
+}
+
+
+
+@keyframes righttoleft {
+  0% {
+    transform: translateX(50vw);
+  }
+  100% {
+    transform: translateX(5vw);
+  }
+}
+
+@keyframes lefttoright {
+  0% {
+    transform: translateX(-15vw);
+  }
+  100% {
+    transform: translateX(5vw);
+  }
 }
