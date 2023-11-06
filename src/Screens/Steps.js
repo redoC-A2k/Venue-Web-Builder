@@ -2,7 +2,7 @@ import { useRef, useState } from "react";
 
 const Steps = (props) => {
     const [currstep, setCurrStep] = useState(1);
-    const totalSteps = useRef(3);
+    const totalSteps = useRef(8);
 
 
     async function handlenext() {
@@ -20,24 +20,54 @@ const Steps = (props) => {
     let map = {
         1: <Step1 />,
         2: <Step2 />,
-        3: <Step3 /> 
+        3: <Step3 />,
+        4: <Step4 />,
+        5: <Step5 />,
+        6: <Step6 />,
+        7: <Step7 />,
+        8: <Step8 />
     }
 
     function Step1(props) {
         return <div className="step">
-            <h2>Step 1</h2>
-        </div>
+            <h2>What is the name of your Venue:</h2>
+            </div>
     }
 
     function Step2(props) {
         return <div className="step">
-            <h2>Step 2</h2>
+            <h2>What's the address:</h2>
         </div>
     }
 
     function Step3(props) {
         return <div className="step">
-            <h2>Step 3</h2>
+            <h2>What's the type of your Venue:</h2>
+        </div>
+    }
+    function Step4(props) {
+        return <div className="step">
+            <h2>What's the maximum guest capacity:</h2>
+        </div>
+    }
+    function Step5(props) {
+        return <div className="step">
+            <h2>What type of food are you offering:</h2>
+        </div>
+    }
+    function Step6(props) {
+        return <div className="step">
+            <h2>Have AC in rooms:</h2>
+        </div>
+    }
+    function Step7(props) {
+        return <div className="step">
+            <h2>Have separate cullinary:</h2>
+        </div>
+    }
+    function Step8(props) {
+        return <div className="step">
+            <h2>What's the maximum guest capacity:</h2>
         </div>
     }
 
