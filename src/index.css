@@ -12,8 +12,8 @@ html::-webkit-scrollbar{
   margin: 0px;
   padding: 0px;
 }
-
-#root { /* selecting root div of react see - public/index.html*/
+/* selecting root div of react see - public//index.html */
+#root { 
   min-height: 99vh;
   position: relative;
 }
@@ -41,10 +41,6 @@ html::-webkit-scrollbar{
   --secondry-grey-2:221, 221, 221;
 
   --space-from-top:85px;
-  /* --filterbar-width-desktop:39rem; */
-  /* --filterbar-width-mobile:100vw; */
-  /* --userbar-width-desktop:34rem; */
-  /* --userbar-width-mobile:100vw; */ 
 }
 
 
@@ -168,9 +164,6 @@ form.myform span{
   padding: 5rem;
 }
 
-#login div.left form:first-child{
-
-}
 
 #login div.left form:last-child{
   display: none;
@@ -315,7 +308,7 @@ form.myform span{
 
 #editor .gjs-two-color{
   color: rgb(var(--primary-grey-2))
-} */
+} 
 
 .gjs-three-bg {
   background-color: rgb(var(--primary-green-yellow)); 
