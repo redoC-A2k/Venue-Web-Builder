@@ -1,30 +1,37 @@
-import { useEffect, useState } from "react";
+import { useRef, useEffect, useState } from "react";
 import grapesjs from 'grapesjs';
 import 'grapesjs/dist/css/grapes.min.css'
 import { Link } from "react-router-dom";
 import grapesjs_blocks_basic from 'grapesjs-blocks-basic';
 import grapesjs_plugin_forms from 'grapesjs-plugin-forms';
+import axios from 'axios'
 
-function handleTab(i) {
-    // document.getElementById("tabhead").childNodes[0].classList.remove('active')
-    // document.getElementById("tabhead").childNodes[1].classList.add('active')
-    let list = document.getElementById("tabhead");
-    list.childNodes[0].childNodes[0].classList.remove('active')
-    list.childNodes[1].childNodes[0].classList.remove('active')
-    list.childNodes[2].childNodes[0].classList.remove('active')
-    list.childNodes[3].childNodes[0].classList.remove('active')
-    list.childNodes[i].childNodes[0].classList.add('active')
-
-    let contentList = document.getElementById("tabbody");
-    contentList.childNodes[0].classList.remove('active');
-    contentList.childNodes[1].classList.remove('active');
-    contentList.childNodes[2].classList.remove('active');
-    contentList.childNodes[3].classList.remove('active');
-    contentList.childNodes[i].classList.add('active')
-}
 
 function Editor(props) {
     const [editor, setEditor] = useState(null)
+    const data = useRef(null);
+
+    function handleTab(i) {
+        // document.getElementById("tabhead").childNodes[0].classList.remove('active')
+        // document.getElementById("tabhead").childNodes[1].classList.add('active')
+        let list = document.getElementById("tabhead");
+        list.childNodes[0].childNodes[0].classList.remove('active')
+        list.childNodes[1].childNodes[0].classList.remove('active')
+        list.childNodes[2].childNodes[0].classList.remove('active')
+        list.childNodes[3].childNodes[0].classList.remove('active')
+        list.childNodes[i].childNodes[0].classList.add('active')
+
+        let contentList = document.getElementById("tabbody");
+        contentList.childNodes[0].classList.remove('active');
+        contentList.childNodes[1].classList.remove('active');
+        contentList.childNodes[2].classList.remove('active');
+        contentList.childNodes[3].classList.remove('active');
+        contentList.childNodes[i].classList.add('active')
+
+        // console.log(editor.getProjectData())
+        console.log(editor.AssetManager.getConfig())
+    }
+
     useEffect(() => {
         console.log("Mounted");
         const editor = grapesjs.init({
@@ -32,14 +39,26 @@ function Editor(props) {
             width: "auto",
             plugins: [grapesjs_blocks_basic, grapesjs_plugin_forms],
             storageManager: {
-                autoload:true,
-                autosave:true,
+                autoload: true,
+                autosave: true,
                 type: 'local',
-                storeHtml:true,
-                storeCss:true,
-                storeComponents:true,
-                contentTypeJson:true,
+                // storeHtml: true,
+                // storeCss: true,
+                // storeComponents: true,
+                contentTypeJson: true,
                 id: 'gjs-custom-',             // Prefix identifier that will be used inside storing and loading
+                onStore: (data, editor) => {
+                    const pagesHtml = editor.Pages.getAll().map(page => {
+                        const component = page.getMainComponent();
+                        return {
+                            html: editor.getHtml({ component }),
+                            css: editor.getCss({ component })
+                        }
+                    });
+                    return { id: 'gjs-custom-', data, pagesHtml };
+                },
+                // If on load, you're returning the same JSON from above...
+                onLoad: result => result.data,
             },
             pluginsOpts: {
                 [grapesjs_blocks_basic]: {
@@ -73,39 +92,59 @@ function Editor(props) {
                 }]
             },
             panels: { defaults: {} },
-            // panels: {
-            //     defaults: [
-            //         {
-            //             id: 'basic-actions',
-            //             el: '.panel__basic-actions',
-            //             buttons: [{
-            //                 id: 'visibility',
-            //                 active: true,
-            //                 className: 'btn-toggle-borders',
-            //                 label: '<i class="fa-regular fa-square"></i>',
-            //                 command: 'sw-visibility',
-            //             }],
-            //         }, {
-            //             id: 'panel-devices',
-            //             el: '.panel__devices',
-            //             buttons: [{
-            //                 id: 'device-desktop',
-            //                 el: '<i class="fa-solid fa-laptop"></i>',
-            //                 command: 'set-device-desktop',
-            //                 active: true,
-            //             }, {
-            //                 id: 'device-mobile',
-            //                 el: '<i class="fa-solid fa-mobile"></i>',
-            //                 command: 'set-device-mobile',
-            //             }]
-            //         }
-            //     ]
-            // }
+            assetManager: {
+                upload: `https://api.imgbb.com/1/upload?key=${process.env.REACT_APP_IMG}`,
+                uploadName: 'source',
+                multiUpload: false,
+                assets: [
+                    {
+                        src: 'https://picsum.photos/300/500',
+                        height: 300,
+                        width: 500,
+                        name: 'image1'
+                    },
+                    {
+                        src: 'https://picsum.photos/400/600',
+                        height: 400,
+                        width: 600,
+                        name: 'image2'
+                    },
+                ],
+                uploadFile: async (e) => {
+                    console.log(e);
+                    var files = e.dataTransfer ? e.dataTransfer.files : e.target.files;
+                    // ...send somewhere
+                    console.log(files);
+                    let formData = new FormData();
+                    formData.append('image', files[0]);
+                    const res = await axios.post(
+                        `https://api.imgbb.com/1/upload?key=${process.env.REACT_APP_IMG}`,
+                        formData,
+                        {
+                            headers: {
+                                "Content-Type": "multipart/form-data",
+                            },
+                        })
+                    console.log(res.data.data);
+                    let imgObj = {
+                        src: res.data.data.display_url,
+                        width: res.data.data.width,
+                        height: res.data.data.height,
+                        name: res.data.data.image.name,
+                    };
+                    console.log("added to asset manager", imgObj)
+                    editor.AssetManager.add([imgObj]);
+                }
+            }
         })
         // editor.Panels.addPanel({
         //     id: 'panel-top',
         //     el: '.panel__top',
         // });
+        // asset manager
+
+
+        // Panels Configuration
         editor.Panels.addPanel({
             id: 'basic-actions',
             el: '.panel__basic-actions',
@@ -155,6 +194,49 @@ function Editor(props) {
         editor.Commands.add('set-device-mobile', {
             run: editor => editor.setDevice('Mobile')
         });
+
+        // configuring StorageManager
+        editor.Storage.add('local', {
+            async load() {
+                // return await axios.get(`projects/${projectId}`);
+                return data.current;
+            },
+
+            async store(edData) {
+                // return await axios.patch(`projects/${projectId}`, { data });
+                console.log(edData)
+                data.current = edData;
+                return data;
+            },
+        });
+
+        // editor.on('asset:upload:start', () => {
+        //     console.log("upload start");
+        // });
+
+        // // The upload is ended (completed or not)
+        // editor.on('asset:upload:end', () => {
+        //     console.log("Upload end");
+        // });
+
+        // // Error handling
+        // editor.on('asset:upload:error', (err) => {
+        //     console.log("error - occured", err);
+        // });
+
+        // // Do something on response
+        // editor.on('asset:upload:response', (response) => {
+        //     let result = response.data.data;
+        //     return {
+        //         src: result.display_url,
+        //         width: result.width,
+        //         height: result.height,
+        //         type: result.image.mime,
+        //         title: result.image.name,
+        //         name: result.image.name,
+        //     }
+        // });
+
         setEditor(editor)
     }, [])
 
