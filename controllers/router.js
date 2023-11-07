@@ -53,7 +53,6 @@ router.get('/render', async (req, res) => {
         fs.writeFile('./main.html', htmlCss[0].html, (error) => { console.log("error is - ", error) });
         // fs.writeFile('./main.css', htmlCss[0].css, (error) => { console.log("error is - ", error) });
         let style = `<style>${htmlCss[0].css}</style>`
-        // let body = `${htmlCss[0].html}`
         template = template.replace('style', style)
         template = template.replace('body', htmlCss[0].html)
         fs.writeFile('./index.html', template, (error) => { console.log("error is - ", error) })
