@@ -195,7 +195,7 @@ function Editor(props) {
                         }
                     });
                     console.log(response.data)
-                    return response.data
+                    return response.data.data
                 } catch (error) {
                     alert("There might be some issue with your internet")
                 }
