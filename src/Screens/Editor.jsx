@@ -4,12 +4,14 @@ import 'grapesjs/dist/css/grapes.min.css'
 import { Link } from "react-router-dom";
 import grapesjs_blocks_basic from 'grapesjs-blocks-basic';
 import grapesjs_plugin_forms from 'grapesjs-plugin-forms';
+// import grapesjs_plugin_carousel from "grapesjs-plugin-carousel"
 import axios from 'axios'
 
 
 function Editor(props) {
     const [editor, setEditor] = useState(null)
-    const data = useRef(null);
+    const endpoint = 'https://venue-web-builder-backend-production.up.railway.app/venue/owner/web'
+    // const endpoint = 'http://localhost:4000/venue/owner/web'
 
     function handleTab(i) {
         // document.getElementById("tabhead").childNodes[0].classList.remove('active')
@@ -29,7 +31,6 @@ function Editor(props) {
         contentList.childNodes[i].classList.add('active')
 
         // console.log(editor.getProjectData())
-        console.log(editor.AssetManager.getConfig())
     }
 
     useEffect(() => {
@@ -41,29 +42,18 @@ function Editor(props) {
             storageManager: {
                 autoload: true,
                 autosave: true,
-                type: 'local',
-                // storeHtml: true,
-                // storeCss: true,
-                // storeComponents: true,
                 contentTypeJson: true,
                 id: 'gjs-custom-',             // Prefix identifier that will be used inside storing and loading
-                onStore: (data, editor) => {
-                    const pagesHtml = editor.Pages.getAll().map(page => {
-                        const component = page.getMainComponent();
-                        return {
-                            html: editor.getHtml({ component }),
-                            css: editor.getCss({ component })
-                        }
-                    });
-                    return { id: 'gjs-custom-', data, pagesHtml };
-                },
+                type: 'remote',
+                onStore: (data, editor) => data,
                 // If on load, you're returning the same JSON from above...
-                onLoad: result => result.data,
+                onLoad: result => result,
             },
             pluginsOpts: {
                 [grapesjs_blocks_basic]: {
                     // flexGrid:true,
                 },
+                // [grapesjs_plugin_carousel]:{},
                 [grapesjs_plugin_forms]: {}
             },
             blockManager: {
@@ -98,13 +88,13 @@ function Editor(props) {
                 multiUpload: false,
                 assets: [
                     {
-                        src: 'https://picsum.photos/300/500',
+                        src: 'https://picsum.photos/500/300',
                         height: 300,
                         width: 500,
                         name: 'image1'
                     },
                     {
-                        src: 'https://picsum.photos/400/600',
+                        src: 'https://picsum.photos/600/400',
                         height: 400,
                         width: 600,
                         name: 'image2'
@@ -196,17 +186,30 @@ function Editor(props) {
         });
 
         // configuring StorageManager
-        editor.Storage.add('local', {
+        editor.Storage.add('remote', {
             async load() {
-                // return await axios.get(`projects/${projectId}`);
-                return data.current;
+                try {
+                    let response = await axios.get(endpoint, {
+                        headers: {
+                            'Content-Type': 'application/json'
+                        }
+                    });
+                    console.log(response.data)
+                    return response.data
+                } catch (error) {
+                    alert("There might be some issue with your internet")
+                }
             },
 
             async store(edData) {
-                // return await axios.patch(`projects/${projectId}`, { data });
-                console.log(edData)
-                data.current = edData;
-                return data;
+                try {
+                    let message = await axios.post(endpoint, edData);
+                    console.log(message.data)
+                    return "Success"
+                } catch (error) {
+                    alert("There might be some issue with your internet")
+                }
+
             },
         });
 
