@@ -19,10 +19,14 @@
   },
   "homepage": "https://github.com/ayushjipatel/Venue-Web-Builder-Backend#readme",
   "dependencies": {
+    "body-parser": "^1.20.2",
     "cors": "^2.8.5",
     "dotenv": "^16.3.1",
+    "ejs": "^3.1.9",
     "express": "^4.18.2",
     "firebase-admin": "^11.11.0",
+    "grapesjs": "^0.21.7",
+    "handlebars": "^4.7.8",
     "nodemon": "^3.0.1",
     "pm2": "^5.3.0"
   }
