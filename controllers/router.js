@@ -37,8 +37,14 @@ router.get("/venue/owner/web", async (req, res) => {
     }
 });
 
-let template = ' <!DOCTYPE html> <html lang="en"> <head> <meta charset="utf-8"> style </head> body </html> '
-router.get('/render', async (req, res) => {
+
+let part1 = `<!DOCTYPE html>
+<html>
+<head>
+<title>Title</title>`
+let part2 = `</head>`
+let part3 = `</html>`
+router.get('/venue/render', async (req, res) => {
     const webDb = db.collection("web");
     const docRef = webDb.doc('1234564125');
 
@@ -49,13 +55,8 @@ router.get('/render', async (req, res) => {
     } else {
         const data = doc.data();
         let htmlCss = getHtmlCss(JSON.parse(data.editorData))
-        console.log(htmlCss)
-        fs.writeFile('./main.html', htmlCss[0].html, (error) => { console.log("error is - ", error) });
-        // fs.writeFile('./main.css', htmlCss[0].css, (error) => { console.log("error is - ", error) });
-        let style = `<style>${htmlCss[0].css}</style>`
-        template = template.replace('style', style)
-        template = template.replace('body', htmlCss[0].html)
-        fs.writeFile('./index.html', template, (error) => { console.log("error is - ", error) })
+        let template = part1+`<style>${htmlCss[0].css}</style>`+part2+htmlCss[0].html+part3
+        console.log("Got template")
         res.send(template);
     }
 })

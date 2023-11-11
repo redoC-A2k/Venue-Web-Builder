@@ -4,7 +4,7 @@ function getHtmlCss(data){
     const editor = grapesjs.init({
         headless: true,
     })
-    editor.loadData(data.data)
+    editor.loadData(data)
     const pagesHtml = editor.Pages.getAll().map(page => {
         const component = page.getMainComponent();
         return {
