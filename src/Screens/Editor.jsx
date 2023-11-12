@@ -10,8 +10,8 @@ import axios from 'axios'
 
 function Editor(props) {
     const [editor, setEditor] = useState(null)
-    const endpoint = 'https://venue-web-builder-backend-production.up.railway.app/venue/owner/web'
-    // const endpoint = 'http://localhost:4000/venue/owner/web'
+    // const endpoint = 'https://venue-web-builder-backend-production.up.railway.app/venue/owner/web'
+    const endpoint = 'http://localhost:4000/venue/owner/web'
 
     function handleTab(i) {
         // document.getElementById("tabhead").childNodes[0].classList.remove('active')
@@ -195,7 +195,7 @@ function Editor(props) {
                         }
                     });
                     console.log(response.data)
-                    return response.data.data
+                    return response.data
                 } catch (error) {
                     alert("There might be some issue with your internet")
                 }
@@ -203,6 +203,14 @@ function Editor(props) {
 
             async store(edData) {
                 try {
+                    const pagesHtml = editor.Pages.getAll().map(page => {
+                        const component = page.getMainComponent();
+                        return {
+                            html: editor.getHtml({ component }),
+                            css: editor.getCss({ component })
+                        }
+                    });
+                    console.log(pagesHtml)
                     let message = await axios.post(endpoint, edData);
                     console.log(message.data)
                     return "Success"
