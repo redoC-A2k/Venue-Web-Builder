@@ -1,4 +1,4 @@
-import { useRef, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import grapesjs from 'grapesjs';
 import 'grapesjs/dist/css/grapes.min.css'
 import { Link } from "react-router-dom";
@@ -10,6 +10,7 @@ import axios from 'axios'
 
 function Editor(props) {
     const [editor, setEditor] = useState(null)
+    const [preview, setPreview] = useState(false)
     // const endpoint = 'https://venue-web-builder-backend-production.up.railway.app/venue/owner/web'
     const endpoint = 'http://localhost:4000/venue/owner/web'
 
@@ -38,6 +39,7 @@ function Editor(props) {
         const editor = grapesjs.init({
             container: "#gjs",
             width: "auto",
+            height: "95vh",
             plugins: [grapesjs_blocks_basic, grapesjs_plugin_forms],
             storageManager: {
                 autoload: true,
@@ -81,7 +83,12 @@ function Editor(props) {
                     widthMedia: '480px',
                 }]
             },
-            panels: { defaults: {} },
+            panels: { defaults: false },
+            // canvas:{
+            //     scripts: [
+            //         'https://cdn.jsdelivr.net/npm/fullcalendar@6.1.9/index.global.min.js'
+            //     ],  
+            // },
             assetManager: {
                 upload: `https://api.imgbb.com/1/upload?key=${process.env.REACT_APP_IMG}`,
                 uploadName: 'source',
@@ -125,7 +132,7 @@ function Editor(props) {
                     console.log("added to asset manager", imgObj)
                     editor.AssetManager.add([imgObj]);
                 }
-            }
+            },
         })
         // editor.Panels.addPanel({
         //     id: 'panel-top',
@@ -144,11 +151,17 @@ function Editor(props) {
                     active: true, // active by default
                     label: '<i class="fa-regular fa-square"></i>',
                     command: 'sw-visibility', // Built-in command
+                    context: 'show borders'
                 }, {
                     id: 'export',
                     label: '<i class="fa-solid fa-code"></i>',
                     command: 'export-template',
                     context: 'export-template', // For grouping context of buttons from the same panel
+                }, {
+                    id: 'preview',
+                    label: '<i class="fa-solid fa-eye"></i>',
+                    command: 'preview',
+                    context: 'preview'
                 }, {
                     id: 'show-json',
                     label: 'JSON',
@@ -184,6 +197,28 @@ function Editor(props) {
         editor.Commands.add('set-device-mobile', {
             run: editor => editor.setDevice('Mobile')
         });
+        editor.on('run:preview', async () => {
+            // console.log("preview")
+            await setPreview(true)
+            let topnav = document.querySelector('#editor div.main div.topnav')
+            topnav.style.display = "none"
+            topnav.style.height = "0"
+            let sidebar = document.querySelector('#editor div.sidebar')
+            sidebar.style.display = "none"
+            let main = document.querySelector('#editor div.main')
+            main.style.width = "100%"
+        })
+        editor.on('stop:preview', async () => {
+            await setPreview(false)
+            let topnav = document.querySelector('#editor div.main div.topnav')
+            topnav.style.display = "flex"
+            topnav.style.height = "3.6rem"
+            let sidebar = document.querySelector('#editor div.sidebar')
+            sidebar.style.display = "initial"
+            let main = document.querySelector('#editor div.main')
+            main.style.width = "calc(100vw - 20rem)"
+        })
+
 
         // configuring StorageManager
         editor.Storage.add('remote', {
@@ -221,32 +256,9 @@ function Editor(props) {
             },
         });
 
-        // editor.on('asset:upload:start', () => {
-        //     console.log("upload start");
-        // });
-
-        // // The upload is ended (completed or not)
-        // editor.on('asset:upload:end', () => {
-        //     console.log("Upload end");
-        // });
-
-        // // Error handling
-        // editor.on('asset:upload:error', (err) => {
-        //     console.log("error - occured", err);
-        // });
-
-        // // Do something on response
-        // editor.on('asset:upload:response', (response) => {
-        //     let result = response.data.data;
-        //     return {
-        //         src: result.display_url,
-        //         width: result.width,
-        //         height: result.height,
-        //         type: result.image.mime,
-        //         title: result.image.name,
-        //         name: result.image.name,
-        //     }
-        // });
+        editor.addComponents(`
+        <iframe srcdoc="<h1>Learn to code</h1>"></iframe>
+        `);
 
         setEditor(editor)
     }, [])
