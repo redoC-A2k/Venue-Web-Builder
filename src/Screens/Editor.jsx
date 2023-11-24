@@ -6,6 +6,10 @@ import grapesjs_blocks_basic from 'grapesjs-blocks-basic';
 import grapesjs_plugin_forms from 'grapesjs-plugin-forms';
 // import grapesjs_plugin_carousel from "grapesjs-plugin-carousel"
 import axios from 'axios'
+import CarouselPlugin from "../Plugins/carousel";
+import grapesjs_navbar_plugin from "grapesjs-navbar";
+import CalendarPlugin from "../Plugins/calendar";
+// import SlickCarouselPlugin from "../Plugins/slick";
 
 
 function Editor(props) {
@@ -40,7 +44,7 @@ function Editor(props) {
             container: "#gjs",
             width: "auto",
             height: "95vh",
-            plugins: [grapesjs_blocks_basic, grapesjs_plugin_forms],
+            plugins: [grapesjs_blocks_basic, grapesjs_plugin_forms, CarouselPlugin, grapesjs_navbar_plugin,CalendarPlugin],
             storageManager: {
                 autoload: true,
                 autosave: true,
@@ -55,8 +59,11 @@ function Editor(props) {
                 [grapesjs_blocks_basic]: {
                     // flexGrid:true,
                 },
-                // [grapesjs_plugin_carousel]:{},
-                [grapesjs_plugin_forms]: {}
+                [grapesjs_plugin_forms]: {},
+                [CarouselPlugin]: {},
+                [grapesjs_navbar_plugin]: {},
+                [CalendarPlugin]: {},
+                // [SlickCarouselPlugin]: {}
             },
             blockManager: {
                 appendTo: '#blockdiv',
@@ -84,27 +91,31 @@ function Editor(props) {
                 }]
             },
             panels: { defaults: false },
-            // canvas:{
-            //     scripts: [
-            //         'https://cdn.jsdelivr.net/npm/fullcalendar@6.1.9/index.global.min.js'
-            //     ],  
-            // },
             assetManager: {
                 upload: `https://api.imgbb.com/1/upload?key=${process.env.REACT_APP_IMG}`,
                 uploadName: 'source',
                 multiUpload: false,
                 assets: [
                     {
-                        src: 'https://picsum.photos/500/300',
-                        height: 300,
-                        width: 500,
+                        type: "image",
+                        src: 'https://source.unsplash.com/random/500x300/?img=1',
+                        height: "auto",
+                        width: "100%",
                         name: 'image1'
                     },
                     {
-                        src: 'https://picsum.photos/600/400',
+                        type: "image",
+                        src: 'https://source.unsplash.com/random/600x400/?img=1',
                         height: 400,
                         width: 600,
                         name: 'image2'
+                    },
+                    {
+                        type: "image",
+                        src: 'https://source.unsplash.com/random/700x500/?img=1',
+                        height: 500,
+                        width: 700,
+                        name: 'image3'
                     },
                 ],
                 uploadFile: async (e) => {
@@ -131,8 +142,18 @@ function Editor(props) {
                     };
                     console.log("added to asset manager", imgObj)
                     editor.AssetManager.add([imgObj]);
+                    const data = editor.getProjectData();
+                    editor.StorageManager.store(data);
+                    // return {data:[imgObj]}
                 }
             },
+            canvas: {
+                // scripts:["http://localhost:3000"+"/calendar.js"],
+                // scripts:["https://cdn.jsdelivr.net/npm/fullcalendar@6.1.9/index.global.min.js"]
+                // styles:["http://localhost:3000"+"/calendar.js.css"]
+                scripts: ["https://cdn.jsdelivr.net/npm/@splidejs/splide@4.1.4/dist/js/splide.min.js", "https://cdn.jsdelivr.net/npm/fullcalendar@6.1.9/index.global.min.js","https://code.jquery.com/jquery-3.7.1.slim.min.js"],
+                styles: ["https://cdn.jsdelivr.net/npm/@splidejs/splide@4.1.4/dist/css/splide.min.css","https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css"]
+            }
         })
         // editor.Panels.addPanel({
         //     id: 'panel-top',
@@ -219,8 +240,6 @@ function Editor(props) {
             main.style.width = "calc(100vw - 20rem)"
         })
 
-
-        // configuring StorageManager
         editor.Storage.add('remote', {
             async load() {
                 try {
@@ -245,8 +264,9 @@ function Editor(props) {
                             css: editor.getCss({ component })
                         }
                     });
-                    console.log(pagesHtml)
+                    // console.log(pagesHtml)
                     let message = await axios.post(endpoint, edData);
+                    // console.log(edData)
                     console.log(message.data)
                     return "Success"
                 } catch (error) {
@@ -256,9 +276,47 @@ function Editor(props) {
             },
         });
 
-        editor.addComponents(`
-        <iframe srcdoc="<h1>Learn to code</h1>"></iframe>
-        `);
+        // prevent adding more than two calendar
+        editor.on('component:add',component=>{
+            if(component.attributes.type==="calendar"){
+                if(editor.getWrapper().find('div.fc').length > 0){
+                    component.remove();
+                }
+                // console.log("wrapper run")
+            }
+        })
+
+        // editor.on('component:slide:update',component=>{
+        //     console.log(component)
+        // })
+        // This is our custom script (avoid using arrow functions)
+        // const script = function () {
+        //     alert('Hi');
+        //     // `this` is bound to the component element
+        //     // console.log('the element', this.id);
+        // };
+
+        // // Define a new custom component
+        // editor.Components.addType('comp-with-js', {
+        //     model: {
+        //         defaults: {
+        //             script,
+        //             // Add some style, just to make the component visible
+        //             style: {
+        //                 width: '100px',
+        //                 height: '100px',
+        //                 background: 'red',
+        //             }
+        //         }
+        //     }
+        // });
+
+        // // Create a block for the component, so we can drop it easily
+        // editor.Blocks.add('test-block', {
+        //     label: 'Test block',
+        //     attributes: { class: 'fa fa-text' },
+        //     content: { type: 'comp-with-js' },
+        // });
 
         setEditor(editor)
     }, [])
