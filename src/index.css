@@ -219,7 +219,7 @@ form.myform span{
 
 #steps div.container div.step{
   /* animation-name: lefttoright; */
-  animation-duration: 1s;
+  animation-duration: 0.5s;
   visibility: visible;
   transform: translateX(5vw);
   animation-timing-function: ease-in;
@@ -237,19 +237,23 @@ form.myform span{
 
 @keyframes righttoleft {
   0% {
-    transform: translateX(50vw);
+    transform: translateX(20vw);
+    opacity: 0;
   }
   100% {
     transform: translateX(5vw);
+    opacity: 1;
   }
 }
 
 @keyframes lefttoright {
   0% {
     transform: translateX(-15vw);
+    opacity: 0;
   }
   100% {
     transform: translateX(5vw);
+    opacity: 1;
   }
 }
 
