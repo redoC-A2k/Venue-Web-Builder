@@ -32,7 +32,8 @@ router.get("/venue/owner/web", async (req, res) => {
         res.status(404).json({ message: "Document not found" });
     } else {
         const data = doc.data();
-        res.json(JSON.parse(data.editorData));
+        res.send(data.editorData)
+        // res.json(JSON.parse(data.editorData));
     }
 });
 
@@ -40,6 +41,30 @@ router.get("/venue/owner/web", async (req, res) => {
 let part1 = `<!DOCTYPE html>
 <html>
 <head>
+<script src="https://cdn.jsdelivr.net/npm/@splidejs/splide@4.1.4/dist/js/splide.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.9/index.global.min.js"></script>
+<script>
+document.addEventListener( 'DOMContentLoaded', function() {
+    // for splide carousel
+    var elms = document.getElementsByClassName( 'splide' );
+    for ( var i = 0; i < elms.length; i++ ) {
+        new Splide( elms[ i ], {
+            padding: {
+                left: "15%",
+                right: "15%",
+            },
+            gap: "1em",
+        }).mount();
+    }
+    let cal = document.querySelector ('div.fcCalendar')
+    new FullCalendar.Calendar(cal, {
+        initialView: 'dayGridMonth'
+    }).render();
+    // for fullcalendar
+
+});
+</script>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@splidejs/splide@4.1.4/dist/css/splide.min.css">
 <title>Grapesjs page</title>`
 let part2 = `</head>`
 let part3 = `</html>`

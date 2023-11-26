@@ -28,4 +28,3 @@ function getHtmlCss(data) {
 
 // module.exports = { getHtmlCss }
 export default getHtmlCss
-// getHtml(data)
