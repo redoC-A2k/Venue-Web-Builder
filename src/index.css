@@ -1,50 +1,54 @@
-html{
+html {
   overflow-y: scroll;
   scrollbar-width: none;
   -ms-overflow-style: none;
 }
-html::-webkit-scrollbar{
+
+html::-webkit-scrollbar {
   width: 0;
   height: 0;
 }
 
-*{
+* {
   margin: 0px;
   padding: 0px;
 }
+
 /* selecting root div of react see - public//index.html */
-#root { 
+#root {
   min-height: 99vh;
   position: relative;
 }
 
-:root{
-  --primary-green: 105,240,174;
-  --primary-light-green:175,288,89;
-  --primary-green-yellow:118,255,3;
+:root {
+  --primary-green: 105, 240, 174;
+  --primary-light-green: 175, 288, 89;
+  /* --primary-very-light-green: 178, 251, 220; */
+  --primary-very-light-green: 160, 248, 202;
+  --primary-green-yellow: 118, 255, 3;
   /* --primary-blue: 24, 144, 255;  */
   /* --primary-dark-blue: 36, 48, 83; */
   /* --secondry-blue: 49, 112, 126; */
   /* --secondry-dark-blue:17, 45, 50;  */
-  --primary-green:58, 175, 169; 
+  --primary-green: 58, 175, 169;
   /* --primary-dark:104, 118, 132; */
-  --primary-white: 250,250,250;
-  --primary-grey:240, 240, 240;
+  --primary-white: 250, 250, 250;
+  --primary-grey: 240, 240, 240;
   --primary-yellow: 255, 233, 0;
-  --primary-green-yellow:154, 205, 50; 
+  --primary-green-yellow: 154, 205, 50;
   --primary-orange: 222, 102, 0;
   --primary-red: 255, 74, 74;
   --primary-grey-1: 108, 117, 125;
-  --primary-grey-2:33, 37, 41;
-  --primary-grey-3:50, 54, 58;
-  --secondry-grey-1:238, 238, 238;
-  --secondry-grey-2:221, 221, 221;
+  --primary-grey-2: 33, 37, 41;
+  --primary-grey-3: 50, 54, 58;
+  --secondry-grey-1: 238, 238, 238;
+  --secondry-grey-2: 221, 221, 221;
 
-  --space-from-top:85px;
+  --space-from-top: 85px;
 }
 
 
-a{
+a {
   text-decoration: none !important;
   color: black !important;
 }
@@ -81,8 +85,8 @@ h3 {
   margin-bottom: 0;
 }
 
-.gradient{
-  background-image: linear-gradient(to right, rgb(var(--primary-green)) , 40% , rgb(var(--primary-blue)));
+.gradient {
+  background-image: linear-gradient(to right, rgb(var(--primary-green)), 40%, rgb(var(--primary-blue)));
   color: transparent;
   font-weight: 900 !important;
   letter-spacing: 2px;
@@ -92,85 +96,207 @@ h3 {
   margin-bottom: 0;
 }
 
-h4{
+h4 {
   font-size: 2.2rem;
   font-family: 'Roboto', sans-serif;
   letter-spacing: 1px;
   margin-bottom: 0;
 }
 
-h5{
-  font-size:1.8rem;
+h5 {
+  font-size: 1.8rem;
   font-family: 'Roboto', sans-serif;
   letter-spacing: 1px;
   margin-bottom: 0;
 }
 
-fieldset{
+fieldset {
   border: none;
   outline: none;
 }
 
+button {
+  display: inline-block;
+  outline: 0;
+  cursor: pointer;
+  border-radius: 8px;
+  box-shadow: 0 2px 5px 0 rgb(213 217 217 / 50%);
+  background: #FFF;
+  border: 1px solid #D5D9D9;
+  font-size: 1.8rem;
+  height: auto;
+  padding: 1rem 2rem;
+  width: auto;
+  text-align: center;
+  font-weight: 400;
+  color: #0F1111;
+}
+
+button:hover {
+  background-color: #F7FAFA;
+  border-color: #D5D9D9;
+}
+
+button.cta {
+  background-color: rgb(var(--primary-green-yellow));
+  color: white;
+  border: none;
+  font-size: 1.8rem;
+  padding: 1rem 2rem;
+  text-transform: uppercase;
+  font-weight: 700;
+  letter-spacing: 1px;
+  transition: all 0.3s ease-in-out;
+  box-shadow: 0 25.6px 57.6px 0 rgb(0 0 0 / 22%), 0 4.8px 14.4px 0 rgb(0 0 0 / 18%);
+}
+
+button.cta:hover {
+  box-shadow: 0 2px 5px 0 rgb(213 217 217 / 50%);
+}
+
 
 /* Forms */
-form.myform label{
+form.myform label {
   width: 100%;
   text-transform: uppercase;
 }
 
-form.myform input{
-  border:white solid 1px;
+form.myform input {
+  border: white solid 1px;
   overflow: none;
-  padding : 0.2rem 0.5rem;
+  padding: 0.2rem 0.5rem;
 }
 
-form.myform input:focus{
-  border:blue solid 1px;
+form.myform input:focus {
+  border: blue solid 1px;
   overflow: none;
   outline: none;
 }
 
-form.myform input:invalid{
+form.myform input:invalid {
   border: red solid 1px;
 }
 
-form.myform span{
+form.myform span {
   width: 100%;
   display: inline-block;
-  color:red;
+  color: red;
+}
+
+/* Loader */
+#loader {
+  position: fixed;
+  z-index: -4;
+  width: 100vw;
+  height: 100vh;
+  display: flex;
+  background-color: white;
+  opacity: 0;
+  justify-content: center;
+  align-items: center;
+  --loader-span-after-width:25%;
+  --loader-span-img-width:10vw
+}
+
+#loader.show {
+  z-index: 5;
+  opacity:1;
+}
+
+#loader div{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+#loader div img{
+  width:var(--loader-span-img-width); 
+  display: block;
+}
+
+#loader div span{
+  width: var(--loader-span-img-width);
+  height: 1rem;
+  border-radius: 10px;
+  border:2px solid rgba(var(--primary-green),255);
+  display: block;
+  position: relative;
+  overflow: hidden;
+}
+
+#loader div span::after{
+  content: "";
+  left: calc(var(--loader-span-after-width) * -1);
+  position: absolute;
+  width:  var(--loader-span-after-width);
+  height: 0.8rem;
+  display: block;
+  background-color: rgb(var(--primary-very-light-green))
+}
+
+#loader.show div span::after{
+  animation: move 1s ease-in-out infinite alternate;
+}
+@keyframes move {
+  0%{
+    left: calc(var(--loader-span-after-width) * -1);
+  }
+  100%{
+    left: 100%;
+  }
+}
+
+@media all and (max-width:992px) {
+  #loader{
+    --loader-span-after-width:35%;
+    --loader-span-img-width:15vw
+  }
+}
+
+@media all and (max-width:768px) {
+  #loader{
+    --loader-span-after-width:45%;
+    --loader-span-img-width:20vw
+  }
+}
+
+@media all and (max-width:576px) {
+  #loader{
+    --loader-span-img-width:30vw
+  }
 }
 
 /* Login Page */
 #login {
-  background-color: rgba(var(--primary-light-green),0.6);
+  background-color: rgba(var(--primary-light-green), 0.6);
   display: flex;
   width: 100%;
   height: 100vh;
 }
 
-#login div{
+#login div {
   padding: 1rem;
 }
 
-#login div.left{
+#login div.left {
   width: 45%;
   display: flex;
   flex-direction: column;
   justify-content: center;
 }
 
-#login div.left form{
+#login div.left form {
   background-color: white;
   padding: 5rem;
 }
 
 
-#login div.left form:last-child{
+#login div.left form:last-child {
   display: none;
 }
 
 
-#login div.right{
+#login div.right {
   background-image: url('http://localhost:3000/garden-background.jpg');
   background-size: cover;
   width: 55%;
@@ -179,18 +305,17 @@ form.myform span{
 }
 
 /* Steps */
-#steps{
+#steps {
   display: flex;
   height: 99vh;
   box-sizing: border-box;
-  padding-top:10vh;
   flex-direction: column;
 }
 
-#steps span.progress{
-  position : absolute;
+#steps span.progress {
+  position: absolute;
   top: 1px;
-  background-color: rgba(var(--primary-green-yellow),0.6);
+  background-color: rgba(var(--primary-green-yellow), 0.6);
   height: 10px;
   /* width: 100%; */
   display: inline-block;
@@ -198,7 +323,7 @@ form.myform span{
   transition: width 0.5s;
 }
 
-#steps div.navigation{
+#steps div.navigation {
   position: absolute;
   bottom: 2px;
   display: flex;
@@ -207,41 +332,42 @@ form.myform span{
   width: 80%;
 }
 
-#steps div.navigation i{
+#steps div.navigation i {
   font-size: 5rem;
   padding: 2rem;
+  z-index: 1;
 }
 
-#steps div.navigation i:hover{
+#steps div.navigation i:hover {
   color: rgb(var(--primary-green-yellow));
   cursor: pointer;
 }
 
-#steps div.container div.step{
+#steps div.container div.step {
   /* animation-name: lefttoright; */
   animation-duration: 0.5s;
   visibility: visible;
-  transform: translateX(5vw);
+  transform: translateX(0vw);
   animation-timing-function: ease-in;
 }
 
-#steps div.container div.step.righttoleft{
+#steps div.container div.step.righttoleft {
   animation-name: righttoleft;
 }
-#steps div.container div.step.lefttoright{
+
+#steps div.container div.step.lefttoright {
   animation-name: lefttoright;
   animation-duration: 0.5s;
 }
-
-
 
 @keyframes righttoleft {
   0% {
     transform: translateX(20vw);
     opacity: 0;
   }
+
   100% {
-    transform: translateX(5vw);
+    transform: translateX(0vw);
     opacity: 1;
   }
 }
@@ -251,42 +377,155 @@ form.myform span{
     transform: translateX(-15vw);
     opacity: 0;
   }
+
   100% {
-    transform: translateX(5vw);
+    transform: translateX(0vw);
     opacity: 1;
   }
 }
 
+#steps div.container div.step {
+  margin-top: 10rem;
+}
+
+#steps div.container div.step h2 {
+  margin-bottom: 2rem;
+}
+
+#steps div.container div.step input {
+  width: 100%;
+  padding: 1rem;
+  margin-bottom: 0.6rem;
+  border: none;
+  border-bottom: 1px solid rgb(var(--primary-green-yellow));
+  outline: none;
+  font-size: 1.8rem;
+}
+
+#steps div.container div.step form span {
+  color: rgb(231, 89, 89);
+}
+
+#steps div.container div.step.photos {
+  max-height: 75%;
+  overflow-y: scroll;
+}
+
+#steps div.container div.step.photos div.stepCropImages {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 2rem;
+}
+
+#steps div.container div.step.photos div.stepCropImages img {
+  width: 30%;
+  height: auto;
+  border: 1px solid rgb(var(--primary-grey-1));
+}
+
+
+#steps div.container div.step.photos input[type=text] {
+  width: 68%;
+  padding: 1rem;
+  margin-bottom: 0.6rem;
+  border: none;
+  border-bottom: 1px solid rgb(var(--primary-green-yellow));
+  outline: none;
+  font-size: 1.8rem;
+  align-self: center;
+}
+
+#steps div.container div.step.photos input[type=text].error {
+  border-bottom: 1px solid rgb(var(--primary-red));
+}
+
+#steps div.container div.step.photos div.stepInputImage {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 2rem;
+}
+
+#steps div.container div.step.photos div.stepInputImage input[type=file] {
+  width: 30%;
+  align-self: center;
+}
+
+#steps #cropModal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  width: 100vw;
+  height: 99vh;
+  display: none;
+  background-color: white;
+}
+
+#steps #cropModal.show {
+  visibility: visible;
+  z-index: 100;
+  display: block;
+}
+
+#steps #cropModal div.cropperContainer {
+  position: relative;
+  height: 80%;
+  width: 100%;
+}
+
+
+#steps div#cropModal div.controls {
+  display: flex;
+  justify-content: center;
+  margin-top: 2rem;
+}
+
+#steps div#cropModal div.controls button {
+  font-size: 2rem;
+  text-transform: uppercase;
+  padding: 1rem 2rem;
+  width: auto;
+  height: auto;
+  color: rgb(var(--primary-grey-3));
+  border: 1px solid rgb(var(--primary-green));
+}
+
+
+#steps div.container div.step.features input[type=text].error {
+  border-bottom: 1px solid rgb(var(--primary-red));
+}
 
 /* Editor */
-#editor div.sidebar{
+#editor div.sidebar {
   position: fixed;
   height: 100%;
   overflow-y: scroll;
-  width: 20rem ;
+  width: 20rem;
   right: 0;
   padding: 0;
 }
 
-#editor div.sidebar ul{
+#editor div.sidebar ul {
   justify-content: space-between;
 }
 
 #editor div.sidebar ul {
   border-bottom-color: rgb(var(--primary-green));
 }
-#editor div.sidebar ul li a.active{
-  border-color:rgb(var(--primary-green));
+
+#editor div.sidebar ul li a.active {
+  border-color: rgb(var(--primary-green));
   border-bottom-color: transparent;
 }
 
-#editor div.main{
+#editor div.main {
   width: calc(100vw - 20rem);
   height: 100vh;
   position: fixed;
 }
 
-#editor div.main div.topnav{
+#editor div.main div.topnav {
   width: 100%;
   height: 3.6rem;
   border-bottom: 1px solid rgb(var(--primary-green));
@@ -294,50 +533,62 @@ form.myform span{
   justify-content: space-between;
 }
 
-#editor div.sidebar div.tab-content div{
+#editor div.sidebar div.tab-content div {
   opacity: 1;
 }
 
-#editor div[class^="gjs-"]{
+#editor div[class^="gjs-"] {
   font-size: 1.2rem;
 }
 
-#editor div.gjs-sm-sector-label{
+#editor div.gjs-sm-sector-label {
   font-size: 1.5rem;
 }
 
-#editor .gjs-one-bg{
-  background-color: rgb(255,255,255);
+#editor .gjs-one-bg {
+  background-color: rgb(255, 255, 255);
 }
 
-#editor .gjs-two-color{
+#editor .gjs-two-color {
   color: rgb(var(--primary-grey-2))
-} 
+}
 
 .gjs-three-bg {
-  background-color: rgb(var(--primary-green-yellow)); 
+  background-color: rgb(var(--primary-green-yellow));
   color: rgb(var(--primary-grey-3));
-} 
+}
 
 /* Quaternary color for the text color */
 .gjs-four-color,
 .gjs-four-color-h:hover {
-  color: rgb(var(--primary-green)); 
+  color: rgb(var(--primary-green-yellow)) !important;
 }
 
 
-#editor .gjs-cv-canvas{
+#editor .gjs-cv-canvas {
   width: 100%;
   height: 100% !important;
-  top:0;
-} 
-  
+  top: 0;
+}
+
 #editor .panel__top {
   padding: 0;
   display: flex !important;
   /* justify-content: center; */
 }
 
-#editor div.gjs-pn-panel{
+#editor .panel__top button {
+  padding: 0.5rem 1rem;
+  font-size: 1.4rem;
+  /* border: none; */
+  box-shadow: none;
+  border-radius: 0;
+  height: 3.4rem;
+  border-width: 2px;
+  font-weight: 600;
+  letter-spacing: 2px;
+}
+
+#editor div.gjs-pn-panel {
   position: relative;
 }

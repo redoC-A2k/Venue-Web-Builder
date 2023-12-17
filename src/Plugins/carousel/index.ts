@@ -1,8 +1,15 @@
 import loadBlocks from './blocks';
 import loadComponents from './components';
+import {Plugin} from 'grapesjs';
+
+export type PluginOptions = {
+    // name:string,
+    // label:string,
+    // type:string,
+}
 
 
-const CarouselPlugin = (editor, opts) => {
+const CarouselPlugin:Plugin<PluginOptions> = (editor, opts) => {
     // const options = {
     //     // Default options
     //     type:'section',

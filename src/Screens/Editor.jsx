@@ -1,23 +1,26 @@
-import { useEffect, useState } from "react";
-import grapesjs from 'grapesjs';
+import { useEffect, useRef, useState } from "react";
+import grapesjs, { Component } from 'grapesjs';
 import 'grapesjs/dist/css/grapes.min.css'
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import grapesjs_blocks_basic from 'grapesjs-blocks-basic';
 import grapesjs_plugin_forms from 'grapesjs-plugin-forms';
-// import grapesjs_plugin_carousel from "grapesjs-plugin-carousel"
 import axios from 'axios'
 import CarouselPlugin from "../Plugins/carousel";
 import grapesjs_navbar_plugin from "grapesjs-navbar";
 import CalendarPlugin from "../Plugins/calendar";
+import { auth } from "../firebase";
+import { hideLoader, showLoader } from "../utils/loader";
 // import SlickCarouselPlugin from "../Plugins/slick";
 
 
 function Editor(props) {
     const [editor, setEditor] = useState(null)
     const [preview, setPreview] = useState(false)
+    const [user, setUser] = useState(null)
     // const endpoint = 'https://venue-web-builder-backend-production.up.railway.app/venue/owner/web'
-    const endpoint = 'http://localhost:4000/venue/owner/web'
-
+    const endpoint = process.env.REACT_APP_HOSTNAME + '/venue/owner/web'
+    const backendHost = process.env.REACT_APP_HOSTNAME
+    const promiseUser = useRef(null)
     function handleTab(i) {
         // document.getElementById("tabhead").childNodes[0].classList.remove('active')
         // document.getElementById("tabhead").childNodes[1].classList.add('active')
@@ -37,14 +40,48 @@ function Editor(props) {
 
         // console.log(editor.getProjectData())
     }
+    let navigate = useNavigate()
 
     useEffect(() => {
-        console.log("Mounted");
+        showLoader()
+        promiseUser.current = new Promise((resolve, reject) => {
+            auth.onAuthStateChanged((user) => {
+                if (user) {
+                    setUser(user)
+                    console.log(user)
+                    resolve(user);
+                    hideLoader()
+                }
+                else {
+                    navigate('/login')
+                    reject("user not signed in")
+                    hideLoader()
+                }
+            })
+        })
+
+        promiseUser.current.then(async user => {
+            if (user != null) {
+                let token = await user.getIdToken();
+                let response = await axios.get(backendHost + '/venue/web/setup',{
+                    headers:{
+                        Authorization:token
+                    }
+                })
+                console.log(response)
+                if(response.data.setup==false)
+                navigate('/steps')
+            }
+        }).catch(error=> {
+            console.log(error)
+            navigate('/login')
+        })
+
         const editor = grapesjs.init({
             container: "#gjs",
             width: "auto",
             height: "95vh",
-            plugins: [grapesjs_blocks_basic, grapesjs_plugin_forms, CarouselPlugin, grapesjs_navbar_plugin,CalendarPlugin],
+            plugins: [grapesjs_blocks_basic, grapesjs_plugin_forms, CarouselPlugin, grapesjs_navbar_plugin, CalendarPlugin],
             storageManager: {
                 autoload: true,
                 autosave: true,
@@ -151,9 +188,9 @@ function Editor(props) {
                 // scripts:["http://localhost:3000"+"/calendar.js"],
                 // scripts:["https://cdn.jsdelivr.net/npm/fullcalendar@6.1.9/index.global.min.js"]
                 // styles:["http://localhost:3000"+"/calendar.js.css"]
-                scripts: ["https://cdn.jsdelivr.net/npm/@splidejs/splide@4.1.4/dist/js/splide.min.js", "https://cdn.jsdelivr.net/npm/fullcalendar@6.1.9/index.global.min.js","https://code.jquery.com/jquery-3.7.1.slim.min.js"],
-                styles: ["https://cdn.jsdelivr.net/npm/@splidejs/splide@4.1.4/dist/css/splide.min.css","https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css"]
-            }
+                scripts: ["https://cdn.jsdelivr.net/npm/@splidejs/splide@4.1.4/dist/js/splide.min.js", "https://cdn.jsdelivr.net/npm/fullcalendar@6.1.9/index.global.min.js", "https://code.jquery.com/jquery-3.7.1.slim.min.js"],
+                styles: ["https://cdn.jsdelivr.net/npm/@splidejs/splide@4.1.4/dist/css/splide.min.css", "https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css"]
+            },
         })
         // editor.Panels.addPanel({
         //     id: 'panel-top',
@@ -183,18 +220,19 @@ function Editor(props) {
                     label: '<i class="fa-solid fa-eye"></i>',
                     command: 'preview',
                     context: 'preview'
-                }, {
-                    id: 'show-json',
-                    label: 'JSON',
-                    context: 'show-json',
-                    command(editor) {
-                        editor.Modal.setTitle('Components JSON')
-                            .setContent(`<textarea style="width:100%; height: 250px;">
-                      ${JSON.stringify(editor.getComponents())}
-                    </textarea>`)
-                            .open();
-                    },
-                }
+                },
+                // {
+                //     id: 'show-json',
+                //     label: 'JSON',
+                //     context: 'show-json',
+                //     command(editor) {
+                //         editor.Modal.setTitle('Components JSON')
+                //             .setContent(`<textarea style="width:100%; height: 250px;">
+                //       ${JSON.stringify(editor.getComponents())}
+                //     </textarea>`)
+                //             .open();
+                //     },
+                // }
             ],
         });
         editor.Panels.addPanel({
@@ -243,32 +281,41 @@ function Editor(props) {
         editor.Storage.add('remote', {
             async load() {
                 try {
-                    let response = await axios.get(endpoint, {
-                        headers: {
-                            'Content-Type': 'application/json'
+                    await promiseUser.current.then(async user => {
+                        if (user != null) {
+                            let token = await user.getIdToken()
+                            let response = await axios.get(endpoint, {
+                                headers: {
+                                    'Content-Type': 'application/json',
+                                    Authorization: token
+                                }
+                            });
+                            editor.loadData(response.data)
+                            console.log(response.data)
+                            return response.data
                         }
-                    });
-                    console.log(response.data)
-                    return response.data
+                    })
                 } catch (error) {
-                    alert("There might be some issue with your internet")
+                    // alert("There might be some issue with your internet")
+                    console.log(error)
+                    navigate('/login')
                 }
             },
 
             async store(edData) {
                 try {
-                    const pagesHtml = editor.Pages.getAll().map(page => {
-                        const component = page.getMainComponent();
-                        return {
-                            html: editor.getHtml({ component }),
-                            css: editor.getCss({ component })
+                    promiseUser.current.then(async user => {
+                        if (user != null) {
+                            let token = await user.getIdToken();
+                            let message = await axios.post(endpoint, edData, {
+                                headers: {
+                                    'Content-Type': 'application/json',
+                                    Authorization: token
+                                }
+                            });
+                            console.log(message.data)
                         }
-                    });
-                    // console.log(pagesHtml)
-                    let message = await axios.post(endpoint, edData);
-                    // console.log(edData)
-                    console.log(message.data)
-                    return "Success"
+                    })
                 } catch (error) {
                     alert("There might be some issue with your internet")
                 }
@@ -277,9 +324,30 @@ function Editor(props) {
         });
 
         // prevent adding more than two calendar
-        editor.on('component:add',component=>{
-            if(component.attributes.type==="calendar"){
-                if(editor.getWrapper().find('div.fc').length > 0){
+        editor.on('component:add', component => {
+            // console.log("component event")
+            // if (component.attributes.type === "slide") {
+            //     let el = component.parent().parent().parent().getEl();
+            //     // console.log(el.id)
+            //     // function load(target, url) {
+            //     //     console.log(url)
+            //     //     var r = new XMLHttpRequest();
+            //     //     r.open("GET", url, true);
+            //     //     r.onreadystatechange = function () {
+            //     //         if (r.readyState != 4 || r.status != 200) return;
+            //     //         console.log(r.responseText)
+            //     //         // target.innerHTML = r.responseText;
+            //     //     };
+            //     //     r.send();
+            //     // }
+            //     let url = window.location.href+"#"+el.id;
+            //     axios.get(url).then(res=>{console.log(res.data)}).catch(err=>console.log(err))
+            //     // load(el,url)
+            //     // component.parent().parent().parent().getEl().innerHTML = el;
+            // }
+
+            if (component.attributes.type === "calendar") {
+                if (editor.getWrapper().find('div.fc').length > 0) {
                     component.remove();
                 }
                 // console.log("wrapper run")
@@ -321,6 +389,31 @@ function Editor(props) {
         setEditor(editor)
     }, [])
 
+    async function publish() {
+        console.log("publish")
+        let formData = {
+            html: editor.getHtml(),
+            css: editor.getCss(),
+        }
+        showLoader();
+        try {
+            let token = await user.getIdToken()
+            let res = await axios.post(backendHost + "/venue/publish", formData, {
+                headers: {
+                    "Authorization": token
+                }
+            })
+            console.log(res.data)
+            hideLoader();
+        } catch (error) {
+            if (error.response)
+                console.log(error.response.data)
+            else console.log(error)
+            hideLoader()
+        }
+
+    }
+
     return <section id="editor">
         <div className="sidebar container-fluid">
             <ul id="tabhead" className="nav nav-tabs">
@@ -357,7 +450,10 @@ function Editor(props) {
             <div className="topnav panel__top">
                 <div className="panel__devices"></div>
                 <div className="panel__basic-actions"></div>
-                <div className="panel__switcher"></div>
+                <div className="custom__actions">
+                    <button onClick={publish}>PUBLISH</button>
+                </div>
+                {/* <div className="panel__switcher"></div> */}
             </div>
             <div id="gjs">
             </div>
