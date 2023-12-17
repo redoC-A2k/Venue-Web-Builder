@@ -4,7 +4,7 @@ export default (editor, opts) => {
     const domc = editor.DomComponents;
     domc.addType(calendar.type, {
         isComponent: (el) => {
-            if (el.classList && el.classList.contains("fc")) {
+            if (el.classList && el.classList.contains("fcCalendar")) {
                 console.log(el.classList)
                 return { type: calendar.type };
             }

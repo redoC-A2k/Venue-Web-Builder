@@ -3,9 +3,6 @@ import {  RecaptchaVerifier, signInWithPhoneNumber } from "firebase/auth";
 import { auth } from '../firebase.js'
 import { useNavigate } from "react-router-dom";
 
-
-
-
 const Login = (props) => {
     let navigate = useNavigate ()
     useEffect(() => {
@@ -13,7 +10,7 @@ const Login = (props) => {
             auth.onAuthStateChanged((user) => {
                 if (user){
                     console.log("user is signedin", user)
-                    navigate('/')
+                    navigate('/steps')
                 }
                 else {
                     window.recaptchaVerifier = new RecaptchaVerifier(auth, 'requestOtp', {

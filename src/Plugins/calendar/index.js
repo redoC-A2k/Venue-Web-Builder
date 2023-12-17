@@ -4,7 +4,7 @@ import loadComponents from './components';
 const CalendarPlugin = (editor, opts) => {
     const options = {
     };
-    console.log(opts)
+    // console.log(opts)
     for (let name in options) {
         if (!(name in opts))
             opts[name] = options[name];
