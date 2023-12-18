@@ -122,6 +122,5 @@ router.post('/venue/publish', async (req, res) => {
     return res.json({ message: "Website published !"})
 })
 
-
 module.exports = { router };
 

@@ -20,6 +20,7 @@ app.use(cors())
 // app.use(express.json())
 app.use(bodyParser.json({limit:'50mb'}));
 app.use(bodyParser.json({limit:'50mb',extended:true}));
+app.use(bodyParser.urlencoded({ extended: true }));
 app.use(router)
 app.use(websiteRouter)
 app.use(setupRouter)

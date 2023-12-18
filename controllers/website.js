@@ -33,4 +33,9 @@ ${data.html}
     }
 })
 
+websiteRouter.post('/book/:slug',async (req,res)=>{
+    console.log("Url hit")
+    console.log(req.body)
+    res.json({message:"Form Submitted"})
+})
 module.exports = { websiteRouter }
