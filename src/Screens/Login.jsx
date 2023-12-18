@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import {  RecaptchaVerifier, signInWithPhoneNumber } from "firebase/auth";
 import { auth } from '../firebase.js'
 import { useNavigate } from "react-router-dom";
+import { hideLoader, showLoader } from "../utils/loader.js";
 
 const Login = (props) => {
     let navigate = useNavigate ()
@@ -30,33 +31,36 @@ const Login = (props) => {
         e.preventDefault()
         console.log(formData.phone)
         let phone = "+91"+formData.phone
+        showLoader()
         signInWithPhoneNumber(auth, phone, window.recaptchaVerifier)
             .then((confirmationResult) => {
                 // user in with confirmationResult.confirm(code).
                 window.confirmationResult = confirmationResult;
                 document.querySelector('#login div.left form:first-child').style.display = "none" 
                 document.querySelector('#login div.left form:last-child').style.display = "block"
-
+                hideLoader()
             }).catch((error) => {
-                ("SMS not sent") 
+                console.log("SMS not sent",error) 
                 window.recaptchaVerifier.render().then((widgetId) => {
                     window.recaptchaVerifier.reset(widgetId);
                 })
+                hideLoader()
             });
     }
     let validateOtp = (e) => {
         e.preventDefault()
+        showLoader()
         window.confirmationResult.confirm(formData.otp).then((result) => {
             // User signed in successfully.
             console.log("user signedin successfullly")
             const user = result.user;
             console.log(user)
-            // 
+            hideLoader()
             // props.history.push('/home')
         }).catch((error) => {
             // User couldn't sign in (bad verification code?)
             console.log("user could not sign in")
-            // ...
+            hideLoader()
         })
     }
     let phoneChange = (e) => {
@@ -64,12 +68,6 @@ const Login = (props) => {
         if (!e.target.checkValidity()) {
             setErrors({ ...errors, phone: 'Please enter a valid phone number' })
         } else setErrors({ ...errors, phone: '' })
-    }
-    let emailChange = (e) => {
-        setFormData({ ...formData, email: e.target.value })
-        if (!e.target.checkValidity()) {
-            setErrors({ ...errors, email: 'Please enter a valid email' })
-        } else setErrors({ ...errors, email: '' })
     }
     let otpChange = (e)=>{
         setFormData({...formData,otp:e.target.value})
@@ -80,12 +78,10 @@ const Login = (props) => {
     const [formData, setFormData] = useState({
         phone: '',
         otp: '',
-        email: ''
     })
     const [errors, setErrors] = useState({
         phone: '',
         otp: '',
-        email: ''
     })
 
     return (
@@ -96,11 +92,6 @@ const Login = (props) => {
                         <label htmlFor="phone">Phone Number : </label>
                         <input type="text" onChange={phoneChange} name="phone" pattern="[0-9]{10}" ></input>
                         <span>{errors.phone}</span>
-                    </fieldset>
-                    <fieldset>
-                        <label htmlFor="email">Email : </label>
-                        <input type="email" onChange={emailChange} name="email" ></input>
-                        <span>{errors.email}</span>
                     </fieldset>
                     <button type="submit" id="requestOtp" className="submitbtn">Request OTP</button>
                 </form>

@@ -162,13 +162,13 @@ form.myform label {
 }
 
 form.myform input {
-  border: white solid 1px;
+  border: black solid 1px;
   overflow: none;
   padding: 0.2rem 0.5rem;
 }
 
 form.myform input:focus {
-  border: blue solid 1px;
+  border: rgb(var(--primary-green)) solid 1px;
   overflow: none;
   outline: none;
 }

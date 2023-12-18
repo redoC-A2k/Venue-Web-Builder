@@ -413,6 +413,10 @@ function Editor(props) {
 
     }
 
+    async function manage(){
+        navigate('/manage')
+    }
+
     return <section id="editor">
         <div className="sidebar container-fluid">
             <ul id="tabhead" className="nav nav-tabs">
@@ -451,6 +455,7 @@ function Editor(props) {
                 <div className="panel__basic-actions"></div>
                 <div className="custom__actions">
                     <button onClick={publish}>PUBLISH</button>
+                    <button onClick={manage}>MANAGE</button>
                 </div>
                 {/* <div className="panel__switcher"></div> */}
             </div>
