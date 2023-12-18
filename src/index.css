@@ -299,7 +299,7 @@ form.myform span {
 
 
 #login div.right {
-  background-image: url('http://localhost:3000/garden-background.jpg');
+  background-image: url('https://venues.netlify.app/garden-background.jpg');
   background-size: cover;
   width: 55%;
   border-radius: 1.5rem;
