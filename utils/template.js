@@ -182,9 +182,8 @@ function getTemplate(setup) {
     // for(let i)
 
     obj.pages[0].frames[0].component.components[3].components[0].components[0].components.push(buttonDiv)
-    console.log(JSON.stringify(obj))
+    return JSON.stringify(obj)
 }
 
-getTemplate(setup)
-
+module.exports={getTemplate}
 // console.log(generateRandomString(5))

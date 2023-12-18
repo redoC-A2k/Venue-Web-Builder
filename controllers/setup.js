@@ -4,6 +4,7 @@ const setupRouter = express.Router()
 
 const db = firestore()
 var admin = require("firebase-admin");
+const { getTemplate } = require('../utils/template');
 
 
 setupRouter.post("/venue/web/setup", async (req, res) => {
@@ -14,6 +15,8 @@ setupRouter.post("/venue/web/setup", async (req, res) => {
     let decodedToken = await admin.auth().verifyIdToken(authorization)
     let response = await db.collection("setup").doc(decodedToken.uid).set(req.body)
     console.log(response)
+    let editorData = getTemplate(req.body)
+    response = await db.collection("editor").doc(decodedToken.uid).set({ editorData })
     res.status(200).json({message: "submitted the form"})
 })
 
