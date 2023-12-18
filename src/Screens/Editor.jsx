@@ -184,9 +184,7 @@ function Editor(props) {
                 }
             },
             canvas: {
-                // scripts:["http://localhost:3000"+"/calendar.js"],
                 // scripts:["https://cdn.jsdelivr.net/npm/fullcalendar@6.1.9/index.global.min.js"]
-                // styles:["http://localhost:3000"+"/calendar.js.css"]
                 scripts: ["https://cdn.jsdelivr.net/npm/@splidejs/splide@4.1.4/dist/js/splide.min.js", "https://cdn.jsdelivr.net/npm/fullcalendar@6.1.9/index.global.min.js", "https://code.jquery.com/jquery-3.7.1.slim.min.js"],
                 styles: ["https://cdn.jsdelivr.net/npm/@splidejs/splide@4.1.4/dist/css/splide.min.css", "https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css"]
             },
