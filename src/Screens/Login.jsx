@@ -51,6 +51,7 @@ const Login = (props) => {
             console.log("user signedin successfullly")
             const user = result.user;
             console.log(user)
+            // 
             // props.history.push('/home')
         }).catch((error) => {
             // User couldn't sign in (bad verification code?)
@@ -64,6 +65,12 @@ const Login = (props) => {
             setErrors({ ...errors, phone: 'Please enter a valid phone number' })
         } else setErrors({ ...errors, phone: '' })
     }
+    let emailChange = (e) => {
+        setFormData({ ...formData, email: e.target.value })
+        if (!e.target.checkValidity()) {
+            setErrors({ ...errors, email: 'Please enter a valid email' })
+        } else setErrors({ ...errors, email: '' })
+    }
     let otpChange = (e)=>{
         setFormData({...formData,otp:e.target.value})
         if(!e.target.checkValidity()){
@@ -72,11 +79,13 @@ const Login = (props) => {
     }
     const [formData, setFormData] = useState({
         phone: '',
-        otp: ''
+        otp: '',
+        email: ''
     })
     const [errors, setErrors] = useState({
         phone: '',
-        otp: ''
+        otp: '',
+        email: ''
     })
 
     return (
@@ -87,6 +96,11 @@ const Login = (props) => {
                         <label htmlFor="phone">Phone Number : </label>
                         <input type="text" onChange={phoneChange} name="phone" pattern="[0-9]{10}" ></input>
                         <span>{errors.phone}</span>
+                    </fieldset>
+                    <fieldset>
+                        <label htmlFor="email">Email : </label>
+                        <input type="email" onChange={emailChange} name="email" ></input>
+                        <span>{errors.email}</span>
                     </fieldset>
                     <button type="submit" id="requestOtp" className="submitbtn">Request OTP</button>
                 </form>

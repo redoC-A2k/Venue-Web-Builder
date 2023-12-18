@@ -68,7 +68,6 @@ function Editor(props) {
                         Authorization:token
                     }
                 })
-                console.log(response)
                 if(response.data.setup==false)
                 navigate('/steps')
             }

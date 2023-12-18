@@ -199,7 +199,7 @@ form.myform span {
 }
 
 #loader.show {
-  z-index: 5;
+  z-index: 50000;
   opacity:1;
 }
 
@@ -207,11 +207,13 @@ form.myform span {
   display: flex;
   flex-direction: column;
   align-items: center;
+  z-index: 1000;
 }
 
 #loader div img{
   width:var(--loader-span-img-width); 
   display: block;
+  z-index: 1000;
 }
 
 #loader div span{
@@ -341,6 +343,10 @@ form.myform span {
 #steps div.navigation i:hover {
   color: rgb(var(--primary-green-yellow));
   cursor: pointer;
+}
+
+#steps div.container div.row div.col-12{
+  max-height: 100vh;
 }
 
 #steps div.container div.step {

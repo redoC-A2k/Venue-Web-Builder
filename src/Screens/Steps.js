@@ -4,7 +4,7 @@ import axios from "axios";
 import getCroppedImg from "../utils/crop.js";
 import { auth } from "../firebase.js";
 import { hideLoader, showLoader } from "../utils/loader.js";
-import {useNavigate} from 'react-router-dom'
+import { useNavigate } from 'react-router-dom'
 
 const hostname = process.env.REACT_APP_HOSTNAME
 
@@ -174,13 +174,6 @@ const Step3 = forwardRef(function (props, ref) {
 
 function Step4(props) {
     const [errors, setErrors] = useState("")
-    function handleFeatures(e, formData) {
-        let txt = e.currentTarget.value
-        // if (validateFeatures(txt)) {
-        //     console.log(txt)
-        //     props.setFormData({ ...formData, slug: txt })
-        // }
-    }
 
     // function validateFeatures(text) {
     //     if (text.length == 0) {
@@ -251,9 +244,124 @@ function Step4(props) {
     </div>)
 }
 
+function Step5(props) {
+    const [errors, setErrors] = useState("")
+    const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
+    function handleEmail(e) {
+        let txt = e.currentTarget.value
+        if (validateEmail(txt)) {
+            let formData = props.formData
+            props.setFormData({ ...formData, email: txt })
+        }
+    }
+
+    function validateEmail(text) {
+        if (text.length == 0) {
+            setErrors("Email cannot be empty")
+            return false;
+        } else if (!emailPattern.test(text)) {
+            setErrors("Please enter valid email")
+            return false;
+        }
+        // TODO: Only allow a-zA-Z0-9-
+        else {
+            setErrors("")
+            return true;
+        }
+    }
+
+    const handleForm = (e) => {
+        e.preventDefault();
+        if (validateEmail(e.target.elements[0].value))
+            props.changeSlide();
+        else;
+    }
+
+    return (<div className="step">
+        <h2>Enter your email </h2>
+        <form action="#" onSubmit={handleForm}>
+            <input type="text" placeholder="Enter your email" defaultValue={props.formData.email} onChange={handleEmail} />
+            <span className="error">{errors}</span>
+        </form>
+    </div>)
+}
+
+function Step6(props) {
+    const [errors, setErrors] = useState("")
+
+    // function validateFeatures(text) {
+    //     if (text.length == 0) {
+    //         setErrors("Features cannot be empty")
+    //         return false;
+    //     } else if (text.length < 5) {
+    //         setErrors("Slug should be atleast 5 characters long")
+    //         return false;
+    //     }
+    //     // TODO: Only allow a-zA-Z0-9-
+    //     else {
+    //         setErrors("")
+    //         return true;
+    //     }
+    // }
+
+    const handleForm = (e) => {
+        e.preventDefault();
+        // if (validateSlug(e.target.elements[0].value))
+        // props.changeSlide();
+        // else;
+        if (props.formData.questions.length > 0) {
+            let elems = document.querySelectorAll('#steps div.container div.step.questions div.questions')[0].childNodes
+            let valid = true;
+            elems.forEach((elem) => {
+                if (elem.childNodes[0].value == "") {
+                    valid = false;
+                    elem.childNodes[0].classList.add('error')
+                }
+                else elem.childNodes[0].classList.remove('error')
+            })
+            if (valid)
+                props.changeSlide();
+        } else {
+            setErrors("Please enter atleast one question")
+        }
+    }
+
+    return (<div className="step questions">
+        <h2>Enter questions you want to ask the visitor before giving them estimate</h2>
+        <div className="questions">
+            {props.formData.questions.map((data, index) => {
+                return (<div className="stepQuestions" key={index}>
+                    <input type="text" placeholder="Enter Question" defaultValue={data} onChange={(e) => {
+                        let questionsArr = props.formData.questions
+                        // props.media[index].caption = e.currentTarget.value
+                        questionsArr[index] = e.currentTarget.value
+                        props.setFormData({ ...props.formData, questions: questionsArr })
+                    }} disabled={index==0?true:false}/>
+                </div>)
+            })}
+        </div>
+        <div className="stepInputQue">
+            <input id="question" type="text" name="question" placeholder="Enter Question" />
+        </div>
+        <div>
+            <button onClick={() => {
+                let question = document.getElementById('question').value
+                if (question != "") {
+                    document.getElementById('question').value = ""
+                    props.setFormData({ ...props.formData, questions: [...props.formData.questions, question] })
+                }
+            }}>Add More Question</button>
+        </div>
+        <form action="#" onSubmit={handleForm}>
+            <span className="error">{errors}</span>
+        </form>
+    </div>)
+}
+
+
 const Steps = (props) => {
     const [currstep, setCurrStep] = useState(1);
-    const totalSteps = useRef(5);
+    const totalSteps = useRef(6);
     // const [media, setMedia] = useState([])
     const [cropImg, setCropImg] = useState("")
     const [crop, setCrop] = useState({ x: 0, y: 0 })
@@ -286,7 +394,8 @@ const Steps = (props) => {
         slug: "",
         media: [],
         features: [],
-        questions: []
+        questions: ["What is your email id ?"],
+        email: ""
     });
 
     async function changeSlide() {
@@ -312,21 +421,17 @@ const Steps = (props) => {
         3: <Step3 ref={fnc} setCropImg={setCropImg} setFormData={setFormData} changeSlide={changeSlide} formData={formData} />,
         4: <Step4 setFormData={setFormData} changeSlide={changeSlide} formData={formData} />,
         5: <Step5 setFormData={setFormData} changeSlide={changeSlide} formData={formData} />,
+        6: <Step6 setFormData={setFormData} changeSlide={changeSlide} formData={formData} />,
         // 6: <Step6 />,
         // 7: <Step7 />,
         // 8: <Step8 />
-    }
-
-    function Step5(props) {
-        return <div className="step">
-            <h2>Questions which you would like to ask anyone , before they book your venue</h2>
-        </div>
     }
 
     // get image from react-easy-crop
     const handleCrop = async () => {
         let formData = new FormData();
         showLoader()
+        console.log("uploading image")
         formData.append('image', imageBase64.current.replace('data:image/png;base64,', ''));
         try {
             const res = await axios.post(
@@ -342,11 +447,13 @@ const Steps = (props) => {
             setCropImg("")
             document.getElementById("cropModal").classList.remove("show")
             hideLoader()
+            console.log("image uploaded")
         } catch (error) {
             if (error.response)
                 console.log(error.response)
             else console.log(error)
             hideLoader()
+            console.log("image uploaded")
         }
     }
 
@@ -359,7 +466,7 @@ const Steps = (props) => {
                     let token = await user.getIdToken();
                     let response = await axios.post(hostname + "/venue/web/setup", formData, {
                         headers: {
-                            'Content-Type':'application/json',
+                            'Content-Type': 'application/json',
                             Authorization: token
                         }
                     })
