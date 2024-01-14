@@ -1,0 +1,678 @@
+{
+    "assets": [
+        {
+            "type": "image",
+            "src": "https://source.unsplash.com/random/500x300/?img=1",
+            "unitDim": "px",
+            "height": 300,
+            "width": 500,
+            "name": "image1"
+        },
+        {
+            "type": "image",
+            "src": "https://source.unsplash.com/random/500x300/?img=2",
+            "unitDim": "px",
+            "height": 300,
+            "width": 500,
+            "name": "image2"
+        },
+        {
+            "type": "image",
+            "src": "https://source.unsplash.com/random/500x300/?img=3",
+            "unitDim": "px",
+            "height": 300,
+            "width": 500,
+            "name": "image3"
+        }
+    ],
+    "styles": [
+        {
+            "selectors": [
+                {
+                    "name": "gjs-row",
+                    "private": 1
+                }
+            ],
+            "style": {
+                "display": "table",
+                "padding-top": "10px",
+                "padding-right": "10px",
+                "padding-bottom": "10px",
+                "padding-left": "10px",
+                "width": "100%"
+            }
+        },
+        {
+            "selectors": [
+                {
+                    "name": "gjs-cell",
+                    "private": 1
+                }
+            ],
+            "style": {
+                "width": "100%",
+                "display": "block"
+            },
+            "mediaText": "(max-width: 768px)",
+            "atRuleType": "media"
+        },
+        {
+            "selectors": [
+                "gjs-cell30"
+            ],
+            "style": {
+                "width": "100%",
+                "display": "block"
+            },
+            "mediaText": "(max-width: 768px)",
+            "atRuleType": "media"
+        },
+        {
+            "selectors": [
+                "gjs-cell70"
+            ],
+            "style": {
+                "width": "100%",
+                "display": "block"
+            },
+            "mediaText": "(max-width: 768px)",
+            "atRuleType": "media"
+        },
+        {
+            "selectors": [
+                {
+                    "name": "gjs-cell",
+                    "private": 1
+                }
+            ],
+            "style": {
+                "width": "8%",
+                "display": "table-cell",
+                "height": "75px"
+            }
+        },
+        {
+            "selectors": [
+                "#in0s"
+            ],
+            "style": {
+                "font-size": "1.5rem",
+                "font-weight": "500",
+                "margin": "0px 0px 2rem 0px",
+                "text-align": "center",
+                "font-family": "Verdana, Geneva, sans-serif"
+            }
+        },
+        {
+            "selectors": [
+                "#iiwn"
+            ],
+            "style": {
+                "width": "auto",
+                "height": "auto",
+                "text-align": "center"
+            }
+        },
+        {
+            "selectors": [
+                "#ixyr"
+            ],
+            "style": {
+                "margin": "0px 0px 2rem 0px",
+                "background-color": "#ffffff"
+            }
+        },
+        {
+            "selectors": [
+                "#iupct"
+            ],
+            "style": {
+                "font-weight": "600",
+                "letter-spacing": "3px",
+                "font-size": "3rem",
+                "text-align": "center",
+                "text-shadow": "2px 1px 12px #69ab24"
+            }
+        },
+        {
+            "selectors": [
+                "#iya8o"
+            ],
+            "style": {
+                "background-color": "rgba(194,221,114,0.34)",
+                "padding": "2rem 0px 2rem 0px"
+            }
+        },
+        {
+            "selectors": [
+                "#itfwg"
+            ],
+            "style": {
+                "min-height": "30px",
+                "min-width": "100%"
+            }
+        },
+        {
+            "selectors": [
+                "#ibi7j"
+            ],
+            "style": {
+                "min-height": "30px",
+                "min-width": "100%"
+            }
+        },
+        {
+            "selectors": [
+                "#is2u"
+            ],
+            "style": {
+                "background-color": "#f7fbf4"
+            },
+            "wrapper": 1
+        },
+        {
+            "selectors": [
+                "#io62f"
+            ],
+            "style": {
+                "width": "99%",
+                "margin": "0px auto 0px auto"
+            }
+        },
+        {
+            "selectors": [
+                "#i9t1e"
+            ],
+            "style": {
+                "padding": "0px 0px 0px 0px",
+                "margin": "3rem 0px 0px 0px"
+            }
+        },
+        {
+            "selectors": [
+                "#i9z7e"
+            ],
+            "style": {
+                "font-size": "1.5rem",
+                "font-weight": "500",
+                "margin": "0px 0px 2rem 0px",
+                "text-align": "center",
+                "font-family": "Verdana, Geneva, sans-serif"
+            }
+        },
+        {
+            "selectors": [
+                "#isx1s"
+            ],
+            "style": {
+                "background-color": "rgba(194,221,114,0.34)",
+                "height": "auto",
+                "padding": "20px 20px 20px 20px"
+            }
+        },
+        {
+            "selectors": [
+                "#iz8w3"
+            ],
+            "style": {
+                "padding": "10px",
+                "margin": "0 0 1rem 0",
+                "border-radius": "13px 0px 15px 0px",
+                "box-shadow": "0px 0px 2px 0px black ",
+                "transition": "background-color 0.2s ease"
+            }
+        },
+        {
+            "selectors": [
+                "splide__slide"
+            ],
+            "style": {
+                "min-height": "30px"
+            }
+        },
+        {
+            "selectors": [
+                "#iz8w3"
+            ],
+            "style": {
+                "background-color": "rgba(52,200,102,0.13)"
+            },
+            "state": "hover"
+        },
+        {
+            "selectors": [
+                "#io9ag"
+            ],
+            "style": {
+                "min-height": "30px",
+                "min-width": "100%"
+            }
+        }
+    ],
+    "pages": [
+        {
+            "frames": [
+                {
+                    "component": {
+                        "type": "wrapper",
+                        "stylable": [
+                            "background",
+                            "background-color",
+                            "background-image",
+                            "background-repeat",
+                            "background-attachment",
+                            "background-position",
+                            "background-size"
+                        ],
+                        "attributes": {
+                            "id": "is2u"
+                        },
+                        "components": [
+                            {
+                                "name": "Row",
+                                "droppable": ".gjs-cell",
+                                "resizable": {
+                                    "tl": 0,
+                                    "tc": 0,
+                                    "tr": 0,
+                                    "cl": 0,
+                                    "cr": 0,
+                                    "bl": 0,
+                                    "br": 0,
+                                    "minDim": 1
+                                },
+                                "classes": [
+                                    {
+                                        "name": "gjs-row",
+                                        "private": 1
+                                    }
+                                ],
+                                "attributes": {
+                                    "id": "ixyr"
+                                },
+                                "components": [
+                                    {
+                                        "name": "Cell",
+                                        "draggable": ".gjs-row",
+                                        "resizable": {
+                                            "tl": 0,
+                                            "tc": 0,
+                                            "tr": 0,
+                                            "cl": 0,
+                                            "cr": 1,
+                                            "bl": 0,
+                                            "br": 0,
+                                            "minDim": 1,
+                                            "bc": 0,
+                                            "currentUnit": 1,
+                                            "step": 0.2
+                                        },
+                                        "classes": [
+                                            {
+                                                "name": "gjs-cell",
+                                                "private": 1
+                                            }
+                                        ],
+                                        "attributes": {
+                                            "id": "iiwn"
+                                        },
+                                        "components": [
+                                            {
+                                                "tagName": "b",
+                                                "type": "text",
+                                                "attributes": {
+                                                    "id": "iupct"
+                                                },
+                                                "components": [
+                                                    {
+                                                        "type": "textnode",
+                                                        "content": "TITLE OF THE WEBPAGE"
+                                                    },
+                                                    {
+                                                        "tagName": "br",
+                                                        "void": true
+                                                    }
+                                                ]
+                                            }
+                                        ]
+                                    }
+                                ]
+                            },
+                            {
+                                "name": "Row",
+                                "droppable": ".gjs-cell",
+                                "resizable": {
+                                    "tl": 0,
+                                    "tc": 0,
+                                    "tr": 0,
+                                    "cl": 0,
+                                    "cr": 0,
+                                    "bl": 0,
+                                    "br": 0,
+                                    "minDim": 1
+                                },
+                                "classes": [
+                                    {
+                                        "name": "gjs-row",
+                                        "private": 1
+                                    }
+                                ],
+                                "attributes": {
+                                    "id": "io62f"
+                                },
+                                "components": [
+                                    {
+                                        "name": "Cell",
+                                        "draggable": ".gjs-row",
+                                        "resizable": {
+                                            "tl": 0,
+                                            "tc": 0,
+                                            "tr": 0,
+                                            "cl": 0,
+                                            "cr": 1,
+                                            "bl": 0,
+                                            "br": 0,
+                                            "minDim": 1,
+                                            "bc": 0,
+                                            "currentUnit": 1,
+                                            "step": 0.2
+                                        },
+                                        "classes": [
+                                            {
+                                                "name": "gjs-cell",
+                                                "private": 1
+                                            }
+                                        ],
+                                        "attributes": {
+                                            "id": "iya8o"
+                                        },
+                                        "components": [
+                                            {
+                                                "type": "text",
+                                                "attributes": {
+                                                    "id": "i9z7e"
+                                                },
+                                                "components": [
+                                                    {
+                                                        "type": "textnode",
+                                                        "content": " Have look at some of our images"
+                                                    },
+                                                    {
+                                                        "tagName": "br",
+                                                        "void": true
+                                                    }
+                                                ]
+                                            },
+                                            {
+                                                "type": "carousel",
+                                                "style": "",
+                                                "classes": [
+                                                    "splide",
+                                                    "carousel"
+                                                ],
+                                                "attributes": {
+                                                    "aria-label": "Splide Basic HTML Example",
+                                                    "id": "itfwg"
+                                                },
+                                                "components": [
+                                                    {
+                                                        "droppable": false,
+                                                        "selectable": false,
+                                                        "classes": [
+                                                            "splide__track"
+                                                        ],
+                                                        "components": [
+                                                            {
+                                                                "droppable": "div.splide__slide",
+                                                                "classes": [
+                                                                    "splide__list"
+                                                                ],
+                                                                "components": [
+                                                                    {
+                                                                        "type": "slide",
+                                                                        "style": "",
+                                                                        "classes": [
+                                                                            "splide__slide"
+                                                                        ],
+                                                                        "attributes": {
+                                                                            "id": "ibi7j"
+                                                                        },
+                                                                        "components": [
+                                                                            {
+                                                                                "type": "slideImage",
+                                                                                "droppable": false,
+                                                                                "resizable": {
+                                                                                    "ratioDefault": 1
+                                                                                },
+                                                                                "classes": [
+                                                                                    "slide_image"
+                                                                                ],
+                                                                                "attributes": {
+                                                                                    "width": "100%",
+                                                                                    "height": "auto",
+                                                                                    "src": "https://source.unsplash.com/random/500x300/?img=1"
+                                                                                }
+                                                                            },
+                                                                            {
+                                                                                "type": "slideText",
+                                                                                "droppable": false,
+                                                                                "content": "",
+                                                                                "classes": [
+                                                                                    "slide_text"
+                                                                                ],
+                                                                                "components": [
+                                                                                    {
+                                                                                        "type": "textnode",
+                                                                                        "content": "This is description for slide 1"
+                                                                                    },
+                                                                                    {
+                                                                                        "tagName": "br",
+                                                                                        "void": true
+                                                                                    }
+                                                                                ]
+                                                                            }
+                                                                        ]
+                                                                    },
+                                                                    {
+                                                                        "type": "slide",
+                                                                        "style": "",
+                                                                        "classes": [
+                                                                            "splide__slide"
+                                                                        ],
+                                                                        "attributes": {
+                                                                            "id": "io9ag"
+                                                                        },
+                                                                        "components": [
+                                                                            {
+                                                                                "type": "slideImage",
+                                                                                "droppable": false,
+                                                                                "resizable": {
+                                                                                    "ratioDefault": 1
+                                                                                },
+                                                                                "classes": [
+                                                                                    "slide_image"
+                                                                                ],
+                                                                                "attributes": {
+                                                                                    "width": "100%",
+                                                                                    "height": "auto",
+                                                                                    "src": "https://source.unsplash.com/random/500x300/?img=2"
+                                                                                }
+                                                                            },
+                                                                            {
+                                                                                "type": "slideText",
+                                                                                "droppable": false,
+                                                                                "content": "",
+                                                                                "classes": [
+                                                                                    "slide_text"
+                                                                                ],
+                                                                                "components": [
+                                                                                    {
+                                                                                        "type": "textnode",
+                                                                                        "content": "This is description for slide 2"
+                                                                                    },
+                                                                                    {
+                                                                                        "tagName": "br",
+                                                                                        "void": true
+                                                                                    }
+                                                                                ]
+                                                                            }
+                                                                        ]
+                                                                    }
+                                                                ]
+                                                            }
+                                                        ]
+                                                    }
+                                                ]
+                                            }
+                                        ]
+                                    }
+                                ]
+                            },
+                            {
+                                "name": "Row",
+                                "droppable": ".gjs-cell",
+                                "resizable": {
+                                    "tl": 0,
+                                    "tc": 0,
+                                    "tr": 0,
+                                    "cl": 0,
+                                    "cr": 0,
+                                    "bl": 0,
+                                    "br": 0,
+                                    "minDim": 1
+                                },
+                                "classes": [
+                                    {
+                                        "name": "gjs-row",
+                                        "private": 1
+                                    }
+                                ],
+                                "attributes": {
+                                    "id": "i9t1e"
+                                },
+                                "components": [
+                                    {
+                                        "name": "Cell",
+                                        "draggable": ".gjs-row",
+                                        "resizable": {
+                                            "tl": 0,
+                                            "tc": 0,
+                                            "tr": 0,
+                                            "cl": 0,
+                                            "cr": 1,
+                                            "bl": 0,
+                                            "br": 0,
+                                            "minDim": 1,
+                                            "bc": 0,
+                                            "currentUnit": 1,
+                                            "step": 0.2
+                                        },
+                                        "classes": [
+                                            {
+                                                "name": "gjs-cell",
+                                                "private": 1
+                                            }
+                                        ],
+                                        "attributes": {
+                                            "id": "i7bkf"
+                                        },
+                                        "components": [
+                                            {
+                                                "type": "text",
+                                                "attributes": {
+                                                    "id": "in0s"
+                                                },
+                                                "components": [
+                                                    {
+                                                        "type": "textnode",
+                                                        "content": "Features of our venue"
+                                                    },
+                                                    {
+                                                        "tagName": "br",
+                                                        "void": true
+                                                    }
+                                                ]
+                                            },
+                                            {
+                                                "name": "Row",
+                                                "droppable": ".gjs-cell",
+                                                "resizable": {
+                                                    "tl": 0,
+                                                    "tc": 0,
+                                                    "tr": 0,
+                                                    "cl": 0,
+                                                    "cr": 0,
+                                                    "bl": 0,
+                                                    "br": 0,
+                                                    "minDim": 1
+                                                },
+                                                "classes": [
+                                                    {
+                                                        "name": "gjs-row",
+                                                        "private": 1
+                                                    }
+                                                ],
+                                                "attributes": {
+                                                    "id": "i1e19"
+                                                },
+                                                "components": [
+                                                    {
+                                                        "name": "Cell",
+                                                        "draggable": ".gjs-row",
+                                                        "resizable": {
+                                                            "tl": 0,
+                                                            "tc": 0,
+                                                            "tr": 0,
+                                                            "cl": 0,
+                                                            "cr": 1,
+                                                            "bl": 0,
+                                                            "br": 0,
+                                                            "minDim": 1,
+                                                            "bc": 0,
+                                                            "currentUnit": 1,
+                                                            "step": 0.2
+                                                        },
+                                                        "classes": [
+                                                            {
+                                                                "name": "gjs-cell",
+                                                                "private": 1
+                                                            }
+                                                        ],
+                                                        "attributes": {
+                                                            "id": "isx1s"
+                                                        },
+                                                        "components": [
+                                                            {
+                                                                "type": "text",
+                                                                "attributes": {
+                                                                    "id": "iz8w3"
+                                                                },
+                                                                "components": [
+                                                                    {
+                                                                        "type": "textnode",
+                                                                        "content": "Feature 1"
+                                                                    },
+                                                                    {
+                                                                        "tagName": "br",
+                                                                        "void": true
+                                                                    }
+                                                                ]
+                                                            }
+                                                        ]
+                                                    }
+                                                ]
+                                            }
+                                        ]
+                                    }
+                                ]
+                            }
+                        ]
+                    },
+                    "id": "RgnRTccnMepe32em"
+                }
+            ],
+            "type": "main",
+            "id": "3RXEpS26JwFmU1a0"
+        }
+    ]
+}
