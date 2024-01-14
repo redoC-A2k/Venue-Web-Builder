@@ -598,3 +598,42 @@ form.myform span {
 #editor div.gjs-pn-panel {
   position: relative;
 }
+
+/* ----- Manage ------ */
+#manage {
+  height: 99vh;
+}
+
+#manage div.container-fluid div.row div.col-2{
+  height: 100%;
+  border-right: 2px solid black;
+}
+
+#manage div.container-fluid div.row div.col-10{
+  height: 100%;
+}
+#manage div.container-fluid div.row div.heading{
+  text-align: center;
+}
+#manage div.container-fluid div.row div.heading h3{
+  text-transform: uppercase;
+  width: 100%;
+  background-color: rgb(var(--primary-grey));
+  height: auto;
+  padding:1rem;
+}
+/* #manage div.container-fluid div#card-container{
+  position: relative;
+}
+
+#manage div.container-fluid div#card-container div.row{
+  visibility: hidden;
+  position: absolute;
+}
+#manage div.container-fluid div#card-container div.row.show{
+ visibility: visible;
+} */
+
+#manage div.accordion{
+  width: 80%;
+}

@@ -387,7 +387,7 @@ function Editor(props) {
     }, [])
 
     async function publish() {
-        console.log("publish")
+        // console.log("publish")
         let formData = {
             html: editor.getHtml(),
             css: editor.getCss(),
@@ -401,6 +401,7 @@ function Editor(props) {
                 }
             })
             console.log(res.data)
+            // window.open('http://localhost:4000/website')
             hideLoader();
         } catch (error) {
             if (error.response)
