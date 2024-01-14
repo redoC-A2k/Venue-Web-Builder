@@ -1,9 +1,8 @@
 import { initializeApp } from "firebase/app";
 import { getAnalytics } from "firebase/analytics";
 import { getAuth } from "firebase/auth";
-
 const firebaseConfig = {
-    apiKey: "AIzaSyCabM72OLyray6fP7xWdBEHlfOf7dyrXkc",
+    apiKey: process.env.REACT_APP_FIREBASE_API_KEY,
     authDomain: "venue-web-builder.firebaseapp.com",
     projectId: "venue-web-builder",
     storageBucket: "venue-web-builder.appspot.com",
@@ -17,4 +16,4 @@ let auth = getAuth();
 auth.useDeviceLanguage()
 const analytics = getAnalytics(app);
 
-export {app,auth};
+export { app, auth };

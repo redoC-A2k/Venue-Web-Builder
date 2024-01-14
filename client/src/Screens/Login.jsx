@@ -77,10 +77,12 @@ const Login = (props) => {
     }
     const [formData, setFormData] = useState({
         phone: '',
+        countryCode: '',
         otp: '',
     })
     const [errors, setErrors] = useState({
         phone: '',
+        countryCode:'',
         otp: '',
     })
 

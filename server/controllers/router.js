@@ -1,14 +1,15 @@
 const express = require('express');
 const { firestore } = require('firebase-admin');
 const router = express.Router()
+const firebaseAdminConfig = require("../utils/firebaseAdminConfig.js")
 
 var admin = require("firebase-admin");
 
-var serviceAccount = require("../admin.json");
+// var serviceAccount = require("../admin.json");
 // const { getHtmlCss } = require('../utils/editor.mjs');
 
 admin.initializeApp({
-    credential: admin.credential.cert(serviceAccount)
+    credential: admin.credential.cert(firebaseAdminConfig)
 });
 
 const db = firestore()
