@@ -801,7 +801,8 @@
                                                                 "attributes": {
                                                                     "type": "text",
                                                                     "id": "iehcr",
-                                                                    "name": "question"
+                                                                    "name": "question",
+                                                                    "required":true
                                                                 }
                                                             }
                                                         ]

@@ -113,14 +113,27 @@ router.post('/venue/publish', async (req, res) => {
     const setup = (await db.collection("setup").doc(decodedToken.uid).get()).data()
     if (!setup) {
         // TODO: Check all setup is done not just slug
-        return res.status(404).json({ error: "Setup not done !" })
+        return res.status(404).json({ error: "Setup not done !"})
     }
     // adding more data in req.body
     req.body.title = setup.name
 
     await db.collection("website").doc(setup.slug).set(req.body)    
+    await db.collection("queries").doc(setup.slug).set({queries:[]})
     return res.json({ message: "Website published !"})
 })
+
+router.get('/venue/queries', async (req, res) => {
+    const { authorization } = req.headers
+    if (!authorization) {
+        return res.status(401).json({ error: "You are not authorised !" })
+    }
+    let decodedToken = await admin.auth().verifyIdToken(authorization)
+    const setup = (await db.collection("setup").doc(decodedToken.uid).get()).data()
+    let queries = (await db.collection("queries").doc(setup.slug).get()).data().queries;
+    console.log(queries)
+    res.json({data:queries})
+})        
 
 module.exports = { router };
 

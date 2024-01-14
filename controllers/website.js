@@ -35,7 +35,16 @@ ${data.html}
 
 websiteRouter.post('/book/:slug',async (req,res)=>{
     console.log("Url hit")
-    console.log(req.body)
+    let query = req.body;
+    let objKeys = Object.keys(query)
+    let objValues = Object.values(query)
+    let queriesSnap = await db.collection("queries").doc(req.params.slug).get();
+    if(!queriesSnap.exists){
+        return res.status(200).json({message:"You have not published website till now"})
+    }
+    let queries = queriesSnap.data().queries
+    queries = [req.body,...queries]
+    await db.collection("queries").doc(req.params.slug).set({queries})
     res.json({message:"Form Submitted"})
 })
 module.exports = { websiteRouter }
