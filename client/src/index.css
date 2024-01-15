@@ -292,6 +292,12 @@ form.myform span {
   padding: 5rem;
 }
 
+#login div.left form div.encloser{
+  display: flex;
+}
+
+#login div.left form div.encloser div:first-child input{
+}
 
 #login div.left form:last-child {
   display: none;
