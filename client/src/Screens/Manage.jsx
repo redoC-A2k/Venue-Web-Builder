@@ -27,7 +27,9 @@ const MyCard = (props) => {
 
 const Manage = (props) => {
     const [queries, setQueries] = useState([])
+    const [queriesArr, setQueriesArr] = useState([])
     const [query, setQuery] = useState({})
+    const [sortedDates, setSortedDates] = useState([])
     const promiseUser = useRef(null)
     // const [visibleInd, setVisibleInd] = useState(-1)
     const visibleInd = useRef(-1);
@@ -37,16 +39,21 @@ const Manage = (props) => {
         promiseUser.current = new Promise((resolve, reject) => {
             auth.onAuthStateChanged(async (user) => {
                 if (user) {
-                    console.log(user)
                     hideLoader()
-                    const token = await user.getIdToken()
-                    let response = await axios.get(`${process.env.REACT_APP_HOSTNAME}/venue/queries`, {
-                        headers: {
-                            Authorization: token
-                        }
-                    })
-                    console.log(response.data.data)
-                    setQueries(response.data.data)
+                    try {
+                        const token = await user.getIdToken()
+                        let response = await axios.get(`${process.env.REACT_APP_HOSTNAME}/venue/queries`, {
+                            headers: {
+                                Authorization: token
+                            }
+                        })
+                        setSortedDates(Object.keys(response.data.queries))
+                        setQueries(response.data.queries)
+                    } catch (error) {
+                        console.log(error)
+                        if (error.response && error.response.status == 401)
+                            navigate('/login')
+                    }
                 }
                 else {
                     navigate('/login')
@@ -57,104 +64,108 @@ const Manage = (props) => {
         })
     }, [])
 
-    function handleQuery(ind) {
-        let elem = document.getElementById('card-container')
-        console.log(query)
-        if (visibleInd.current !== -1) {
-            // elems[visibleInd.current].classList.remove('show')
-            // elems[ind].classList.add('show')
-            // console.log(elems[ind])
-            // visibleInd.current = ind 
-
-        } else {
-            // elems[ind].classList.add('show')
-            // visibleInd.current = ind
-            // console.log(elems[ind])
-        }
-        setQuery(queries[ind])
-
+    async function makeADateVisible(date) {
+        setQueriesArr(queries[date])
     }
-    // return (
-    //     // make two columns on left will be the entries of request on right will be their brief
-    //     <div id="manage">
-    //         <div className='container-fluid'>
-    //             <div className="row">
-    //                 <div className="col-3">
-    //                     <div className="row heading">
-    //                         <h3>Requests</h3>
-    //                         {queries.map((query, ind) => {
-    //                             return (<div key={ind} onClick={() => handleQuery(ind)} className='row'>
-    //                                 <div className="col-12"><h5>{query['What is your email id ?']}</h5></div>
-    //                             </div>)
-    //                         })}
-    //                     </div>
-    //                 </div>
-    //                 <div className="col-9">
-    //                     <div className="row heading">
-    //                         <h3>Manage</h3>
-    //                         <div id="card-container">
-    //                             <MyCard query={query} />
-    //                             {/* {queries.map((query, ind) => {
-    //                                 // console.log(query['What is your email id ?'])
-    //                                 return (<div key={ind} className='row'>
 
-    //                                     <div className="col-12">
-    //                                         {Object.keys(query).map((key, ind) => {
-    //                                             if (key !== 'What is your email id ?') {
-    //                                                 return (
-    //                                                     <div key={ind} className="card">
-    //                                                         <div className="row">
-    //                                                             <div className="card-body">
-    //                                                                 <h5 className="card-title">{key}</h5>
-    //                                                                 <p className="card-text">{query[key]}</p>
-    //                                                             </div>
-    //                                                         </div>
-    //                                                     </div>)
-    //                                             }
-    //                                         })}
-    //                                     </div>
-    //                                 </div>)
-    //                             })} */}
-    //                         </div>
-    //                     </div>
-    //                 </div>
-    //             </div>
-    //         </div>
-    //     </div>
-    // )
+
 
     return (
         // make two columns on left will be the entries of request on right will be their brief
         <div id="manage">
             <div className='container-fluid'>
                 <div className="row">
-                    <div className="accordion" id="accordionExample">
-                        {queries.map((query, ind) => {
-                            return (
-                                <div key={ind} className="card">
-                                    <div className="card-header" id="headingOne">
-                                        <h2 className="mb-0">
-                                            <button className="btn btn-link btn-block text-left" type="button" data-toggle="collapse" data-target={`#entry${ind}`} aria-expanded="true" aria-controls="collapseOne">
-                                                {query['What is your email id ?']}
-                                            </button>
-                                        </h2>
-                                    </div>
+                    <div className="col-2 leftpane">
+                        <div className='heading'>
+                            <h3>Dates</h3>
+                        </div>
+                        <div>
+                            <ul>
+                                {sortedDates.map((date, ind) => {
+                                    return (<li key={date} onClick={() => makeADateVisible(date)}><span style={{ cursor: "pointer" }}>{date}</span></li>)
+                                })}
+                            </ul>
+                        </div>
+                    </div>
+                    <div className="col-10 rightpane">
+                        <div className="row">
+                            <div className="col-12">
+                                <div className='heading'>
+                                    <h3>Queries</h3>
+                                </div>
+                                <div>
+                                    <div className="accordion" id="accordionExample">
+                                        {queriesArr.map((query, ind) => {
+                                            return (
+                                                <div key={ind} className="card">
+                                                    <div className="card-header">
+                                                        <h2 className="mb-0">
+                                                            <button className="btn btn-link btn-block text-left" type="button" data-toggle="collapse" data-target={`#entry${ind}`} aria-expanded="true" >
+                                                                {query['What is your email id ?']}
+                                                            </button>
+                                                        </h2>
+                                                    </div>
 
-                                    <div id={`entry${ind}`} className="collapse show" aria-labelledby="headingOne" data-parent="#accordionExample">
-                                        <div className="card-body w-100">
-                                            {Object.keys(query).map((key,ind)=>{
-                                                if(key!='What is your email id ?')
-                                                return (<div>
-                                                    <h4>{key}</h4>
-                                                    <h5>{query[key]}</h5>
-                                                    <br/>
-                                                    </div>)
-                                            })}
-                                        </div>
+                                                    <div id={`entry${ind}`} className="collapse" data-parent="#accordionExample">
+                                                        <div className="card-body w-100 p-0">
+                                                            <div className="queries p-3">
+                                                                {Object.keys(query).map((key, ind) => {
+                                                                    if (key != 'What is your email id ?')
+                                                                        return (<div key={ind} className='entry mb-3 pb-1'>
+                                                                            <div>
+                                                                                <h5>{key}</h5>
+                                                                            </div>
+                                                                            <div>
+                                                                                <h5>{query[key]}</h5>
+                                                                            </div>
+                                                                        </div>)
+                                                                })}
+                                                            </div>
+                                                            <hr />
+                                                            <div className="action p-3">
+                                                                <div className='row mt-3 pb-1'>
+                                                                    <div className="col">
+                                                                        <h5>Write your quote with cost break-down </h5>
+                                                                        <textarea className="form-control" rows="3"></textarea>
+                                                                    </div>
+                                                                </div>
+                                                                <div className='row mb-5'>
+                                                                    <div className='col-6'>
+                                                                        <div className="row">
+                                                                            <div className="col-6">
+                                                                                <h5>Select start date</h5>
+                                                                                <input type="date" className="form-control" />
+                                                                            </div>
+                                                                            <div className="col-6">
+                                                                                <h5>Select end date</h5>
+                                                                                <input type="date" className="form-control" />
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                    <div className="col-6">
+                                                                        <div className="row">
+                                                                            <div className="col">
+                                                                                <h5>Enter your quote (in Rs) </h5>
+                                                                                <input type="number" className="form-control" />
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                                <div className="row ">
+                                                                    <div className="col">
+                                                                        <button className='cta'>Send</button>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            )
+                                        })}
                                     </div>
                                 </div>
-                            )
-                        })}
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>

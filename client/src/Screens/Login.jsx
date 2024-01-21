@@ -12,7 +12,7 @@ const Login = (props) => {
         try {
             auth.onAuthStateChanged((user) => {
                 if (user) {
-                    console.log("user is signedin", user)
+                    console.log("user is signedin")
                     navigate('/steps')
                 }
                 else {
@@ -57,7 +57,6 @@ const Login = (props) => {
             const user = result.user;
             console.log(user)
             hideLoader()
-            // props.history.push('/home')
         }).catch((error) => {
             // User couldn't sign in (bad verification code?)
             console.log("user could not sign in")
@@ -79,7 +78,6 @@ const Login = (props) => {
             for (let i = 0; i < countryCodes.length; i++) {
                 if (countryCodes[i].dial_code === e.target.value) {
                     found = true;
-                    console.log("found")
                     break;
                 }
             }
@@ -113,7 +111,7 @@ const Login = (props) => {
             <div className="left">
                 <form className="myform" onSubmit={handleSubmit}>
                     <div className="encloser">
-                        <div style={{width:"165px",minWidth:"165px"}}>
+                        <div style={{width:"155px",minWidth:"155px"}}>
                             <label htmlFor="countryCode">Country Code: </label>
                             <input type="text" size={countryCodeSize} onChange={countryCodeChange} placeholder="Ex: 91" name="countryCode"></input>
                             <span style={{fontSize:"1.2rem"}}>{errors.countryCode}</span>

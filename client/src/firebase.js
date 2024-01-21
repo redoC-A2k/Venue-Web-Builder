@@ -10,10 +10,15 @@ const firebaseConfig = {
     appId: "1:431377118230:web:ceddaee513f031e96df137",
     measurementId: "G-PRPCF3QVWP"
 };
-
-const app = initializeApp(firebaseConfig);
-let auth = getAuth();
-auth.useDeviceLanguage()
-const analytics = getAnalytics(app);
+let app = null;
+let auth = null;
+try {
+    app = initializeApp(firebaseConfig);
+    auth = getAuth();
+    auth.useDeviceLanguage()
+    const analytics = getAnalytics(app);
+} catch (error) {
+    console.log("failed initializing firebase : "+error)
+}
 
 export { app, auth };

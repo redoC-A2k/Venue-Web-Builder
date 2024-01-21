@@ -1,10 +1,8 @@
-const express = require('express');
 const { firestore } = require('firebase-admin');
-const websiteRouter = express.Router()
 
 const db = firestore()
 
-websiteRouter.get("/website/:slug", async (req, res) => {
+exports.getWebsiteBySlug = async (req, res) => {
     console.log("Url hit")
     const { slug } = req.params
     const docRef = db.collection("website").doc(slug);
@@ -31,20 +29,37 @@ ${data.html}
         // console.log(webpage)
         res.send(webpage)
     }
-})
+}
 
-websiteRouter.post('/book/:slug',async (req,res)=>{
+exports.bookWebsiteBySlug = async (req, res) => {
     console.log("Url hit")
     let query = req.body;
-    let objKeys = Object.keys(query)
-    let objValues = Object.values(query)
-    let queriesSnap = await db.collection("queries").doc(req.params.slug).get();
-    if(!queriesSnap.exists){
-        return res.status(200).json({message:"You have not published website till now"})
+    // let objKeys = Object.keys(query)
+    // let objValues = Object.values(query)
+    // console.log(objKeys)
+    // let userEmail
+    // for(let i=0;i<objKeys.length; i++){
+    //     if(objKeys[i].contains('email')){
+
+    //         break;
+    //     }
+    // }
+    // console.log(objValues)
+    let queriesSnap = await db.collection("queries").doc(req.params.slug).get()
+    if (!queriesSnap.exists) {
+        return res.status(200).json({ message: "You have not published website till now" })
     }
-    let queries = queriesSnap.data().queries
-    queries = [req.body,...queries]
-    await db.collection("queries").doc(req.params.slug).set({queries})
-    res.json({message:"Form Submitted"})
-})
-module.exports = { websiteRouter }
+    let queries = queriesSnap.data();
+    let todayDate = new Date();
+    todayDate = todayDate.getDate() + "-" + (1 + todayDate.getMonth()) + "-" + todayDate.getFullYear()
+    if (todayDate in queries.queriesmap) {
+        let todayqueries = queries.queriesmap[todayDate];
+        todayqueries = [query, ...todayqueries]
+        queries.queriesmap[todayDate] = todayqueries
+    }
+    else queries.queriesmap[todayDate] = [query]
+    // console.log(query)
+    // queries = [query, ...queries]
+    await db.collection("queries").doc(req.params.slug).set({queriesmap:queries.queriesmap})
+    res.json({ message: "Form Submitted" })
+}

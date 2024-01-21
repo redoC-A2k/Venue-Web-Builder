@@ -1,5 +1,7 @@
+let obj = require('./template.json')
 const dotenv = require('dotenv');
 dotenv.config({path:__dirname+'/../.env'})
+
 
 function generateRandomString(length) {
     const characters = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
@@ -54,7 +56,6 @@ let setup = {
 
 function getTemplate(setup) {
     let name = setup.name;
-    let obj = require('./template.json')
     obj.pages[0].frames[0].component.components[0].components[0].components[0].components[0].content = name.toUpperCase();
 
     // ---------------------------------

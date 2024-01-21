@@ -10,12 +10,14 @@ import grapesjs_navbar_plugin from "grapesjs-navbar";
 import CalendarPlugin from "../Plugins/calendar";
 import { auth } from "../firebase";
 import { hideLoader, showLoader } from "../utils/loader";
+import toast from 'react-hot-toast'
 // import SlickCarouselPlugin from "../Plugins/slick";
 
 
 function Editor(props) {
     const [editor, setEditor] = useState(null)
     const [preview, setPreview] = useState(false)
+    const [slug , setSlug] = useState(null)
     const [user, setUser] = useState(null)
     // const endpoint = 'https://venue-web-builder-backend-production.up.railway.app/venue/owner/web'
     const endpoint = process.env.REACT_APP_HOSTNAME + '/venue/owner/web'
@@ -62,16 +64,21 @@ function Editor(props) {
 
         promiseUser.current.then(async user => {
             if (user != null) {
-                let token = await user.getIdToken();
-                let response = await axios.get(backendHost + '/venue/web/setup',{
-                    headers:{
-                        Authorization:token
-                    }
-                })
-                if(response.data.setup==false)
-                navigate('/steps')
+                try {
+                    let token = await user.getIdToken();
+                    let response = await axios.get(backendHost + '/venue/web/steps', {
+                        headers: {
+                            Authorization: token
+                        }
+                    })
+                    setSlug(response.data.slug)
+                } catch (error) {
+                    console.log(error.response.data)
+                    navigate('/steps')
+                }
+
             }
-        }).catch(error=> {
+        }).catch(error => {
             console.log(error)
             navigate('/login')
         })
@@ -294,7 +301,9 @@ function Editor(props) {
                     })
                 } catch (error) {
                     // alert("There might be some issue with your internet")
-                    console.log(error)
+                    if (error.response && error.response.data)
+                        console.log(error.response.data)
+                    else console.log(error)
                     navigate('/login')
                 }
             },
@@ -314,7 +323,10 @@ function Editor(props) {
                         }
                     })
                 } catch (error) {
-                    alert("There might be some issue with your internet")
+                    if (error.response.data)
+                        console.log(error.response.data)
+                    else console.log(error)
+                    // alert("There might be some issue with your internet")
                 }
 
             },
@@ -402,6 +414,17 @@ function Editor(props) {
             })
             console.log(res.data)
             // window.open('http://localhost:4000/website')
+            toast(
+                (toastId) => (
+                    <span>
+                        View Published website
+                        <button style={{ padding: "2px", marginLeft: "4px", border: "1px solid black" }} onClick={() => {
+                            window.open(process.env.REACT_APP_HOSTNAME + '/website/' + slug)
+                        }}>🌐</button>
+                    </span>
+                ),
+                { duration: 2000 }
+            );
             hideLoader();
         } catch (error) {
             if (error.response)
@@ -412,8 +435,12 @@ function Editor(props) {
 
     }
 
-    async function manage(){
+    function manage() {
         navigate('/manage')
+    }
+
+    function bookings() {
+        navigate('/bookings')
     }
 
     return <section id="editor">
@@ -455,6 +482,7 @@ function Editor(props) {
                 <div className="custom__actions">
                     <button onClick={publish}>PUBLISH</button>
                     <button onClick={manage}>MANAGE</button>
+                    <button onClick={bookings}>BOOKINGS</button>
                 </div>
                 {/* <div className="panel__switcher"></div> */}
             </div>

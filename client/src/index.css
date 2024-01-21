@@ -1,13 +1,4 @@
-html {
-  overflow-y: scroll;
-  scrollbar-width: none;
-  -ms-overflow-style: none;
-}
 
-html::-webkit-scrollbar {
-  width: 0;
-  height: 0;
-}
 
 * {
   margin: 0px;
@@ -609,37 +600,112 @@ form.myform span {
 #manage {
   height: 99vh;
 }
-
-#manage div.container-fluid div.row div.col-2{
-  height: 100%;
-  border-right: 2px solid black;
-}
-
-#manage div.container-fluid div.row div.col-10{
+#manage div.container-fluid ,
+#manage div.container-fluid div.row{
   height: 100%;
 }
-#manage div.container-fluid div.row div.heading{
+
+#manage div.leftpane{
+  height: 100%;
+  padding-top: 1vh;
+  overflow-y: scroll;
+  border-right: 1px solid rgba(0,0,0,0.2);
+}
+
+#manage div.leftpane div.heading{
   text-align: center;
 }
-#manage div.container-fluid div.row div.heading h3{
+
+#manage div.leftpane div.heading h3,
+#manage div.rightpane div.heading h3{
   text-transform: uppercase;
   width: 100%;
-  background-color: rgb(var(--primary-grey));
+  background-color: rgba(var(--primary-light-green),0.4);
   height: auto;
   padding:1rem;
 }
-/* #manage div.container-fluid div#card-container{
-  position: relative;
+
+#manage div.leftpane div ul{
+  list-style-type: none;
 }
 
-#manage div.container-fluid div#card-container div.row{
-  visibility: hidden;
-  position: absolute;
+#manage div.leftpane div ul li{
+  padding: 1rem;
+  border-bottom: 1px solid rgb(var(--primary-grey));
+  font-size: larger;
 }
-#manage div.container-fluid div#card-container div.row.show{
- visibility: visible;
-} */
 
-#manage div.accordion{
-  width: 80%;
+#manage div.leftpane div ul li span:hover{
+  color: rgb(var(--primary-green-yellow));
+}
+
+#manage div.rightpane{
+  height: 100%;
+  padding-top: 1vh;
+  overflow-y: scroll;
+}
+
+#manage div.rightpane div.accordion{
+  width: 90%;
+  margin:0 auto;
+  margin-top:1.6rem;
+}
+
+#manage div.rightpane div.accordion div.card{
+  /* border: none; */
+  margin-bottom: 1.6rem;
+  border: 2px solid rgba(0,0,0,0.125);
+  border-radius: 10px;
+  padding-bottom: 0;
+  padding-top: 0.5rem;
+}
+
+#manage div.rightpane div.accordion div.card div.card-header{
+  background-color: white;
+  padding-bottom: 1.5rem;
+}
+
+#manage div.rightpane div.accordion div.card div.card-header h2{
+  background-color: rgba(0,0,0,0.03);
+}
+
+#manage div.rightpane div.accordion div.card div.card-header h2:hover,
+#manage div.rightpane div.accordion div.card div.card-header h2 button:hover,
+#manage div.rightpane div.accordion div.card div.card-header h2 button:not(.collapsed),
+#manage div.rightpane div.accordion div.card div.card-header h2:has(button:not(.collapsed)){
+  background-color: rgb(var(--primary-green-yellow),0.1);
+}
+
+#manage div.rightpane div.accordion div.card div.card-header h2 button{
+  font-size: large;
+}
+
+#manage div.rightpane div.accordion div.card div.card-body div.queries div.entry div:nth-child(2){
+  padding: 1.2rem;
+  margin:1rem;
+  border:0.5px solid rgba(0,0,0,0.2);
+  border-radius: 12px;
+  color: rgb(var(--primary-grey-2));
+}
+
+#manage div.rightpane div.accordion div.card div.card-body hr{
+  border-top-width: 2px;
+  border-top-color: rgba(0,0,0,0.25);
+  margin: 0;
+}
+
+#manage div.rightpane div.accordion div.card div.card-body div.action{
+  background-color: rgba(var(--primary-light-green),0.1);
+}
+
+#manage div.rightpane div.accordion div.card div.card-body div.action textarea{
+  margin:1rem;
+  width: 98%;
+  padding: 0.5rem 1rem;
+  font-size: 1.5rem;
+  border-radius: 7px;
+}
+
+#manage div.rightpane div.accordion div.card div.card-body div.action input {
+  font-size: 1.4rem;
 }

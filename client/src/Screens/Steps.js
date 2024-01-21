@@ -5,6 +5,7 @@ import getCroppedImg from "../utils/crop.js";
 import { auth } from "../firebase.js";
 import { hideLoader, showLoader } from "../utils/loader.js";
 import { useNavigate } from 'react-router-dom'
+import toast from 'react-hot-toast'
 
 const hostname = process.env.REACT_APP_HOSTNAME
 
@@ -336,7 +337,7 @@ function Step6(props) {
                         // props.media[index].caption = e.currentTarget.value
                         questionsArr[index] = e.currentTarget.value
                         props.setFormData({ ...props.formData, questions: questionsArr })
-                    }} disabled={index==0?true:false}/>
+                    }} disabled={index == 0 ? true : false} />
                 </div>)
             })}
         </div>
@@ -377,15 +378,41 @@ const Steps = (props) => {
         promiseUser.current = new Promise((resolve, reject) => {
             auth.onAuthStateChanged((user) => {
                 if (user) {
+                    console.log("promise resolved")
                     resolve(user);
                     hideLoader()
                 }
                 else {
+                    console.log("promise rejected")
                     navigate('/login')
                     reject("user not signed in")
                     hideLoader()
                 }
             })
+        })
+        promiseUser.current.then(async user => {
+            console.log(user)
+            if (user != null) {
+                let token = await user.getIdToken();
+                let response = await axios.get(hostname + "/venue/web/steps", {
+                    headers: {
+                        'Content-Type': 'application/json',
+                        Authorization: token
+                    }
+                })
+                console.log("response", response)
+                if (response.status === 201) {
+                    navigate('/')
+                    // toast("Steps can only be filled once",{duration: 5000,icon: "✅"})
+                    toast.success("Steps can only be filled once", { duration: 5000 })
+                }
+            }
+        }).catch((error) => {
+            if (error.response && error.response.data)
+                console.log(error.response.data)
+            else console.log(error)
+            if (error.response && error.response.status == 401)
+                navigate('/login')
         })
     }, [])
 
@@ -464,7 +491,7 @@ const Steps = (props) => {
             promiseUser.current.then(async user => {
                 if (user != null) {
                     let token = await user.getIdToken();
-                    let response = await axios.post(hostname + "/venue/web/setup", formData, {
+                    let response = await axios.post(hostname + "/venue/web/steps", formData, {
                         headers: {
                             'Content-Type': 'application/json',
                             Authorization: token
@@ -476,7 +503,13 @@ const Steps = (props) => {
                 }
             })
         } catch (error) {
-            console.log(error)
+            if (error.response.data)
+                console.log(error.response.data)
+            else console.log(error)
+            if (error.response.status == 401) {
+                localStorage.clear()
+                navigate("/login")
+            }
             hideLoader()
         }
     }
