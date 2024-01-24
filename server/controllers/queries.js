@@ -1,6 +1,7 @@
 const { firestore } = require('firebase-admin');
 const nodemailer = require("nodemailer")
 const db = firestore()
+const dayjs = require('dayjs')
 
 
 exports.getQueriesForVenue = async (req, res) => {
@@ -24,6 +25,41 @@ exports.getQueriesForVenue = async (req, res) => {
         sortedQueries[allDates[i]] = queries[allDates[i]]
     }
     res.json({ queries: sortedQueries })
+}
+
+// TODO: test this , by adding one more document besides punam-mahal
+exports.deleteAllOldQueries = async (req, res) => {
+    try {
+        const allDocs = await db.collection("queries").get();
+        let date = dayjs().subtract(365, 'day');
+        let bulkWriter = db.bulkWriter();
+        allDocs.forEach(doc => {
+            // console.dir(doc.id+" - ",{depth:null});
+            // console.dir(doc.data(),{depth:null});
+            let newQueriesMap = {}
+            let queriesMap = doc.data().queriesmap;
+            let found = false;
+            for (let queryDateStr in queriesMap) {
+                let queryDateArr = queryDateStr.split('-');
+                let queryDate = dayjs(new Date(Number(queryDateArr[2]), Number(queryDateArr[1]) - 1, Number(queryDateArr[0])))
+                if (queryDate < date) {
+                    console.log(queryDate.date() + "-" + (queryDate.month() + 1) + "-" + queryDate.year())
+                    found = true;
+                }
+                else {
+                    newQueriesMap[queryDateStr] = queriesMap[queryDateStr]
+                }
+            }
+            if (found)
+                bulkWriter.update(doc.ref, { queriesmap: newQueriesMap });
+        })
+        let response = await bulkWriter.close()
+        console.log("Bulk writer commit : " + response)
+        res.status(200).json("All old queries deleted")
+    } catch (error) {
+        console.log("Error while deleting all old queries : " + error)
+        res.status(500).json("Unable to delete old queries")
+    }
 }
 
 async function sendMail() {
@@ -57,4 +93,4 @@ async function sendMail() {
         console.log("error in sending mail : ", error)
     }
 }
-sendMail();
+// sendMail();

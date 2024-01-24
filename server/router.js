@@ -10,7 +10,9 @@ const validateSession = require("./utils/validateSession.js");
 let setup = require('./controllers/steps.js')
 let editor = require('./controllers/editor.js')
 let website = require('./controllers/website.js')
-let manage = require('./controllers/manage.js')
+let queries = require('./controllers/queries.js');
+let events = require('./controllers/events.js')
+const validateCron = require("./utils/validateCron.js");
 
 // const { getHtmlCss } = require('../utils/editor.mjs');
 
@@ -37,17 +39,28 @@ router.post('/venue/publish', validateSession, editor.publishWebsite, err => {
     console.log("Error in editor.publishWebsite : " + err)
 });
 
-// ------------------- MANAGE -------------------
-router.get('/venue/queries', validateSession, manage.getQueriesForVenue, err => {
+// ------------------- QUERIES -------------------
+router.get('/venue/queries', validateSession, queries.getQueriesForVenue, err => {
     console.log("Error in editor.getQueriesForVenue : " + err)
 })
 
 // ------------------- WEBSITE -------------------
-router.get("/website/:slug", website.getWebsiteBySlug, err=>{
+router.get("/website/:slug", website.getWebsiteBySlug, err => {
     console.log("Error in website.getWebsiteBySlug : " + err)
 })
-router.post('/book/:slug', website.bookWebsiteBySlug, err=>{
+router.post('/book/:slug', website.bookWebsiteBySlug, err => {
     console.log("Error in website.bookWebsiteBySlug : " + err)
+})
+
+// ------------------- EVENTS ---------------------
+router.post('/venue/events', validateSession, events.getCalendarEvents, err => {
+    console.log("Error in events.getCalendarEvents : " + err)
+})
+
+
+// ------------------- CRON JOB -------------------
+router.delete(`/cron/secret/${process.env.CRON_JOB_SECRET}/queries`, validateCron, queries.deleteAllOldQueries, err => {
+    console.log("Error in queries.deleteAllOldQueries : " + err)
 })
 
 // ------------------- 404 -------------------
