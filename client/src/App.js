@@ -6,7 +6,7 @@ import Loader from './Screens/Loader.jsx';
 import Manage from './Screens/Manage.jsx';
 import { Toaster } from 'react-hot-toast';
 import Logout from './Screens/Logout.jsx';
-import Bookings from './Screens/Bookings.jsx';
+import Events from './Screens/Events.jsx';
 
 function App() {
   return (
@@ -14,14 +14,21 @@ function App() {
       <Loader />
       <Toaster
         toastOptions={{
-          style:{
+          style: {
             border: '2px solid rgba(var(--primary-green-yellow),1)',
           },
           success: {
             style: {
               padding: '10px',
-              marginTop:"6rem"
+              marginTop: "6rem"
             },
+          },
+          error: {
+            style: {
+              padding: '10px',
+              marginTop: "6rem",
+              border: '2px solid rgba(var(--primary-red),0.8)',
+            }
           }
         }}
       />
@@ -31,7 +38,7 @@ function App() {
           <Route exact path='/steps' element={<Steps />} />
           <Route exact path='/manage' element={<Manage />} />
           <Route exact path='/logout' element={<Logout />} />
-          <Route exact path='/bookings' element={<Bookings />} />
+          <Route exact path='/events' element={<Events />} />
           <Route exact path='/' element={<Editor />} />
         </Routes>
       </BrowserRouter>

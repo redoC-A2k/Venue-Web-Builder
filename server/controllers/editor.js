@@ -31,12 +31,17 @@ exports.publishWebsite = async (req, res) => {
     const setup = (await db.collection("setup").doc(req.uid).get()).data()
     if (!setup) {
         // TODO: Check all setup is done not just slug
-        return res.status(404).json({ error: "Setup not done !"})
+        return res.status(404).json({ error: "Setup not done !" })
     }
     // adding more data in req.body
     req.body.title = setup.name
-
-    await db.collection("website").doc(setup.slug).set(req.body)    
-    await db.collection("queries").doc(setup.slug).set({queries:[]})
-    return res.json({ message: "Website published !"})
+    let websiteSnap = await db.collection("website").doc(setup.slug).get()
+    if (!websiteSnap.exists) {
+        await db.collection("website").doc(setup.slug).set(req.body)
+        await db.collection("queries").doc(setup.slug).set({ queriesmap: {} })
+        await db.collection("events").doc(setup.slug).set({ eventsmap: {} })
+    } else {
+        await db.collection("website").doc(setup.slug).update(req.body)
+    }
+    return res.json({ message: "Website published !" })
 }
