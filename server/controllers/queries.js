@@ -6,25 +6,18 @@ const dayjs = require('dayjs')
 
 exports.getQueriesForVenue = async (req, res) => {
     const setup = (await db.collection("setup").doc(req.uid).get()).data()
-    let queries = (await db.collection("queries").doc(setup.slug).get()).data().queriesmap;
-    let allDates = Object.keys(queries);
-    allDates.sort((a, b) => {
-        let aDate = a.split('-');
-        let bDate = b.split('-');
-        aDate[0] = parseInt(aDate[0]);
-        aDate[1] = parseInt(aDate[1]);
-        aDate[2] = parseInt(aDate[2]);
-        bDate[0] = parseInt(bDate[0]);
-        bDate[1] = parseInt(bDate[1]);
-        bDate[2] = parseInt(bDate[2]);
-        // Date constructor - year , monthIndex, day (MdN reference)
-        return new Date(bDate[2], bDate[1] - 1, bDate[0]) - new Date(aDate[2], aDate[1] - 1, aDate[0])
-    })
-    let sortedQueries = {}
-    for (let i = 0; i < allDates.length; i++) {
-        sortedQueries[allDates[i]] = queries[allDates[i]]
-    }
-    res.json({ queries: sortedQueries })
+    let queriesSnap = await db.collection("queries").doc(setup.slug).get()
+    if (!queriesSnap.exists)
+        return res.status(422).json("Website not published !")
+
+    let queriesCollection = db.collection('queries/' + setup.slug + '/queries')
+    let queries = (await queriesCollection.get()).docs
+        .map(doc => ({
+            docId: dayjs(Number(doc.id)).format('DD-MM-YYYY'),
+            queries: doc.data().queriesArr
+        }));
+
+    res.json(queries)
 }
 
 // TODO: test this , by adding one more document besides punam-mahal

@@ -1,3 +1,4 @@
+const dayjs = require('dayjs');
 const { firestore } = require('firebase-admin');
 
 const db = firestore()
@@ -34,32 +35,22 @@ ${data.html}
 exports.bookWebsiteBySlug = async (req, res) => {
     console.log("Url hit")
     let query = req.body;
-    // let objKeys = Object.keys(query)
-    // let objValues = Object.values(query)
-    // console.log(objKeys)
-    // let userEmail
-    // for(let i=0;i<objKeys.length; i++){
-    //     if(objKeys[i].contains('email')){
-
-    //         break;
-    //     }
-    // }
-    // console.log(objValues)
+    console.log(query)
     let queriesSnap = await db.collection("queries").doc(req.params.slug).get()
     if (!queriesSnap.exists) {
-        return res.status(200).json({ message: "You have not published website till now" })
+        return res.status(422).json("Website not published !")
     }
-    let queries = queriesSnap.data();
-    let todayDate = new Date();
-    todayDate = todayDate.getDate() + "-" + (1 + todayDate.getMonth()) + "-" + todayDate.getFullYear()
-    if (todayDate in queries.queriesmap) {
-        let todayqueries = queries.queriesmap[todayDate];
-        todayqueries = [query, ...todayqueries]
-        queries.queriesmap[todayDate] = todayqueries
+    let todayDate = (dayjs(dayjs().format('YYYY-MM-DD 00:00:00')).unix()*1000).toString()
+    let queriesCollection = db.collection('queries/' + req.params.slug + '/queries')
+    let todayDoc = (await queriesCollection.doc(todayDate).get())
+    if(!todayDoc.exists){
+        todayDoc = todayDoc.data()
+        todayDoc = {queriesArr:[query]}
+    } else {
+        todayDoc = todayDoc.data()
+        todayDoc.queriesArr.unshift(query)
     }
-    else queries.queriesmap[todayDate] = [query]
-    // console.log(query)
-    // queries = [query, ...queries]
-    await db.collection("queries").doc(req.params.slug).set({queriesmap:queries.queriesmap})
+    // let response = await queriesCollection.doc(todayDate).set(todayDoc)
+    // console.log(response)
     res.json({ message: "Form Submitted" })
 }
