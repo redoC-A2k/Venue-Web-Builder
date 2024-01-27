@@ -264,7 +264,7 @@ function Step5(props) {
             setErrors("Please enter valid email")
             return false;
         }
-        // TODO: Only allow a-zA-Z0-9-
+        // TODO: Only allow a-zA-Z0-9
         else {
             setErrors("")
             return true;
@@ -290,26 +290,8 @@ function Step5(props) {
 function Step6(props) {
     const [errors, setErrors] = useState("")
 
-    // function validateFeatures(text) {
-    //     if (text.length == 0) {
-    //         setErrors("Features cannot be empty")
-    //         return false;
-    //     } else if (text.length < 5) {
-    //         setErrors("Slug should be atleast 5 characters long")
-    //         return false;
-    //     }
-    //     // TODO: Only allow a-zA-Z0-9-
-    //     else {
-    //         setErrors("")
-    //         return true;
-    //     }
-    // }
-
     const handleForm = (e) => {
         e.preventDefault();
-        // if (validateSlug(e.target.elements[0].value))
-        // props.changeSlide();
-        // else;
         if (props.formData.questions.length > 0) {
             let elems = document.querySelectorAll('#steps div.container div.step.questions div.questions')[0].childNodes
             let valid = true;
@@ -380,7 +362,6 @@ const Steps = (props) => {
                 if (user) {
                     console.log("promise resolved")
                     resolve(user);
-                    hideLoader()
                 }
                 else {
                     console.log("promise rejected")
@@ -401,6 +382,7 @@ const Steps = (props) => {
                     }
                 })
                 console.log("response", response)
+                hideLoader()
                 if (response.status === 201) {
                     navigate('/')
                     // toast("Steps can only be filled once",{duration: 5000,icon: "✅"})
@@ -411,8 +393,10 @@ const Steps = (props) => {
             if (error.response && error.response.data)
                 console.log(error.response.data)
             else console.log(error)
-            if (error.response && error.response.status == 401)
+            if (error.response && error.response.status == 401){
                 navigate('/login')
+                window.location.reload()
+            }
         })
     }, [])
 
@@ -421,7 +405,13 @@ const Steps = (props) => {
         slug: "",
         media: [],
         features: [],
-        questions: ["What is your email id ?"],
+        questions: [
+            "What is your email id ?",
+            "What will be the start time of your event ?",
+            "What will be the end time of your event ?",
+            "What date your event will start ?",
+            "What date your event will end ?",
+            "What is the title or type of your event i.e. wedding, birthday, exhibition etc ?"],
         email: ""
     });
 
@@ -506,8 +496,9 @@ const Steps = (props) => {
             if (error.response.data)
                 console.log(error.response.data)
             else console.log(error)
-            if (error.response.status == 401) {
+            if (error.response && error.response.status == 401) {
                 localStorage.clear()
+                window.location.reload()
                 navigate("/login")
             }
             hideLoader()

@@ -7,6 +7,7 @@ dotenv.config()
 
 app.use(function (req, res, next) {
   res.header("Access-Control-Allow-Origin", process.env.CLIENT_URL);
+  // res.header("Access-Control-Allow-Origin", process.env.BUILD_CLIENT_URL);
   res.header("Access-Control-Allow-Methods", "GET, PUT, POST,DELETE");
   res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, authorization, Accept, Authorization");
   next();

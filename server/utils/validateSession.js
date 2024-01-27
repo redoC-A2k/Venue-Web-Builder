@@ -8,7 +8,7 @@ module.exports = async (req, res, next) => {
         }
         let decodedToken = await admin.auth().verifyIdToken(authorization)
         let loginTime = decodedToken.auth_time * 1000
-        let threeDaysBackTime = new Date().getTime() - 1 * 24 * 60 * 60 * 1000
+        let threeDaysBackTime = new Date().getTime() - 3 * 24 * 60 * 60 * 1000
         console.log("loginTime :", loginTime)
         console.log("threeDaysBackTime :", threeDaysBackTime)
         if (loginTime >= threeDaysBackTime) {
@@ -22,6 +22,6 @@ module.exports = async (req, res, next) => {
         }
     } catch (error) {
         console.log(error)
-        res.status(500).json("Unable to authenticate")
+        res.status(401).json("Unable to authenticate")
     }
 }
