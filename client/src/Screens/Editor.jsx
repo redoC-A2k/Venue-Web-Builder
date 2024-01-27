@@ -5,16 +5,16 @@ import { Link, useNavigate } from "react-router-dom";
 import grapesjs_blocks_basic from 'grapesjs-blocks-basic';
 import grapesjs_plugin_forms from 'grapesjs-plugin-forms';
 import axios from 'axios'
-import CarouselPlugin from "../Plugins/carousel";
+import CarouselPlugin from "grapesjs-carousel-component";
 import grapesjs_navbar_plugin from "grapesjs-navbar";
-import CalendarPlugin from "../Plugins/calendar";
+import CalendarPlugin from "grapesjs-calendar-component";
 import { hideLoader, showLoader } from "../utils/loader";
 import toast from 'react-hot-toast'
 import { globalContext } from '../App'
 
 
+let editor = undefined;
 function Editor(props) {
-    let editor = undefined;
     const [preview, setPreview] = useState(false)
     const endpoint = process.env.REACT_APP_HOSTNAME + '/venue/owner/web'
     function handleTab(i) {
