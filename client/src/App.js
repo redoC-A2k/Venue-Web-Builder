@@ -3,7 +3,7 @@ import Login from './Screens/Login.jsx';
 import Steps from './Screens/Steps.js';
 import Editor from './Screens/Editor.jsx';
 import Loader from './Screens/Loader.jsx';
-import Manage from './Screens/Manage.jsx';
+import Queries from './Screens/Queries.jsx';
 import { Toaster } from 'react-hot-toast';
 import Logout from './Screens/Logout.jsx';
 import Events from './Screens/Events.jsx';
@@ -36,7 +36,7 @@ function App() {
         <Routes>
           <Route exact path="/login" element={<Login />} />
           <Route exact path='/steps' element={<Steps />} />
-          <Route exact path='/manage' element={<Manage />} />
+          <Route exact path='/queries' element={<Queries />} />
           <Route exact path='/logout' element={<Logout />} />
           <Route exact path='/events' element={<Events />} />
           <Route exact path='/' element={<Editor />} />

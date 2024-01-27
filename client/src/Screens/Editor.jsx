@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from "react";
-import grapesjs, { Component } from 'grapesjs';
+import grapesjs from 'grapesjs';
 import 'grapesjs/dist/css/grapes.min.css'
 import { Link, useNavigate } from "react-router-dom";
 import grapesjs_blocks_basic from 'grapesjs-blocks-basic';
@@ -17,11 +17,10 @@ import toast from 'react-hot-toast'
 function Editor(props) {
     const [editor, setEditor] = useState(null)
     const [preview, setPreview] = useState(false)
-    const [slug , setSlug] = useState(null)
+    const [slug, setSlug] = useState(null)
     const [user, setUser] = useState(null)
     // const endpoint = 'https://venue-web-builder-backend-production.up.railway.app/venue/owner/web'
     const endpoint = process.env.REACT_APP_HOSTNAME + '/venue/owner/web'
-    const backendHost = process.env.REACT_APP_HOSTNAME
     const promiseUser = useRef(null)
     function handleTab(i) {
         // document.getElementById("tabhead").childNodes[0].classList.remove('active')
@@ -61,17 +60,21 @@ function Editor(props) {
                 }
             })
         })
-
         promiseUser.current.then(async user => {
             if (user != null) {
                 try {
                     let token = await user.getIdToken();
-                    let response = await axios.get(backendHost + '/venue/web/steps', {
+                    let response = await axios.get(process.env.REACT_APP_HOSTNAME + '/venue/web/steps', {
                         headers: {
                             Authorization: token
                         }
                     })
                     setSlug(response.data.slug)
+                    console.log(window.frames)
+                    document.getElementsByTagName("iframe")
+                    // console.log(window.frames["0"].document)
+                    // console.log(window.frames["1"].document)
+
                 } catch (error) {
                     console.log(error.response.data)
                     navigate('/steps')
@@ -191,8 +194,8 @@ function Editor(props) {
                 }
             },
             canvas: {
-                // scripts:["https://cdn.jsdelivr.net/npm/fullcalendar@6.1.9/index.global.min.js"]
-                scripts: ["https://cdn.jsdelivr.net/npm/@splidejs/splide@4.1.4/dist/js/splide.min.js", "https://cdn.jsdelivr.net/npm/fullcalendar@6.1.9/index.global.min.js", "https://code.jquery.com/jquery-3.7.1.slim.min.js"],
+                // scripts: ["https://cdn.jsdelivr.net/npm/@splidejs/splide@4.1.4/dist/js/splide.min.js", "https://cdn.jsdelivr.net/npm/fullcalendar@6.1.9/index.global.min.js", "https://code.jquery.com/jquery-3.7.1.slim.min.js"],
+                scripts: ["https://cdn.jsdelivr.net/npm/@redoc_a2k/splide@4.1.4/dist/js/splide.min.js", "https://cdn.jsdelivr.net/npm/fullcalendar@6.1.9/index.global.min.js"],
                 styles: ["https://cdn.jsdelivr.net/npm/@splidejs/splide@4.1.4/dist/css/splide.min.css", "https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css"]
             },
         })
@@ -285,20 +288,20 @@ function Editor(props) {
         editor.Storage.add('remote', {
             async load() {
                 try {
-                    await promiseUser.current.then(async user => {
-                        if (user != null) {
-                            let token = await user.getIdToken()
-                            let response = await axios.get(endpoint, {
-                                headers: {
-                                    'Content-Type': 'application/json',
-                                    Authorization: token
-                                }
-                            });
-                            editor.loadData(response.data)
-                            console.log(response.data)
-                            return response.data
-                        }
-                    })
+                    let user = await promiseUser.current
+
+                    if (user != null) {
+                        let token = await user.getIdToken()
+                        let response = await axios.get(endpoint, {
+                            headers: {
+                                'Content-Type': 'application/json',
+                                Authorization: token
+                            }
+                        });
+                        editor.loadData(response.data)
+                        console.log(response.data)
+                        return response.data
+                    }
                 } catch (error) {
                     // alert("There might be some issue with your internet")
                     if (error.response && error.response.data)
@@ -399,7 +402,6 @@ function Editor(props) {
     }, [])
 
     async function publish() {
-        // console.log("publish")
         let formData = {
             html: editor.getHtml(),
             css: editor.getCss(),
@@ -407,13 +409,12 @@ function Editor(props) {
         showLoader();
         try {
             let token = await user.getIdToken()
-            let res = await axios.post(backendHost + "/venue/publish", formData, {
+            let res = await axios.post(process.env.REACT_APP_HOSTNAME + "/venue/publish", formData, {
                 headers: {
                     "Authorization": token
                 }
             })
             console.log(res.data)
-            // window.open('http://localhost:4000/website')
             toast(
                 (toastId) => (
                     <span>
@@ -435,12 +436,12 @@ function Editor(props) {
 
     }
 
-    function manage() {
-        navigate('/manage')
+    function queries() {
+        navigate('/queries')
     }
 
-    function bookings() {
-        navigate('/bookings')
+    function events() {
+        navigate('/events')
     }
 
     return <section id="editor">
@@ -481,8 +482,8 @@ function Editor(props) {
                 <div className="panel__basic-actions"></div>
                 <div className="custom__actions">
                     <button onClick={publish}>PUBLISH</button>
-                    <button onClick={manage}>MANAGE</button>
-                    <button onClick={bookings}>BOOKINGS</button>
+                    <button onClick={queries}>QUERIES</button>
+                    <button onClick={events}>EVENTS</button>
                 </div>
                 {/* <div className="panel__switcher"></div> */}
             </div>

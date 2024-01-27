@@ -5,7 +5,7 @@
   padding: 0px;
 }
 
-/* selecting root div of react see - public//index.html */
+/* selecting root div of react see - public/index.html */
 #root {
   min-height: 99vh;
   position: relative;
@@ -36,12 +36,29 @@
   --secondry-grey-2: 221, 221, 221;
 
   --space-from-top: 85px;
+
+  /* fullcalendar override */
+  --fc-border-color: rgba(var(--primary-grey-1),0.9);
+  --fc-neutral-bg-color: rgba(08, 08, 08, 0);
+  /* --fc-neutral-text-color: #808080; */
+  --fc-neutral-text-color: #000;
+  /* --fc-today-bg-color: rgba(255, 220, 40, 0.15); */
+  --fc-today-bg-color: rgba(var(--primary-light-green), 0.4);
 }
 
 
 a {
   text-decoration: none !important;
   color: black !important;
+}
+
+/* Bootstrap override */
+.form-control{
+  font-size: 1.6rem;
+}
+.form-control:focus{
+  border-color:rgb(var(--primary-light-green));
+  box-shadow: 0 0 0 0.2rem rgba(var(--primary-light-green),0.5);
 }
 
 /* General */
@@ -150,18 +167,6 @@ button.cta:hover {
 form.myform label {
   width: 100%;
   text-transform: uppercase;
-}
-
-form.myform input {
-  border: black solid 1px;
-  overflow: none;
-  padding: 0.2rem 0.5rem;
-}
-
-form.myform input:focus {
-  border: rgb(var(--primary-green)) solid 1px;
-  overflow: none;
-  outline: none;
 }
 
 form.myform input:invalid {
@@ -285,9 +290,6 @@ form.myform span {
 
 #login div.left form div.encloser{
   display: flex;
-}
-
-#login div.left form div.encloser div:first-child input{
 }
 
 #login div.left form:last-child {
@@ -596,28 +598,28 @@ form.myform span {
   position: relative;
 }
 
-/* ----- Manage ------ */
-#manage {
+/* ----- Queries ------ */
+#queries {
   height: 99vh;
 }
-#manage div.container-fluid ,
-#manage div.container-fluid div.row{
+#queries div.container-fluid ,
+#queries div.container-fluid div.row{
   height: 100%;
 }
 
-#manage div.leftpane{
+div.leftpane{
   height: 100%;
   padding-top: 1vh;
   overflow-y: scroll;
   border-right: 1px solid rgba(0,0,0,0.2);
 }
 
-#manage div.leftpane div.heading{
+div.leftpane div.heading{
   text-align: center;
 }
 
-#manage div.leftpane div.heading h3,
-#manage div.rightpane div.heading h3{
+div.leftpane div.heading h3,
+#queries div.rightpane div.heading h3{
   text-transform: uppercase;
   width: 100%;
   background-color: rgba(var(--primary-light-green),0.4);
@@ -625,33 +627,33 @@ form.myform span {
   padding:1rem;
 }
 
-#manage div.leftpane div ul{
+div.leftpane div ul{
   list-style-type: none;
 }
 
-#manage div.leftpane div ul li{
+div.leftpane div ul li{
   padding: 1rem;
   border-bottom: 1px solid rgb(var(--primary-grey));
   font-size: larger;
 }
 
-#manage div.leftpane div ul li span:hover{
+div.leftpane div ul li span:hover{
   color: rgb(var(--primary-green-yellow));
 }
 
-#manage div.rightpane{
+#queries div.rightpane{
   height: 100%;
   padding-top: 1vh;
   overflow-y: scroll;
 }
 
-#manage div.rightpane div.accordion{
+#queries div.rightpane div.accordion{
   width: 90%;
   margin:0 auto;
   margin-top:1.6rem;
 }
 
-#manage div.rightpane div.accordion div.card{
+#queries div.rightpane div.accordion div.card{
   /* border: none; */
   margin-bottom: 1.6rem;
   border: 2px solid rgba(0,0,0,0.125);
@@ -660,27 +662,27 @@ form.myform span {
   padding-top: 0.5rem;
 }
 
-#manage div.rightpane div.accordion div.card div.card-header{
+#queries div.rightpane div.accordion div.card div.card-header{
   background-color: white;
   padding-bottom: 1.5rem;
 }
 
-#manage div.rightpane div.accordion div.card div.card-header h2{
+#queries div.rightpane div.accordion div.card div.card-header h2{
   background-color: rgba(0,0,0,0.03);
 }
 
-#manage div.rightpane div.accordion div.card div.card-header h2:hover,
-#manage div.rightpane div.accordion div.card div.card-header h2 button:hover,
-#manage div.rightpane div.accordion div.card div.card-header h2 button:not(.collapsed),
-#manage div.rightpane div.accordion div.card div.card-header h2:has(button:not(.collapsed)){
+#queries div.rightpane div.accordion div.card div.card-header h2:hover,
+#queries div.rightpane div.accordion div.card div.card-header h2 button:hover,
+#queries div.rightpane div.accordion div.card div.card-header h2 button:not(.collapsed),
+#queries div.rightpane div.accordion div.card div.card-header h2:has(button:not(.collapsed)){
   background-color: rgb(var(--primary-green-yellow),0.1);
 }
 
-#manage div.rightpane div.accordion div.card div.card-header h2 button{
+#queries div.rightpane div.accordion div.card div.card-header h2 button{
   font-size: large;
 }
 
-#manage div.rightpane div.accordion div.card div.card-body div.queries div.entry div:nth-child(2){
+#queries div.rightpane div.accordion div.card div.card-body div.queries div.entry div:nth-child(2){
   padding: 1.2rem;
   margin:1rem;
   border:0.5px solid rgba(0,0,0,0.2);
@@ -688,17 +690,17 @@ form.myform span {
   color: rgb(var(--primary-grey-2));
 }
 
-#manage div.rightpane div.accordion div.card div.card-body hr{
+#queries div.rightpane div.accordion div.card div.card-body hr{
   border-top-width: 2px;
   border-top-color: rgba(0,0,0,0.25);
   margin: 0;
 }
 
-#manage div.rightpane div.accordion div.card div.card-body div.action{
+#queries div.rightpane div.accordion div.card div.card-body div.action{
   background-color: rgba(var(--primary-light-green),0.1);
 }
 
-#manage div.rightpane div.accordion div.card div.card-body div.action textarea{
+#queries div.rightpane div.accordion div.card div.card-body div.action textarea{
   margin:1rem;
   width: 98%;
   padding: 0.5rem 1rem;
@@ -706,6 +708,77 @@ form.myform span {
   border-radius: 7px;
 }
 
-#manage div.rightpane div.accordion div.card div.card-body div.action input {
+#queries div.rightpane div.accordion div.card div.card-body div.action input {
   font-size: 1.4rem;
 }
+
+/* ----- Events ------ */
+#events {
+  height: 99vh;
+}
+
+#events div.container-fluid ,
+#events div.container-fluid div.row{
+  height: 100%;
+}
+
+#events div.leftpane div:nth-child(2) ul li{
+  width: 100%;
+  display: inline-block;
+  overflow-x: hidden;
+  padding-bottom: 0;
+}
+
+#events div.leftpane div:nth-child(2) ul li span{
+  cursor: pointer;
+  display: inline-block;
+  width: 100%;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  overflow-x: hidden;
+}
+
+#events div.col-9{
+  overflow-y: scroll;
+  height: 99vh;
+}
+
+#events #calendar{
+  width: 100%;
+  height: auto;
+  /* max-width: 100rem; */
+  margin-top: 1rem;
+  border: 2px solid rgba(0,0,0,0.08);
+  padding: 1rem;
+  background-color: rgba(var(--primary-green-yellow),0.01);
+}
+
+#events #calendar div.calHeader{
+  margin-bottom: 1rem;
+  background-color: rgba(var(--primary-green-yellow), 0.2);
+  padding: 0.8rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+#events #calendar div.calHeader select.custom-select{
+  width: 8rem;
+  font-size: 1.8rem;
+  box-shadow:  2px 5px 0 rgb(213 217 217 / 20%);
+  border-radius: 8px;
+  /* overriding bootstrap defaults */
+  vertical-align: bottom;
+  height: 4.1rem;
+}
+
+#events #calendar div.calHeader button{
+  font-size: 1.6rem;
+  padding: 0.8rem 1.2rem;
+  margin:0 0.5rem;
+}
+
+#events div.bookevent form input{
+  font-size: 1.6rem;
+}
+

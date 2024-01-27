@@ -4,6 +4,7 @@ import { auth } from '../firebase.js'
 import { useNavigate } from "react-router-dom";
 import countryCodes from '../utils/countryCodes.json'
 import { hideLoader, showLoader } from "../utils/loader.js";
+import toast from 'react-hot-toast'
 
 const Login = (props) => {
     let navigate = useNavigate()
@@ -43,7 +44,9 @@ const Login = (props) => {
             }).catch((error) => {
                 console.log("SMS not sent", error)
                 window.recaptchaVerifier.render().then((widgetId) => {
-                    window.recaptchaVerifier.reset(widgetId);
+                    // window.recaptchaVerifier.reset(widgetId);
+                    window.location.reload()
+                    toast.error("SMS not sent. Please try again ! ", {duration:2000})
                 })
                 hideLoader()
             });
@@ -111,25 +114,25 @@ const Login = (props) => {
             <div className="left">
                 <form className="myform" onSubmit={handleSubmit}>
                     <div className="encloser">
-                        <div style={{width:"155px",minWidth:"155px"}}>
+                        <div className="form-group" style={{width:"155px",minWidth:"155px"}}>
                             <label htmlFor="countryCode">Country Code: </label>
-                            <input type="text" size={countryCodeSize} onChange={countryCodeChange} placeholder="Ex: 91" name="countryCode"></input>
+                            <input className="form-control" type="text" size={countryCodeSize} onChange={countryCodeChange} placeholder="Ex: 91" name="countryCode"></input>
                             <span style={{fontSize:"1.2rem"}}>{errors.countryCode}</span>
                         </div>
-                        <div>
+                        <div className="form-group">
                             <label htmlFor="phone">Phone Number : </label>
-                            <input type="text" onChange={phoneChange} placeholder="7428730894" name="phone" pattern="[0-9]{10}" ></input>
+                            <input className="form-control" type="text" onChange={phoneChange} placeholder="7428730894" name="phone" pattern="[0-9]{10}" ></input>
                             <span style={{fontSize:"1.2rem"}}>{errors.phone}</span>
                         </div>
                     </div>
                     <button type="submit" id="requestOtp" className="submitbtn">Request OTP</button>
                 </form>
                 <form className="myform" onSubmit={validateOtp}>
-                    <fieldset>
+                    <div className="form-group">
                         <label htmlFor="otp">OTP : </label>
-                        <input type="text" onChange={otpChange} name="otp" pattern="[0-9]{6}"></input>
+                        <input className="form-control" type="text" onChange={otpChange} name="otp" pattern="[0-9]{6}"></input>
                         <span>{errors.otp}</span>
-                    </fieldset>
+                    </div>
                     <button type="submit" className="submitbtn">Validate OTP</button>
                 </form>
             </div>
