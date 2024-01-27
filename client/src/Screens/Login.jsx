@@ -1,34 +1,35 @@
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { RecaptchaVerifier, signInWithPhoneNumber } from "firebase/auth";
 import { auth } from '../firebase.js'
 import { useNavigate } from "react-router-dom";
 import countryCodes from '../utils/countryCodes.json'
 import { hideLoader, showLoader } from "../utils/loader.js";
 import toast from 'react-hot-toast'
+import { globalContext } from "../App.js";
 
 const Login = (props) => {
     let navigate = useNavigate()
     let countryCodeSize = 6;
+    const { user, stepsData } = useContext(globalContext)
     useEffect(() => {
         try {
-            auth.onAuthStateChanged((user) => {
-                if (user) {
-                    console.log("user is signedin")
-                    navigate('/steps')
-                }
-                else {
-                    window.recaptchaVerifier = new RecaptchaVerifier(auth, 'requestOtp', {
-                        'size': 'invisible',
-                        'callback': (response) => {
-                            console.log("captcha solved")
-                        },
-                    });
-                }
-            });
+            hideLoader()
+            if (user) {
+                console.log("user is signedin")
+                navigate('/steps')
+            }
+            else {
+                window.recaptchaVerifier = new RecaptchaVerifier(auth, 'requestOtp', {
+                    'size': 'invisible',
+                    'callback': (response) => {
+                        console.log("captcha solved")
+                    },
+                });
+            }
         } catch (error) {
             console.log(error)
         }
-    }, [])
+    }, [user, stepsData])
     let handleSubmit = (e) => {
         e.preventDefault()
         let phone = "+" + formData.countryCode + formData.phone
@@ -46,7 +47,7 @@ const Login = (props) => {
                 window.recaptchaVerifier.render().then((widgetId) => {
                     // window.recaptchaVerifier.reset(widgetId);
                     window.location.reload()
-                    toast.error("SMS not sent. Please try again ! ", {duration:2000})
+                    toast.error("SMS not sent. Please try again ! ", { duration: 2000 })
                 })
                 hideLoader()
             });
@@ -114,15 +115,15 @@ const Login = (props) => {
             <div className="left">
                 <form className="myform" onSubmit={handleSubmit}>
                     <div className="encloser">
-                        <div className="form-group" style={{width:"155px",minWidth:"155px"}}>
+                        <div className="form-group" style={{ width: "155px", minWidth: "155px" }}>
                             <label htmlFor="countryCode">Country Code: </label>
                             <input className="form-control" type="text" size={countryCodeSize} onChange={countryCodeChange} placeholder="Ex: 91" name="countryCode"></input>
-                            <span style={{fontSize:"1.2rem"}}>{errors.countryCode}</span>
+                            <span style={{ fontSize: "1.2rem" }}>{errors.countryCode}</span>
                         </div>
                         <div className="form-group">
                             <label htmlFor="phone">Phone Number : </label>
                             <input className="form-control" type="text" onChange={phoneChange} placeholder="7428730894" name="phone" pattern="[0-9]{10}" ></input>
-                            <span style={{fontSize:"1.2rem"}}>{errors.phone}</span>
+                            <span style={{ fontSize: "1.2rem" }}>{errors.phone}</span>
                         </div>
                     </div>
                     <button type="submit" id="requestOtp" className="submitbtn">Request OTP</button>

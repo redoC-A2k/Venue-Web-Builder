@@ -1,67 +1,38 @@
-import { useEffect, useRef, useState } from 'react'
+import { useContext, useEffect, useRef, useState } from 'react'
 import axios from 'axios'
 import { hideLoader, showLoader } from '../utils/loader'
-import { auth } from '../firebase'
 import { useNavigate } from 'react-router-dom'
+import { globalContext } from '../App'
 
 const Queries = (props) => {
     const [queries, setQueries] = useState([])
     const [queriesArr, setQueriesArr] = useState([])
-    const [query, setQuery] = useState({})
-    const promiseUser = useRef(null)
-    // const [visibleInd, setVisibleInd] = useState(-1)
-    const visibleInd = useRef(-1);
-    const navigate = useNavigate()
+    const { user } = useContext(globalContext)
     useEffect(() => {
         showLoader()
         async function initQueries() {
-            promiseUser.current = new Promise((resolve, reject) => {
-                console.log("promise called")
-                auth.onAuthStateChanged(async (user) => {
-                    if (user) {
-                        resolve(user)
-                    } else {
-                        navigate('/login')
-                        reject("User not signed in")
+            try {
+                const token = await user.getIdToken()
+                let response = await axios.get(`${process.env.REACT_APP_HOSTNAME}/venue/queries`, {
+                    headers: {
+                        Authorization: token
                     }
                 })
-            })
-            try {
-                let user = await promiseUser.current
-                if (user) {
-                    try {
-                        const token = await user.getIdToken()
-                        let response = await axios.get(`${process.env.REACT_APP_HOSTNAME}/venue/queries`, {
-                            headers: {
-                                Authorization: token
-                            }
-                        })
-                        console.log(response.data)
-                        setQueries(response.data)
-                        hideLoader()
-                    } catch (error) {
-                        console.log(error)
-                        hideLoader()
-                        if (error.response && error.response.status == 401)
-                            navigate('/login')
-                    }
-                }
-                else {
-                    navigate('/login')
-                    hideLoader()
-                }
+                console.log(response.data)
+                setQueries(response.data)
+                hideLoader()
             } catch (error) {
                 console.log(error)
+                hideLoader()
             }
         }
-        initQueries()
-    }, [])
+        if (user)
+            initQueries()
+    }, [user])
 
     async function makeADateVisible(ind) {
         setQueriesArr(queries[ind].queries)
     }
-
-
 
     return (
         // make two columns on left will be the entries of request on right will be their brief
@@ -74,7 +45,7 @@ const Queries = (props) => {
                         </div>
                         <div>
                             <ul>
-                                {queries.map(({docId}, ind) => {
+                                {queries.map(({ docId }, ind) => {
                                     return (<li key={docId}><span style={{ cursor: "pointer" }} onClick={() => makeADateVisible(ind)}>{docId}</span></li>)
                                 })}
                             </ul>

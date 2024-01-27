@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from "react";
+import { useContext, useEffect, useRef, useState } from "react";
 import { Calendar } from '@fullcalendar/core'
 import dayGridPlugin from '@fullcalendar/daygrid'
 import timeGridPlugin from '@fullcalendar/timegrid'
@@ -13,6 +13,7 @@ import toast from 'react-hot-toast'
 
 import dayjs from "dayjs"
 import isSameOrBefore from 'dayjs/plugin/isSameOrBefore'
+import { globalContext } from "../App";
 dayjs.extend(isSameOrBefore)
 
 const Events = (props) => {
@@ -23,7 +24,6 @@ const Events = (props) => {
     const [year, setYear] = useState(date.getFullYear());
     const [initialView, setInitialView] = useState('dayGridMonth')
     const endpoint = process.env.REACT_APP_HOSTNAME + '/venue/events';
-    const promiseUser = useRef(null)
     let navigate = useNavigate()
 
     const [formData, setFormData] = useState({
@@ -43,78 +43,66 @@ const Events = (props) => {
     })
 
     const [sortedEvents, setSortedEvents] = useState([])
-
+    const { user, stepsData } = useContext(globalContext)
     useEffect(() => {
         showLoader()
         async function initEvents() {
-            promiseUser.current = new Promise((resolve, reject) => {
-                console.log("promise called")
-                auth.onAuthStateChanged((user) => {
-                    if (user) {
-                        resolve(user)
-                    } else {
-                        hideLoader()
-                        navigate('/login')
-                        reject("User not signed in")
-                    }
-                })
-            })
             try {
-                let user = await promiseUser.current
-                let token = await user.getIdToken()
-                let events = await axios.get(process.env.REACT_APP_HOSTNAME + "/venue/events", {
-                    headers: {
-                        'Content-Type': "application/json",
-                        Authorization: token
-                    }
-                })
-                setSortedEvents(events.data)
-                let calendar = new Calendar(calref.current, {
-                    plugins: [dayGridPlugin, timeGridPlugin],
-                    initialView: initialView,
-                    headerToolbar: false,
-                    aspectRatio: 1.77,
-                    themeSystem: 'bootstrap',
-                    eventContent: (info)=>{ 
-                        const title = info.event.title
-                        const start = info.event.start
-                        const end = info.event.end
-                        return {html:"<span style='overflow-x:hidden;' data-toggle='tooltip' title='"+title+"'>"+`${dayjs(start).format("hh:mm A")} - ${title}</span>`} 
-                    },
-                    // eventContent: function(arg){
-                    //     console.log(arg)
-                    // },
-                    events: async function (info, successCallback, failureCallback) {
-                        try {
-                            let user = await promiseUser.current
-                            let token = await user.getIdToken()
-                            // TODO: Change punam-mahal to actual slug placeholder from context
-                            let response = await axios.get(process.env.REACT_APP_HOSTNAME + `/venue/punam-mahal/events?start=${info.startStr}&end=${info.endStr}`, {
-                                headers: {
-                                    "Content-Type": 'application/json',
-                                    Authorization: token
-                                }
-                            })
-                            successCallback(response.data)
-                        } catch (error) {
-                            console.log(error)
-                            failureCallback(error?.response)
+                if (user != undefined) {
+                    let token = await user.getIdToken()
+                    let events = await axios.get(process.env.REACT_APP_HOSTNAME + "/venue/events", {
+                        headers: {
+                            'Content-Type': "application/json",
+                            Authorization: token
                         }
-                        successCallback([])
-                        // failureCallback()
-                    }
-                });
-                calendar.render();
-                setCalendar(calendar)
-
-                hideLoader()
+                    })
+                    setSortedEvents(events.data)
+                    let calendar = new Calendar(calref.current, {
+                        plugins: [dayGridPlugin, timeGridPlugin],
+                        initialView: initialView,
+                        headerToolbar: false,
+                        aspectRatio: 1.77,
+                        themeSystem: 'bootstrap',
+                        eventContent: (info) => {
+                            const title = info.event.title
+                            const start = info.event.start
+                            const end = info.event.end
+                            return { html: "<span style='overflow-x:hidden;' data-toggle='tooltip' title='" + title + "'>" + `${dayjs(start).format("hh:mm A")} - ${title}</span>` }
+                        },
+                        // eventContent: function(arg){
+                        //     console.log(arg)
+                        // },
+                        events: async function (info, successCallback, failureCallback) {
+                            try {
+                                let token = await user.getIdToken()
+                                // TODO: Change punam-mahal to actual slug placeholder from context
+                                let response = await axios.get(process.env.REACT_APP_HOSTNAME + `/venue/punam-mahal/events?start=${info.startStr}&end=${info.endStr}`, {
+                                    headers: {
+                                        "Content-Type": 'application/json',
+                                        Authorization: token
+                                    }
+                                })
+                                successCallback(response.data)
+                            } catch (error) {
+                                console.log(error)
+                                failureCallback(error?.response)
+                            }
+                            successCallback([])
+                            // failureCallback()
+                        }
+                    });
+                    calendar.render();
+                    setCalendar(calendar)
+                    hideLoader()
+                }
             } catch (error) {
                 console.log(error)
                 hideLoader()
             }
         }
+
         initEvents()
-    }, [])
+    }, [user, stepsData])
 
     // ------- FullCalendar methods -------
 
@@ -210,22 +198,19 @@ const Events = (props) => {
     async function handleSubmit(e) {
         e.preventDefault()
         try {
-            let user = await promiseUser.current
-            if (user != null) {
-                let token = await user.getIdToken()
-                if (validateFormData()) {
-                    showLoader()
-                    let response = await axios.post(endpoint, formData, {
-                        headers: {
-                            'Content-Type': 'application/json',
-                            Authorization: token
-                        }
-                    })
-                    hideLoader()
-                    console.log(response.data)
-                    if (Number(response.status) === 200)
-                        toast.success("Event added to calendar")
-                }
+            let token = await user.getIdToken()
+            if (validateFormData()) {
+                showLoader()
+                let response = await axios.post(endpoint, formData, {
+                    headers: {
+                        'Content-Type': 'application/json',
+                        Authorization: token
+                    }
+                })
+                hideLoader()
+                console.log(response.data)
+                if (Number(response.status) === 200)
+                    toast.success("Event added to calendar")
             }
         } catch (error) {
             hideLoader()
@@ -292,7 +277,7 @@ const Events = (props) => {
                                         </div>
                                         <h5>{months[date.getMonth()]} {date.getDate()} , {date.getFullYear()}</h5>
                                         <div style={{ display: 'flex', alignItems: 'center' }}>
-                                            <input type="date" className="form-control" onChange={(e)=>console.log(e.target.value)}/>
+                                            <input type="date" className="form-control" onChange={(e) => console.log(e.target.value)} />
                                             <button onClick={() => { handleMonth("prev") }}><i className="fa-solid fa-chevron-left"></i></button>
                                             <button onClick={() => { handleMonth("next") }}><i className="fa-solid fa-chevron-right"></i></button>
                                         </div>
