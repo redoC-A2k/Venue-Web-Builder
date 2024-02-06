@@ -1,8 +1,16 @@
 const { firestore } = require('firebase-admin');
-const nodemailer = require("nodemailer")
 const db = firestore()
-const dayjs = require('dayjs')
+const dayjs = require('dayjs');
+const { sendMail } = require('../utils/sendMail');
+const handlebars = require('handlebars')
+const crypto = require('crypto')
+require('dotenv').config()
+const fs = require('fs')
+const path = require('path');
+const Razorpay = require('razorpay');
+const { isEventColliding } = require('./events');
 
+const queryResponseTemplate = handlebars.compile(fs.readFileSync(path.join(__dirname, "/../utils/templates/queryResponse.handlebars"), "utf-8"))
 
 exports.getQueriesForVenue = async (req, res) => {
     const setup = (await db.collection("setup").doc(req.uid).get()).data()
@@ -11,7 +19,7 @@ exports.getQueriesForVenue = async (req, res) => {
         return res.status(422).json("Website not published !")
 
     let queriesCollection = db.collection('queries/' + setup.slug + '/queries')
-    let queries = (await queriesCollection.get()).docs
+    let queries = (await queriesCollection.orderBy(firestore.FieldPath.documentId(), 'desc').get()).docs
         .map(doc => ({
             docId: dayjs(Number(doc.id)).format('DD-MM-YYYY'),
             queries: doc.data().queriesArr
@@ -55,35 +63,75 @@ exports.deleteAllOldQueries = async (req, res) => {
     }
 }
 
-async function sendMail() {
+exports.postQueryMail = async (req, res) => {
     try {
-        let transporter = nodemailer.createTransport({
-            host: "smtp-relay.sendinblue.com",
-            port: 587,
-            auth: {
-                user: "afshanahmeda2k@gmail.com",
-                pass: process.env.BREVO_KEY
-            }
-        })
+        const setup = (await db.collection("setup").doc(req.uid).get()).data()
+        let newEvent = {
+            title: req.body.title,
+            startTime: req.body.startTime,
+            endTime: req.body.endTime,
+            startDate: req.body.startDate,
+            endDate: req.body.endDate,
+        }
+        const isColliding = await isEventColliding(newEvent, setup.slug)
+        
+        if (isColliding)
+            return res.status(409).json("Event is colliding with another event")
 
-        transporter.sendMail({
-            from: "venuewebbuilder@proton.me",
-            to: "a2kafshan@gmail.com",
-            subject: "New Query",
-            html: `
-<html>
-<body>
-<h1>Hello User</h1>
-<h3>You have recieved a query , kindly take action to have booking .</h3>
-</body>
-</html>`
-        }).then(messagestatus => {
-            // logger.info("message gets delivered", messagestatus)
-            // res.json({ message: "Check your mailbox for link" })
-            console.log("message delivered")
+        const [order, slugWeb] = await Promise.all([
+            initPayment(req.body.token),
+            db.collection('website').doc(setup.slug).get()
+        ])
+        const emailHtml = queryResponseTemplate({
+            slug: setup.slug,
+            endDate: dayjs(req.body.endDate).format('DD-MM-YYYY'),
+            startDate: dayjs(req.body.startDate).format('DD-MM-YYYY'),
+            endTime: dayjs("1/1/1 " + req.body.endTime).format('hh:mm A'),
+            startTime: dayjs("1/1/1 " + req.body.startTime).format('hh:mm A'),
+            title: req.body.title,
+            token: req.body.token,
+            paymentLink: process.env.HOST + "/website/" + setup.slug + "/order/" + order.id,
+            contactUs: setup.email,
+            // quote: req.body.quote.replace(/\n/g, "\\n"),
+            quote: req.body.quote,
         })
+        if (!slugWeb.exists) {
+            return res.status(422).json("Website not published !")
+        }
+        await Promise.all([
+            db.collection('website/' + setup.slug + '/orders').doc(order.id).set({
+                amount: req.body.token,
+                startDate: req.body.startDate,
+                endDate: req.body.endDate,
+                startTime: req.body.startTime,
+                endTime: req.body.endTime,
+                title: req.body.title,
+                customerEmail: req.body.toEmail,
+                status: order.status
+            }),
+            sendMail(
+                setup.email,
+                req.body.toEmail,
+                `Complete your booking for venue ${setup.slug}`,
+                emailHtml
+            )
+        ])
+        return res.status(200).json("Mail sent successfully")
     } catch (error) {
-        console.log("error in sending mail : ", error)
+        console.log("Error while generating payment link and sending mail :", error)
+        return res.status(500).json("Unable to send mail")
     }
 }
-// sendMail();
+
+async function initPayment(amount) {
+    let instance = new Razorpay({
+        key_id: process.env.RAZORPAY_KEY_ID,
+        key_secret: process.env.RAZORPAY_KEY_SECRET
+    })
+    var options = {
+        amount: Number(amount) * 100,
+        currency: "INR",
+    };
+    let order = await instance.orders.create(options)
+    return order
+}

@@ -48,9 +48,21 @@ router.get('/venue/queries', validateSession, queries.getQueriesForVenue, err =>
     console.log("Error in editor.getQueriesForVenue : " + err)
 })
 
+router.post('/venue/queries', validateSession, queries.postQueryMail, err => {
+    console.log("Error in queries.postQueryResponse : " + err)
+})
+
 // ------------------- WEBSITE -------------------
 router.get("/website/:slug", website.getWebsiteBySlug, err => {
     console.log("Error in website.getWebsiteBySlug : " + err)
+})
+
+router.get("/website/:slug/order/:orderId", website.getWebsiteOrder, err => {
+    console.log("Error in website.getWebsiteOrder : " + err)
+})
+
+router.post("/website/:slug/order/:orderId/complete", website.postCompletePayment, err => {
+    console.log("Error in website.postCompletePayment : " + err)
 })
 
 // TODO: JOI Validation
@@ -62,7 +74,6 @@ router.post('/book/:slug', website.bookWebsiteBySlug, err => {
 router.get('/venue/events', validateSession, events.getCalendarEvents, err => {
     console.log("Error in events.getCalendarEvents : " + err)
 })
-
 
 // TODO: JOI Validation
 router.post('/venue/events', validateSession, events.postCalendarEvents, err => {

@@ -1,5 +1,3 @@
-
-
 * {
   margin: 0px;
   padding: 0px;
@@ -13,7 +11,7 @@
 
 :root {
   --primary-green: 105, 240, 174;
-  --primary-light-green: 175, 288, 89;
+  --primary-light-green: 153, 230, 0;
   /* --primary-very-light-green: 178, 251, 220; */
   --primary-very-light-green: 160, 248, 202;
   --primary-green-yellow: 118, 255, 3;
@@ -21,7 +19,7 @@
   /* --primary-dark-blue: 36, 48, 83; */
   /* --secondry-blue: 49, 112, 126; */
   /* --secondry-dark-blue:17, 45, 50;  */
-  --primary-green: 58, 175, 169;
+  --primary-green: 58, 175, 3;
   /* --primary-dark:104, 118, 132; */
   --primary-white: 250, 250, 250;
   --primary-grey: 240, 240, 240;
@@ -38,7 +36,7 @@
   --space-from-top: 85px;
 
   /* fullcalendar override */
-  --fc-border-color: rgba(var(--primary-grey-1),0.9);
+  --fc-border-color: rgba(var(--primary-grey-1), 0.9);
   --fc-neutral-bg-color: rgba(08, 08, 08, 0);
   /* --fc-neutral-text-color: #808080; */
   --fc-neutral-text-color: #000;
@@ -53,12 +51,13 @@ a {
 }
 
 /* Bootstrap override */
-.form-control{
+.form-control {
   font-size: 1.6rem;
 }
-.form-control:focus{
-  border-color:rgb(var(--primary-light-green));
-  box-shadow: 0 0 0 0.2rem rgba(var(--primary-light-green),0.5);
+
+.form-control:focus {
+  border-color: rgb(var(--primary-light-green));
+  box-shadow: 0 0 0 0.2rem rgba(var(--primary-light-green), 0.5);
 }
 
 /* General */
@@ -99,8 +98,8 @@ h3 {
   font-weight: 900 !important;
   letter-spacing: 2px;
   text-transform: uppercase;
-  background-clip: text;
   -webkit-background-clip: text;
+  background-clip: text;
   margin-bottom: 0;
 }
 
@@ -169,8 +168,14 @@ form.myform label {
   text-transform: uppercase;
 }
 
-form.myform input:invalid {
+form.myform input {
+  font-size: 1.6rem;
+}
+
+form.myform input:invalid,
+form.myform textarea:invalid {
   border: red solid 1px;
+  box-shadow: none;
 }
 
 form.myform span {
@@ -190,77 +195,79 @@ form.myform span {
   opacity: 0;
   justify-content: center;
   align-items: center;
-  --loader-span-after-width:25%;
-  --loader-span-img-width:10vw
+  --loader-span-after-width: 25%;
+  --loader-span-img-width: 10vw
 }
 
 #loader.show {
   z-index: 50000;
-  opacity:1;
+  opacity: 1;
 }
 
-#loader div{
+#loader div {
   display: flex;
   flex-direction: column;
   align-items: center;
   z-index: 1000;
 }
 
-#loader div img{
-  width:var(--loader-span-img-width); 
+#loader div img {
+  width: var(--loader-span-img-width);
   display: block;
   z-index: 1000;
 }
 
-#loader div span{
+#loader div span {
   width: var(--loader-span-img-width);
   height: 1rem;
   border-radius: 10px;
-  border:2px solid rgba(var(--primary-green),255);
+  border: 2px solid rgba(var(--primary-very-light-green), 255);
   display: block;
   position: relative;
   overflow: hidden;
 }
 
-#loader div span::after{
+#loader div span::after {
   content: "";
   left: calc(var(--loader-span-after-width) * -1);
   position: absolute;
-  width:  var(--loader-span-after-width);
+  width: var(--loader-span-after-width);
   height: 0.8rem;
   display: block;
   background-color: rgb(var(--primary-very-light-green))
 }
 
-#loader.show div span::after{
+#loader.show div span::after {
   animation: move 1s ease-in-out infinite alternate;
 }
+
 @keyframes move {
-  0%{
+  0% {
     left: calc(var(--loader-span-after-width) * -1);
   }
-  100%{
+
+  100% {
     left: 100%;
   }
 }
 
 @media all and (max-width:992px) {
-  #loader{
-    --loader-span-after-width:35%;
-    --loader-span-img-width:15vw
+  #loader {
+    --loader-span-after-width: 35%;
+    --loader-span-img-width: 15vw
   }
 }
 
 @media all and (max-width:768px) {
-  #loader{
-    --loader-span-after-width:45%;
-    --loader-span-img-width:20vw
+  #loader {
+    --loader-span-after-width: 45%;
+    --loader-span-img-width: 20vw
   }
 }
 
 @media all and (max-width:576px) {
-  #loader{
-    --loader-span-img-width:30vw
+  #loader {
+    --loader-span-img-width: 30vw
   }
 }
 
@@ -288,7 +295,7 @@ form.myform span {
   padding: 5rem;
 }
 
-#login div.left form div.encloser{
+#login div.left form div.encloser {
   display: flex;
 }
 
@@ -344,7 +351,7 @@ form.myform span {
   cursor: pointer;
 }
 
-#steps div.container div.row div.col-12{
+#steps div.container div.row div.col-12 {
   max-height: 100vh;
 }
 
@@ -602,134 +609,132 @@ form.myform span {
 #queries {
   height: 99vh;
 }
-#queries div.container-fluid ,
-#queries div.container-fluid div.row{
+
+#queries div.container-fluid,
+#queries div.container-fluid div.row {
   height: 100%;
 }
 
-div.leftpane{
+div.leftpane {
   height: 100%;
   padding-top: 1vh;
   overflow-y: scroll;
-  border-right: 1px solid rgba(0,0,0,0.2);
+  border-right: 1px solid rgba(0, 0, 0, 0.2);
 }
 
-div.leftpane div.heading{
+div.leftpane div.heading {
   text-align: center;
 }
 
 div.leftpane div.heading h3,
-#queries div.rightpane div.heading h3{
+#queries div.rightpane div.heading h3 {
   text-transform: uppercase;
   width: 100%;
-  background-color: rgba(var(--primary-light-green),0.4);
+  background-color: rgba(var(--primary-light-green), 0.4);
   height: auto;
-  padding:1rem;
+  padding: 1rem;
 }
 
-div.leftpane div ul{
+div.leftpane div ul {
   list-style-type: none;
 }
 
-div.leftpane div ul li{
+div.leftpane div ul li {
   padding: 1rem;
   border-bottom: 1px solid rgb(var(--primary-grey));
   font-size: larger;
 }
 
-div.leftpane div ul li span:hover{
+div.leftpane div ul li span:hover {
   color: rgb(var(--primary-green-yellow));
 }
 
-#queries div.rightpane{
+#queries div.rightpane {
   height: 100%;
   padding-top: 1vh;
   overflow-y: scroll;
 }
 
-#queries div.rightpane div.accordion{
+#queries div.rightpane div.accordion {
   width: 90%;
-  margin:0 auto;
-  margin-top:1.6rem;
+  margin: 0 auto;
+  margin-top: 1.6rem;
 }
 
-#queries div.rightpane div.accordion div.card{
+#queries div.rightpane div.accordion div.card {
   /* border: none; */
   margin-bottom: 1.6rem;
-  border: 2px solid rgba(0,0,0,0.125);
+  border: 2px solid rgba(0, 0, 0, 0.125);
   border-radius: 10px;
   padding-bottom: 0;
   padding-top: 0.5rem;
 }
 
-#queries div.rightpane div.accordion div.card div.card-header{
+#queries div.rightpane div.accordion div.card div.card-header {
   background-color: white;
   padding-bottom: 1.5rem;
 }
 
-#queries div.rightpane div.accordion div.card div.card-header h2{
-  background-color: rgba(0,0,0,0.03);
+#queries div.rightpane div.accordion div.card div.card-header h2 {
+  background-color: rgba(0, 0, 0, 0.03);
 }
 
 #queries div.rightpane div.accordion div.card div.card-header h2:hover,
 #queries div.rightpane div.accordion div.card div.card-header h2 button:hover,
 #queries div.rightpane div.accordion div.card div.card-header h2 button:not(.collapsed),
-#queries div.rightpane div.accordion div.card div.card-header h2:has(button:not(.collapsed)){
-  background-color: rgb(var(--primary-green-yellow),0.1);
+#queries div.rightpane div.accordion div.card div.card-header h2:has(button:not(.collapsed)) {
+  background-color: rgb(var(--primary-green-yellow), 0.1);
 }
 
-#queries div.rightpane div.accordion div.card div.card-header h2 button{
+#queries div.rightpane div.accordion div.card div.card-header h2 button {
   font-size: large;
 }
 
-#queries div.rightpane div.accordion div.card div.card-body div.queries div.entry div:nth-child(2){
+#queries div.rightpane div.accordion div.card div.card-body div.queries div.entry div:nth-child(2) {
   padding: 1.2rem;
-  margin:1rem;
-  border:0.5px solid rgba(0,0,0,0.2);
+  margin: 1rem;
+  border: 0.5px solid rgba(0, 0, 0, 0.2);
   border-radius: 12px;
   color: rgb(var(--primary-grey-2));
 }
 
-#queries div.rightpane div.accordion div.card div.card-body hr{
+#queries div.rightpane div.accordion div.card div.card-body hr {
   border-top-width: 2px;
-  border-top-color: rgba(0,0,0,0.25);
+  border-top-color: rgba(0, 0, 0, 0.25);
   margin: 0;
 }
 
-#queries div.rightpane div.accordion div.card div.card-body div.action{
-  background-color: rgba(var(--primary-light-green),0.1);
+#queries div.rightpane div.accordion div.card div.card-body div.action {
+  background-color: rgba(var(--primary-light-green), 0.1);
 }
 
-#queries div.rightpane div.accordion div.card div.card-body div.action textarea{
-  margin:1rem;
+#queries div.rightpane div.accordion div.card div.card-body div.action textarea {
+  margin: 1rem;
   width: 98%;
   padding: 0.5rem 1rem;
   font-size: 1.5rem;
   border-radius: 7px;
 }
 
-#queries div.rightpane div.accordion div.card div.card-body div.action input {
-  font-size: 1.4rem;
-}
 
 /* ----- Events ------ */
 #events {
   height: 99vh;
 }
 
-#events div.container-fluid ,
-#events div.container-fluid div.row{
+#events div.container-fluid,
+#events div.container-fluid div.row {
   height: 100%;
 }
 
-#events div.leftpane div:nth-child(2) ul li{
+#events div.leftpane div:nth-child(2) ul li {
   width: 100%;
   display: inline-block;
   overflow-x: hidden;
   padding-bottom: 0;
 }
 
-#events div.leftpane div:nth-child(2) ul li span{
+#events div.leftpane div:nth-child(2) ul li span {
   cursor: pointer;
   display: inline-block;
   width: 100%;
@@ -738,22 +743,22 @@ div.leftpane div ul li span:hover{
   overflow-x: hidden;
 }
 
-#events div.col-9{
+#events div.col-9 {
   overflow-y: scroll;
   height: 99vh;
 }
 
-#events #calendar{
+#events #calendar {
   width: 100%;
   height: auto;
   /* max-width: 100rem; */
   margin-top: 1rem;
-  border: 2px solid rgba(0,0,0,0.08);
+  border: 2px solid rgba(0, 0, 0, 0.08);
   padding: 1rem;
-  background-color: rgba(var(--primary-green-yellow),0.01);
+  background-color: rgba(var(--primary-green-yellow), 0.01);
 }
 
-#events #calendar div.calHeader{
+#events #calendar div.calHeader {
   margin-bottom: 1rem;
   background-color: rgba(var(--primary-green-yellow), 0.2);
   padding: 0.8rem;
@@ -762,23 +767,18 @@ div.leftpane div ul li span:hover{
   justify-content: space-between;
 }
 
-#events #calendar div.calHeader select.custom-select{
+#events #calendar div.calHeader select.custom-select {
   width: 8rem;
   font-size: 1.8rem;
-  box-shadow:  2px 5px 0 rgb(213 217 217 / 20%);
+  box-shadow: 2px 5px 0 rgb(213 217 217 / 20%);
   border-radius: 8px;
   /* overriding bootstrap defaults */
   vertical-align: bottom;
   height: 4.1rem;
 }
 
-#events #calendar div.calHeader button{
+#events #calendar div.calHeader button {
   font-size: 1.6rem;
   padding: 0.8rem 1.2rem;
-  margin:0 0.5rem;
+  margin: 0 0.5rem;
 }
-
-#events div.bookevent form input{
-  font-size: 1.6rem;
-}
-
