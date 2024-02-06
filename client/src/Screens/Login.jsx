@@ -16,7 +16,7 @@ const Login = (props) => {
             hideLoader()
             if (user) {
                 console.log("user is signedin")
-                navigate('/steps')
+                navigate('/')
             }
             else {
                 window.recaptchaVerifier = new RecaptchaVerifier(auth, 'requestOtp', {
@@ -61,7 +61,9 @@ const Login = (props) => {
             const user = result.user;
             console.log(user)
             hideLoader()
+            navigate('/')
         }).catch((error) => {
+            console.log(error)
             // User couldn't sign in (bad verification code?)
             console.log("user could not sign in")
             hideLoader()

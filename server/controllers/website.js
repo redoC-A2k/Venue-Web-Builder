@@ -6,7 +6,6 @@ const fs = require('fs')
 const path = require('path')
 const newQueryTemplate = handlebars.compile(fs.readFileSync(path.join(__dirname, "/../utils/templates/newQuery.handlebars"), "utf-8"))
 const { sendMail } = require('../utils/sendMail')
-const crypto = require('crypto');
 const { isEventColliding } = require('./events');
 
 exports.getWebsiteBySlug = async (req, res) => {

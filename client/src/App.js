@@ -7,8 +7,8 @@ import Queries from './Screens/Queries.jsx';
 import { Toaster } from 'react-hot-toast';
 import Logout from './Screens/Logout.jsx';
 import Events from './Screens/Events.jsx';
-import { useContext, useEffect, useRef, useState } from 'react';
-import { hideLoader, showLoader } from './utils/loader.js';
+import {  useEffect, useState } from 'react';
+import {  showLoader } from './utils/loader.js';
 
 import { createContext } from 'react'
 import { auth } from './firebase.js';

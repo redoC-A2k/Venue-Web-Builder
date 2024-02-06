@@ -368,7 +368,6 @@ const Steps = (props) => {
                             Authorization: token
                         }
                     })
-                    console.log("response", response)
                     hideLoader()
                     if (response.status === 201) {
                         navigate('/')

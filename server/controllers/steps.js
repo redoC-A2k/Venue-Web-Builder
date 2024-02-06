@@ -5,6 +5,7 @@ const { getTemplate } = require('../utils/template');
 
 
 exports.postStepsData = async (req, res) => {
+    req.body.published = false
     let response = await db.collection("setup").doc(req.uid).set(req.body)
     console.log(response)
     let editorData = getTemplate(req.body)

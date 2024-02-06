@@ -37,9 +37,13 @@ exports.publishWebsite = async (req, res) => {
     req.body.title = setup.name
     let websiteSnap = await db.collection("website").doc(setup.slug).get()
     if (!websiteSnap.exists) {
-        await db.collection("website").doc(setup.slug).set(req.body)
-        await db.collection("queries").doc(setup.slug).set({ queriesmap: {} })
-        await db.collection("events").doc(setup.slug).set({ eventsmap: {} })
+        setup.published = true;
+        await Promise.all([
+            db.collection("website").doc(setup.slug).set(req.body),
+            db.collection("queries").doc(setup.slug).set(),
+            db.collection("events").doc(setup.slug).set(),
+            db.collection("setup").doc(req.uid).update(setup)
+        ])
     } else {
         await db.collection("website").doc(setup.slug).update(req.body)
     }

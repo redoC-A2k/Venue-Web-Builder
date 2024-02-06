@@ -74,12 +74,9 @@ const Events = (props) => {
                         // },
                         events: async function (info, successCallback, failureCallback) {
                             try {
-                                let token = await user.getIdToken()
-                                // TODO: Change punam-mahal to actual slug placeholder from context
-                                let response = await axios.get(process.env.REACT_APP_HOSTNAME + `/venue/punam-mahal/events?start=${info.startStr}&end=${info.endStr}`, {
+                                let response = await axios.get(process.env.REACT_APP_HOSTNAME + `/venue/${stepsData.slug}/events?start=${info.startStr}&end=${info.endStr}`, {
                                     headers: {
                                         "Content-Type": 'application/json',
-                                        Authorization: token
                                     }
                                 })
                                 successCallback(response.data)
@@ -87,7 +84,6 @@ const Events = (props) => {
                                 console.log(error)
                                 failureCallback(error?.response)
                             }
-                            successCallback([])
                             // failureCallback()
                         }
                     });
@@ -250,6 +246,8 @@ const Events = (props) => {
                                         <div className="mb-2" key={ind}>
                                             <li data-toggle="tooltip" title={event.title}><span onClick={() => handleGoTo(event.start)}>{event.title}</span></li>
                                             <small><span style={{ color: "rgba(var(--primary-grey-1),0.7)" }}>{dayjs(event.start).format("DD-MM-YYYY")}</span><pre style={{ display: "inline" }}> </pre> {dayjs(event.start).format("hh:mm A")}</small>
+                                            <br/>
+                                            <small><span style={{ color: "rgba(var(--primary-grey-1),0.7)" }}>{dayjs(event.end).format("DD-MM-YYYY")}</span><pre style={{ display: "inline" }}> </pre> {dayjs(event.end).format("hh:mm A")}</small>
                                         </div>
                                     )
                                 })}

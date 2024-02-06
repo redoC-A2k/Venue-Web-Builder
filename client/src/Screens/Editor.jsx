@@ -35,9 +35,12 @@ function Editor(props) {
 
     const navigate = useNavigate()
     const { user, stepsData } = useContext(globalContext)
-    console.log("rendering editor")
+    // console.log("rendering editor")
     useEffect(() => {
+        if (stepsData != undefined && stepsData.step === false)
+            navigate('/steps')
         if (editor == undefined && user != undefined) {
+            console.log("editor init")
             editor = grapesjs.init({
                 container: "#gjs",
                 width: "auto",
@@ -281,26 +284,6 @@ function Editor(props) {
 
             // prevent adding more than two calendar
             editor.on('component:add', component => {
-                // console.log("component event")
-                // if (component.attributes.type === "slide") {
-                //     let el = component.parent().parent().parent().getEl();
-                //     // console.log(el.id)
-                //     // function load(target, url) {
-                //     //     console.log(url)
-                //     //     var r = new XMLHttpRequest();
-                //     //     r.open("GET", url, true);
-                //     //     r.onreadystatechange = function () {
-                //     //         if (r.readyState != 4 || r.status != 200) return;
-                //     //         console.log(r.responseText)
-                //     //         // target.innerHTML = r.responseText;
-                //     //     };
-                //     //     r.send();
-                //     // }
-                //     let url = window.location.href+"#"+el.id;
-                //     axios.get(url).then(res=>{console.log(res.data)}).catch(err=>console.log(err))
-                //     // load(el,url)
-                //     // component.parent().parent().parent().getEl().innerHTML = el;
-                // }
 
                 if (component.attributes.type === "calendar") {
                     if (editor.getWrapper().find('div.fc').length > 0) {
