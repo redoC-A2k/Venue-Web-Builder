@@ -59,7 +59,7 @@ function Editor(props) {
                 },
                 pluginsOpts: {
                     [grapesjs_blocks_basic]: {
-                        // flexGrid:true,
+                        blocks:['column1', 'column2', 'column3', 'column3-7', 'text', 'link', 'image']
                     },
                     [grapesjs_plugin_forms]: {},
                     [CarouselPlugin]: {},
