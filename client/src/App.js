@@ -8,7 +8,7 @@ import { Toaster } from 'react-hot-toast';
 import Logout from './Screens/Logout.jsx';
 import Events from './Screens/Events.jsx';
 import {  useEffect, useState } from 'react';
-import {  showLoader } from './utils/loader.js';
+import {  hideLoader, showLoader } from './utils/loader.js';
 
 import { createContext } from 'react'
 import { auth } from './firebase.js';
@@ -38,6 +38,7 @@ function App() {
                         navigate("/steps")
                     setUser(firebaseUser)
                 } else {
+                    hideLoader()
                     navigate("/login")
                 }
             } catch (error) {
