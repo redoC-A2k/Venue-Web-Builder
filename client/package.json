@@ -18,7 +18,7 @@
     "firebase": "^10.5.2",
     "grapesjs": "^0.21.7",
     "grapesjs-blocks-basic": "^1.0.2",
-    "grapesjs-calendar-component": "^1.0.2",
+    "grapesjs-calendar-component": "^1.0.3-0",
     "grapesjs-carousel-component": "^1.0.1",
     "grapesjs-navbar": "^1.0.2",
     "grapesjs-plugin-forms": "^2.0.6",

@@ -394,13 +394,7 @@ const Steps = (props) => {
         slug: "",
         media: [],
         features: [],
-        questions: [
-            "What is your email id ?",
-            "What will be the start time of your event ?",
-            "What will be the end time of your event ?",
-            "What date your event will start ?",
-            "What date your event will end ?",
-            "What is the title or type of your event i.e. wedding, birthday, exhibition etc ?"],
+        questions: ["What is your email id ?"],
         email: ""
     });
 

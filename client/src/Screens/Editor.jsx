@@ -39,8 +39,9 @@ function Editor(props) {
     useEffect(() => {
         if (stepsData != undefined && stepsData.step === false)
             navigate('/steps')
-        if (editor == undefined && user != undefined) {
+        if (editor == undefined && user != undefined && stepsData != undefined) {
             console.log("editor init")
+            let slug = stepsData.slug
             editor = grapesjs.init({
                 container: "#gjs",
                 width: "auto",
@@ -63,7 +64,42 @@ function Editor(props) {
                     [grapesjs_plugin_forms]: {},
                     [CarouselPlugin]: {},
                     [grapesjs_navbar_plugin]: {},
-                    [CalendarPlugin]: {},
+                    [CalendarPlugin]: {
+                        aspectRatio: 1.77,
+                        functionEnv: {
+                            slug: stepsData.slug
+                        },
+                        events: async function (info, successCallback, failureCallback) {
+                            try {
+                                let response = fetch(process.env.REACT_APP_HOSTNAME + `/venue/${slug}/events?start=${info.startStr}&end=${info.endStr}`, {
+                                    method: 'GET',
+                                    headers: {
+                                        "Content-Type": 'application/json',
+                                    }
+                                })
+                                response = await (await response).json()
+                                successCallback(response)
+                            } catch (error) {
+                                console.log(error)
+                                failureCallback(error?.response)
+                            }
+                            // failureCallback()
+                        },
+                        eventContent: (info) => {
+                            const title = info.event.title
+                            const start = info.event.start
+                            // return { html: `<span data-tooltip=${title}>${window.dayjs(start).format("hh:mm A")} - ${title}</span>` }
+                            let tdText = `${window.dayjs(start).format("hh:mm A")} - ${title}`
+                            let tooltipText = `${title}`
+                            return {
+                                html: `
+                                <div class="tooltip">
+                                    <div class="text">${tdText}</div>
+                                    <div class="tooltiptext">${tooltipText}</div>
+                                </div>`
+                            }
+                        },
+                    },
                     // [SlickCarouselPlugin]: {}
                 },
                 blockManager: {
@@ -150,8 +186,8 @@ function Editor(props) {
                 },
                 canvas: {
                     // scripts: ["https://cdn.jsdelivr.net/npm/@splidejs/splide@4.1.4/dist/js/splide.min.js", "https://cdn.jsdelivr.net/npm/fullcalendar@6.1.9/index.global.min.js", "https://code.jquery.com/jquery-3.7.1.slim.min.js"],
-                    scripts: ["https://cdn.jsdelivr.net/npm/@redoc_a2k/splide@4.1.4/dist/js/splide.min.js", "https://cdn.jsdelivr.net/npm/fullcalendar@6.1.9/index.global.min.js"],
-                    styles: ["https://cdn.jsdelivr.net/npm/@splidejs/splide@4.1.4/dist/css/splide.min.css", "https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css"]
+                    scripts: ["https://cdn.jsdelivr.net/npm/@redoc_a2k/splide@4.1.4/dist/js/splide.min.js", "https://cdn.jsdelivr.net/npm/fullcalendar@6.1.9/index.global.min.js", "https://cdn.jsdelivr.net/npm/dayjs@1/dayjs.min.js"],
+                    styles: ["https://cdn.jsdelivr.net/npm/@splidejs/splide@4.1.4/dist/css/splide.min.css", "https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css", process.env.REACT_APP_CLIENT + "/canvas.css"]
                 },
             })
 
