@@ -56,11 +56,30 @@ let setup = {
 
 function getTemplate(setup) {
     let name = setup.name;
+                            //body    //row 0       //cell 0      //text div      //textnode   //title
     obj.pages[0].frames[0].component.components[0].components[0].components[0].components[0].content = name.toUpperCase();
 
     // ---------------------------------
-    // -------- setting features --------
+    // -------- setting features --------                                           //row 0 contains heading for features ie textdiv
+                                            //body      //row 2       //cell 0      //row 1       //cell 0      //text div
     let featureNode = obj.pages[0].frames[0].component.components[2].components[0].components[1].components[0].components[0];
+    // feature node - 
+    // {
+    //     "type": "text",
+    //     "attributes": {
+    //         "id": "iz8w3"
+    //     },
+    //     "components": [
+    //         {
+    //             "type": "textnode",
+    //             "content": "Feature 1"
+    //         },
+    //         {
+    //             "tagName": "br",
+    //             "void": true
+    //         }
+    //     ]
+    // }
     featureNode.components[0].content = setup.features[0];
     let featureNodeId = featureNode.attributes.id;
     featureNodeId = "#" + featureNodeId
@@ -87,10 +106,57 @@ function getTemplate(setup) {
     }
     obj.pages[0].frames[0].component.components[2].components[0].components[1].components[0].components = featureArr;
 
-    //-------------------------------
-    // ------ setting slides ---------
     //--------------------------------
+    // ------ setting slides ---------
+    //--------------------------------                                            //row 0 contains heading for carousel i.e textdiv
+                                            //body      //row 1       //cell 0   //carouseldiv //splidetrack //splidelist   //splide slide 
     let slideNode = obj.pages[0].frames[0].component.components[1].components[0].components[1].components[0].components[0].components[0]
+    // slideNode -
+    // {
+    //     "type": "slide",
+    //     "style": "",
+    //     "classes": [
+    //         "splide__slide"
+    //     ],
+    //     "attributes": {
+    //         "id": "ibi7j"
+    //     },
+    //     "components": [
+    //         {
+    //             "type": "slideImage",
+    //             "droppable": false,
+    //             "resizable": {
+    //                 "ratioDefault": 1
+    //             },
+    //             "classes": [
+    //                 "slide_image"
+    //             ],
+    //             "attributes": {
+    //                 "width": "100%",
+    //                 "height": "auto",
+    //                 "src": "https://source.unsplash.com/random/500x300/?img=1"
+    //             }
+    //         },
+    //         {
+    //             "type": "slideText",
+    //             "droppable": false,
+    //             "content": "",
+    //             "classes": [
+    //                 "slide_text"
+    //             ],
+    //             "components": [
+    //                 {
+    //                     "type": "textnode",
+    //                     "content": "This is description for image 1"
+    //                 },
+    //                 {
+    //                     "tagName": "br",
+    //                     "void": true
+    //                 }
+    //             ]
+    //         }
+    //     ]
+    // }
     slideNode.components[0].attributes.src = setup.media[0].src
     slideNode.components[1].components[0].content = setup.media[0].caption
     // obj.pages[0].frames[0].component.components[1].components[0].components[1].components[0].components[0].components[0] = slideNode
@@ -126,15 +192,80 @@ function getTemplate(setup) {
     // ---------------------------
     // ------ setting form --------
     // ---------------------------
-
-    let formNode = obj.pages[0].frames[0].component.components[3].components[0].components[0]
+                                            //body      //row 5      //cell 0   //form div
+    let formNode = obj.pages[0].frames[0].component.components[5].components[0].components[0]
+    // formNode -
+    // {
+    //     "type": "form",
+    //     "attributes": {
+    //         "method": "post",
+    //         "id": "io4p5",
+    //         "action": "http://localhost:4000/book/punam-mahal"
+    //     },
+    //     "components": [
+    //         {
+    //             "attributes": {
+    //                 "id": "ixnsm"
+    //             },
+    //             "components": [
+    //                 {
+    //                     "type": "text",
+    //                     "attributes": {
+    //                         "id": "i56gj"
+    //                     },
+    //                     "components": [
+    //                         {
+    //                             "type": "textnode",
+    //                             "content": "Enter your question here"
+    //                         },
+    //                         {
+    //                             "tagName": "br",
+    //                             "void": true
+    //                         }
+    //                     ]
+    //                 },
+    //                 {
+    //                     "type": "input",
+    //                     "void": true,
+    //                     "attributes": {
+    //                         "type": "text",
+    //                         "id": "iehcr",
+    //                         "name": "question",
+    //                         "required": true
+    //                     }
+    //                 }
+    //             ]
+    //         },
+    //         {
+    //             "attributes": {
+    //                 "id": "iu5x1"
+    //             },
+    //             "components": [
+    //                 {
+    //                     "type": "button",
+    //                     "attributes": {
+    //                         "type": "submit",
+    //                         "id": "idcqj"
+    //                     },
+    //                     "text": "BOOK NOW",
+    //                     "components": [
+    //                         {
+    //                             "type": "textnode",
+    //                             "content": "BOOK NOW"
+    //                         }
+    //                     ]
+    //                 }
+    //             ]
+    //         }
+    //     ]
+    // }
     formNode.attributes.action = process.env.HOST+"/book/" + setup.slug
 
     let divNode = formNode.components[0];
     let buttonDiv = formNode.components[formNode.components.length-1];
     divNode.components[0].components[0].content = setup.questions[0];
     divNode.components[1].attributes.name = setup.questions[0];
-    
+
     // editing text 
     let questionsDivArr = [divNode]
     for (let i = 1; i < setup.questions.length; i++) {
@@ -146,7 +277,7 @@ function getTemplate(setup) {
         newDiv.components[1].attributes.name = setup.questions[i];
         questionsDivArr = [...questionsDivArr, newDiv]
     }
-    obj.pages[0].frames[0].component.components[3].components[0].components[0].components = questionsDivArr;
+    obj.pages[0].frames[0].component.components[5].components[0].components[0].components = questionsDivArr;
 
     let divNodeStyle = [];
     let textNodeStyle = [];
@@ -180,9 +311,25 @@ function getTemplate(setup) {
         // console.log(...newDivStyle, ...newTextStyle, ...newInputStyle)
         obj.styles = [...obj.styles, ...newDivStyle, ...newTextStyle, ...newInputStyle]
     }
-    // for(let i)
+    
+    // -------  making what is your email id compulsary question in form ---
+    // divNode in formNode 
+    obj.pages[0].frames[0].component.components[5].components[0].components[0].components[0].removable = false;
+    obj.pages[0].frames[0].component.components[5].components[0].components[0].components[0].selectable = false;
+    // text div in div node
+    obj.pages[0].frames[0].component.components[5].components[0].components[0].components[0].components[0].removable = false;
+    obj.pages[0].frames[0].component.components[5].components[0].components[0].components[0].components[0].editable = false;
+    // text node in text div
+    obj.pages[0].frames[0].component.components[5].components[0].components[0].components[0].components[0].components[0].editable = false;
+    obj.pages[0].frames[0].component.components[5].components[0].components[0].components[0].components[0].components[0].removable = false;
 
-    obj.pages[0].frames[0].component.components[3].components[0].components[0].components.push(buttonDiv)
+    // input in div node
+    obj.pages[0].frames[0].component.components[5].components[0].components[0].components[0].components[1].removable = false;
+    obj.pages[0].frames[0].component.components[5].components[0].components[0].components[0].components[1].editable = false;
+    obj.pages[0].frames[0].component.components[5].components[0].components[0].components[0].components[1].selectable = false;
+    // --- that's it
+
+    obj.pages[0].frames[0].component.components[5].components[0].components[0].components.push(buttonDiv)
     return JSON.stringify(obj)
 }
 

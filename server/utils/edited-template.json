@@ -98,9 +98,11 @@
             "style": {
                 "font-size": "1.5rem",
                 "font-weight": "500",
-                "margin": "0px 0px 2rem 0px",
+                "margin": "0px 0px 1rem 0px",
                 "text-align": "center",
-                "font-family": "Verdana, Geneva, sans-serif"
+                "font-family": "Verdana, Geneva, sans-serif",
+                "padding": "10px 10px 10px 10px",
+                "background-color": "#ffffff"
             }
         },
         {
@@ -241,11 +243,309 @@
         },
         {
             "selectors": [
-                "#io9ag"
+                "#i1e19"
+            ],
+            "style": {
+                "margin": "0px 0px 2rem 0px"
+            }
+        },
+        {
+            "selectors": [
+                "#i7bkf"
+            ],
+            "style": {
+                "height": "auto",
+                "width": "auto"
+            }
+        },
+        {
+            "selectors": [
+                "#i7biz"
+            ],
+            "style": {
+                "background-color": "rgba(194,221,114,0.34)",
+                "height": "auto",
+                "padding": "20px 20px 20px 20px",
+                "width": "80%",
+                "display": "block",
+                "margin": "0px auto 0px auto",
+                "border-radius": "20px 20px 20px 20px",
+                "box-shadow": "0px 0px 20px 0px rgba(0,0,0,0.32) "
+            }
+        },
+        {
+            "selectors": [
+                "#i1jtz"
+            ],
+            "style": {
+                "margin": "0px 0px 2rem 0px"
+            }
+        },
+        {
+            "selectors": [
+                "#io4p5"
+            ],
+            "style": {
+                "padding": "10px 10px 10px 10px"
+            }
+        },
+        {
+            "selectors": [
+                "#ixnsm"
+            ],
+            "style": {
+                "padding": "10px 10px 10px 10px",
+                "margin": "0px 0px 1rem 0px"
+            }
+        },
+        {
+            "selectors": [
+                "#i56gj"
+            ],
+            "style": {
+                "padding": "10px"
+            }
+        },
+        {
+            "selectors": [
+                "#iehcr"
+            ],
+            "style": {
+                "width": "100%"
+            }
+        },
+        {
+            "selectors": [
+                "#oyGXk"
+            ],
+            "style": {
+                "padding": "10px",
+                "margin": "0 0 1rem 0",
+                "border-radius": "13px 0px 15px 0px",
+                "box-shadow": "0px 0px 2px 0px black ",
+                "transition": "background-color 0.2s ease"
+            }
+        },
+        {
+            "selectors": [
+                "#oyGXk"
+            ],
+            "style": {
+                "background-color": "rgba(52,200,102,0.13)"
+            },
+            "state": "hover"
+        },
+        {
+            "selectors": [
+                "#iX4WF"
+            ],
+            "style": {
+                "padding": "10px",
+                "margin": "0 0 1rem 0",
+                "border-radius": "13px 0px 15px 0px",
+                "box-shadow": "0px 0px 2px 0px black ",
+                "transition": "background-color 0.2s ease"
+            }
+        },
+        {
+            "selectors": [
+                "#iX4WF"
+            ],
+            "style": {
+                "background-color": "rgba(52,200,102,0.13)"
+            },
+            "state": "hover"
+        },
+        {
+            "selectors": [
+                "#JX7hJ"
+            ],
+            "style": {
+                "padding": "10px",
+                "margin": "0 0 1rem 0",
+                "border-radius": "13px 0px 15px 0px",
+                "box-shadow": "0px 0px 2px 0px black ",
+                "transition": "background-color 0.2s ease"
+            }
+        },
+        {
+            "selectors": [
+                "#JX7hJ"
+            ],
+            "style": {
+                "background-color": "rgba(52,200,102,0.13)"
+            },
+            "state": "hover"
+        },
+        {
+            "selectors": [
+                "#ll7BP"
+            ],
+            "style": {
+                "padding": "10px",
+                "margin": "0 0 1rem 0",
+                "border-radius": "13px 0px 15px 0px",
+                "box-shadow": "0px 0px 2px 0px black ",
+                "transition": "background-color 0.2s ease"
+            }
+        },
+        {
+            "selectors": [
+                "#ll7BP"
+            ],
+            "style": {
+                "background-color": "rgba(52,200,102,0.13)"
+            },
+            "state": "hover"
+        },
+        {
+            "selectors": [
+                "#NUkGR"
             ],
             "style": {
                 "min-height": "30px",
                 "min-width": "100%"
+            }
+        },
+        {
+            "selectors": [
+                "#B32az"
+            ],
+            "style": {
+                "min-height": "30px",
+                "min-width": "100%"
+            }
+        },
+        {
+            "selectors": [
+                "#97S3V"
+            ],
+            "style": {
+                "min-height": "30px",
+                "min-width": "100%"
+            }
+        },
+        {
+            "selectors": [
+                "#lfPO3"
+            ],
+            "style": {
+                "min-height": "30px",
+                "min-width": "100%"
+            }
+        },
+        {
+            "selectors": [
+                "#QetIW"
+            ],
+            "style": {
+                "padding": "10px 10px 10px 10px",
+                "margin": "0px 0px 1rem 0px"
+            }
+        },
+        {
+            "selectors": [
+                "#otmPe"
+            ],
+            "style": {
+                "padding": "10px"
+            }
+        },
+        {
+            "selectors": [
+                "#4mzRK"
+            ],
+            "style": {
+                "width": "100%"
+            }
+        },
+        {
+            "selectors": [
+                "#LmIeO"
+            ],
+            "style": {
+                "padding": "10px 10px 10px 10px",
+                "margin": "0px 0px 1rem 0px"
+            }
+        },
+        {
+            "selectors": [
+                "#foXvd"
+            ],
+            "style": {
+                "padding": "10px"
+            }
+        },
+        {
+            "selectors": [
+                "#TmpVM"
+            ],
+            "style": {
+                "width": "100%"
+            }
+        },
+        {
+            "selectors": [
+                "#ESB9m"
+            ],
+            "style": {
+                "padding": "10px 10px 10px 10px",
+                "margin": "0px 0px 1rem 0px"
+            }
+        },
+        {
+            "selectors": [
+                "#P5RSp"
+            ],
+            "style": {
+                "padding": "10px"
+            }
+        },
+        {
+            "selectors": [
+                "#6Bmmo"
+            ],
+            "style": {
+                "width": "100%"
+            }
+        },
+        {
+            "selectors": [
+                "#bBi5x"
+            ],
+            "style": {
+                "padding": "10px 10px 10px 10px",
+                "margin": "0px 0px 1rem 0px"
+            }
+        },
+        {
+            "selectors": [
+                "#CTzJ6"
+            ],
+            "style": {
+                "padding": "10px"
+            }
+        },
+        {
+            "selectors": [
+                "#dURAT"
+            ],
+            "style": {
+                "width": "100%"
+            }
+        },
+        {
+            "selectors": [
+                "#imj9p"
+            ],
+            "style": {
+                "font-size": "1.5rem",
+                "font-weight": "500",
+                "margin": "0px 0px 1rem 0px",
+                "text-align": "center",
+                "font-family": "Verdana, Geneva, sans-serif",
+                "padding": "10px 10px 10px 10px",
+                "background-color": "#ffffff"
             }
         }
     ],
@@ -326,7 +626,7 @@
                                                 "components": [
                                                     {
                                                         "type": "textnode",
-                                                        "content": "TITLE OF THE WEBPAGE"
+                                                        "content": "PUNAM MAHAL CONVENTION HALL"
                                                     },
                                                     {
                                                         "tagName": "br",
@@ -450,7 +750,7 @@
                                                                                 "attributes": {
                                                                                     "width": "100%",
                                                                                     "height": "auto",
-                                                                                    "src": "https://source.unsplash.com/random/500x300/?img=1"
+                                                                                    "src": "https://i.ibb.co/myXmZ64/eca0b7f018c5.png"
                                                                                 }
                                                                             },
                                                                             {
@@ -463,7 +763,7 @@
                                                                                 "components": [
                                                                                     {
                                                                                         "type": "textnode",
-                                                                                        "content": "This is description for slide 1"
+                                                                                        "content": "Punam Mahal Convention Hall in day"
                                                                                     },
                                                                                     {
                                                                                         "tagName": "br",
@@ -480,7 +780,7 @@
                                                                             "splide__slide"
                                                                         ],
                                                                         "attributes": {
-                                                                            "id": "io9ag"
+                                                                            "id": "NUkGR"
                                                                         },
                                                                         "components": [
                                                                             {
@@ -495,7 +795,7 @@
                                                                                 "attributes": {
                                                                                     "width": "100%",
                                                                                     "height": "auto",
-                                                                                    "src": "https://source.unsplash.com/random/500x300/?img=2"
+                                                                                    "src": "https://i.ibb.co/Z60kQWH/cb8b9b9e3597.png"
                                                                                 }
                                                                             },
                                                                             {
@@ -508,7 +808,142 @@
                                                                                 "components": [
                                                                                     {
                                                                                         "type": "textnode",
-                                                                                        "content": "This is description for slide 2"
+                                                                                        "content": "Grand function in punam mahal"
+                                                                                    },
+                                                                                    {
+                                                                                        "tagName": "br",
+                                                                                        "void": true
+                                                                                    }
+                                                                                ]
+                                                                            }
+                                                                        ]
+                                                                    },
+                                                                    {
+                                                                        "type": "slide",
+                                                                        "style": "",
+                                                                        "classes": [
+                                                                            "splide__slide"
+                                                                        ],
+                                                                        "attributes": {
+                                                                            "id": "B32az"
+                                                                        },
+                                                                        "components": [
+                                                                            {
+                                                                                "type": "slideImage",
+                                                                                "droppable": false,
+                                                                                "resizable": {
+                                                                                    "ratioDefault": 1
+                                                                                },
+                                                                                "classes": [
+                                                                                    "slide_image"
+                                                                                ],
+                                                                                "attributes": {
+                                                                                    "width": "100%",
+                                                                                    "height": "auto",
+                                                                                    "src": "https://i.ibb.co/cQ4bWm7/467a8a34de8d.png"
+                                                                                }
+                                                                            },
+                                                                            {
+                                                                                "type": "slideText",
+                                                                                "droppable": false,
+                                                                                "content": "",
+                                                                                "classes": [
+                                                                                    "slide_text"
+                                                                                ],
+                                                                                "components": [
+                                                                                    {
+                                                                                        "type": "textnode",
+                                                                                        "content": "Punam Mahal Convention Decorated for a function"
+                                                                                    },
+                                                                                    {
+                                                                                        "tagName": "br",
+                                                                                        "void": true
+                                                                                    }
+                                                                                ]
+                                                                            }
+                                                                        ]
+                                                                    },
+                                                                    {
+                                                                        "type": "slide",
+                                                                        "style": "",
+                                                                        "classes": [
+                                                                            "splide__slide"
+                                                                        ],
+                                                                        "attributes": {
+                                                                            "id": "97S3V"
+                                                                        },
+                                                                        "components": [
+                                                                            {
+                                                                                "type": "slideImage",
+                                                                                "droppable": false,
+                                                                                "resizable": {
+                                                                                    "ratioDefault": 1
+                                                                                },
+                                                                                "classes": [
+                                                                                    "slide_image"
+                                                                                ],
+                                                                                "attributes": {
+                                                                                    "width": "100%",
+                                                                                    "height": "auto",
+                                                                                    "src": "https://i.ibb.co/CJwq5fX/b62877d35aa4.png"
+                                                                                }
+                                                                            },
+                                                                            {
+                                                                                "type": "slideText",
+                                                                                "droppable": false,
+                                                                                "content": "",
+                                                                                "classes": [
+                                                                                    "slide_text"
+                                                                                ],
+                                                                                "components": [
+                                                                                    {
+                                                                                        "type": "textnode",
+                                                                                        "content": "Punam Mahal Convention Hall in night"
+                                                                                    },
+                                                                                    {
+                                                                                        "tagName": "br",
+                                                                                        "void": true
+                                                                                    }
+                                                                                ]
+                                                                            }
+                                                                        ]
+                                                                    },
+                                                                    {
+                                                                        "type": "slide",
+                                                                        "style": "",
+                                                                        "classes": [
+                                                                            "splide__slide"
+                                                                        ],
+                                                                        "attributes": {
+                                                                            "id": "lfPO3"
+                                                                        },
+                                                                        "components": [
+                                                                            {
+                                                                                "type": "slideImage",
+                                                                                "droppable": false,
+                                                                                "resizable": {
+                                                                                    "ratioDefault": 1
+                                                                                },
+                                                                                "classes": [
+                                                                                    "slide_image"
+                                                                                ],
+                                                                                "attributes": {
+                                                                                    "width": "100%",
+                                                                                    "height": "auto",
+                                                                                    "src": "https://i.ibb.co/rwdMr5F/126a2327d977.png"
+                                                                                }
+                                                                            },
+                                                                            {
+                                                                                "type": "slideText",
+                                                                                "droppable": false,
+                                                                                "content": "",
+                                                                                "classes": [
+                                                                                    "slide_text"
+                                                                                ],
+                                                                                "components": [
+                                                                                    {
+                                                                                        "type": "textnode",
+                                                                                        "content": "A program happeing at Punam Mahal Convention Hall"
                                                                                     },
                                                                                     {
                                                                                         "tagName": "br",
@@ -650,11 +1085,347 @@
                                                                 "components": [
                                                                     {
                                                                         "type": "textnode",
-                                                                        "content": "Feature 1"
+                                                                        "content": "Punam Mahal Convention Hall offers air-condi=kup, a fully-equipped kitchen, dance floor, elevator, and a suite of essential services, including Purohit, Photographer, Videographer, Florist, Choreographer, Astrologer, and Caterer."
                                                                     },
                                                                     {
                                                                         "tagName": "br",
                                                                         "void": true
+                                                                    }
+                                                                ]
+                                                            },
+                                                            {
+                                                                "type": "text",
+                                                                "attributes": {
+                                                                    "id": "oyGXk"
+                                                                },
+                                                                "components": [
+                                                                    {
+                                                                        "type": "textnode",
+                                                                        "content": "Enjoy an Orchestra, Security Guards, and the option for External Catering. The hall provides its decorator services, allowing for seamless event planning. Hawan and Baraat ceremonies are accommodated."
+                                                                    },
+                                                                    {
+                                                                        "tagName": "br",
+                                                                        "void": true
+                                                                    }
+                                                                ]
+                                                            },
+                                                            {
+                                                                "type": "text",
+                                                                "attributes": {
+                                                                    "id": "iX4WF"
+                                                                },
+                                                                "components": [
+                                                                    {
+                                                                        "type": "textnode",
+                                                                        "content": "The venue maintains a serene atmosphere by restricting smoking, alcohol (both inside and external), loud music, external decorators, and firecrackers."
+                                                                    },
+                                                                    {
+                                                                        "tagName": "br",
+                                                                        "void": true
+                                                                    }
+                                                                ]
+                                                            },
+                                                            {
+                                                                "type": "text",
+                                                                "attributes": {
+                                                                    "id": "JX7hJ"
+                                                                },
+                                                                "components": [
+                                                                    {
+                                                                        "type": "textnode",
+                                                                        "content": "Punam Mahal embraces diverse events with permissions for Hawan and Baraat, while pets are not allowed."
+                                                                    },
+                                                                    {
+                                                                        "tagName": "br",
+                                                                        "void": true
+                                                                    }
+                                                                ]
+                                                            },
+                                                            {
+                                                                "type": "text",
+                                                                "attributes": {
+                                                                    "id": "ll7BP"
+                                                                },
+                                                                "components": [
+                                                                    {
+                                                                        "type": "textnode",
+                                                                        "content": "Ensure uninterrupted festivities with the venue's dependable power backup system."
+                                                                    },
+                                                                    {
+                                                                        "tagName": "br",
+                                                                        "void": true
+                                                                    }
+                                                                ]
+                                                            }
+                                                        ]
+                                                    }
+                                                ]
+                                            }
+                                        ]
+                                    }
+                                ]
+                            },
+                            {
+                                "type": "text",
+                                "attributes": {
+                                    "id": "imj9p"
+                                },
+                                "components": [
+                                    {
+                                        "type": "textnode",
+                                        "content": "Why Wait , Book Now"
+                                    },
+                                    {
+                                        "tagName": "br",
+                                        "void": true
+                                    }
+                                ]
+                            },
+                            {
+                                "name": "Row",
+                                "droppable": ".gjs-cell",
+                                "resizable": {
+                                    "tl": 0,
+                                    "tc": 0,
+                                    "tr": 0,
+                                    "cl": 0,
+                                    "cr": 0,
+                                    "bl": 0,
+                                    "br": 0,
+                                    "minDim": 1
+                                },
+                                "classes": [
+                                    {
+                                        "name": "gjs-row",
+                                        "private": 1
+                                    }
+                                ],
+                                "attributes": {
+                                    "id": "i1jtz"
+                                },
+                                "components": [
+                                    {
+                                        "name": "Cell",
+                                        "draggable": ".gjs-row",
+                                        "resizable": {
+                                            "tl": 0,
+                                            "tc": 0,
+                                            "tr": 0,
+                                            "cl": 0,
+                                            "cr": 1,
+                                            "bl": 0,
+                                            "br": 0,
+                                            "minDim": 1,
+                                            "bc": 0,
+                                            "currentUnit": 1,
+                                            "step": 0.2
+                                        },
+                                        "classes": [
+                                            {
+                                                "name": "gjs-cell",
+                                                "private": 1
+                                            }
+                                        ],
+                                        "attributes": {
+                                            "id": "i7biz"
+                                        },
+                                        "components": [
+                                            {
+                                                "type": "form",
+                                                "attributes": {
+                                                    "method": "post",
+                                                    "id": "io4p5",
+                                                    "action": "http://localhost:4000/book/punam-mahal"
+                                                },
+                                                "components": [
+                                                    {
+                                                        "removable": false,
+                                                        "selectable": false,
+                                                        "hoverable": false,
+                                                        "attributes": {
+                                                            "id": "ixnsm"
+                                                        },
+                                                        "components": [
+                                                            {
+                                                                "type": "text",
+                                                                "removable": false,
+                                                                "editable": false,
+                                                                "selectable": false,
+                                                                "hoverable": false,
+                                                                "attributes": {
+                                                                    "id": "i56gj"
+                                                                },
+                                                                "components": [
+                                                                    {
+                                                                        "type": "textnode",
+                                                                        "content": "What is your email id ?"
+                                                                    },
+                                                                    {
+                                                                        "tagName": "br",
+                                                                        "void": true
+                                                                    }
+                                                                ]
+                                                            },
+                                                            {
+                                                                "type": "input",
+                                                                "removable": false,
+                                                                "selectable": false,
+                                                                "hoverable": false,
+                                                                "void": true,
+                                                                "attributes": {
+                                                                    "type": "email",
+                                                                    "id": "iehcr",
+                                                                    "name": "What is your email id ?",
+                                                                    "required": true
+                                                                }
+                                                            }
+                                                        ]
+                                                    },
+                                                    {
+                                                        "attributes": {
+                                                            "id": "QetIW"
+                                                        },
+                                                        "components": [
+                                                            {
+                                                                "type": "text",
+                                                                "attributes": {
+                                                                    "id": "otmPe"
+                                                                },
+                                                                "components": [
+                                                                    {
+                                                                        "type": "textnode",
+                                                                        "content": "Will your event feature a vegetarian menu, or do you prefer non-vegetarian options?"
+                                                                    },
+                                                                    {
+                                                                        "tagName": "br",
+                                                                        "void": true
+                                                                    }
+                                                                ]
+                                                            },
+                                                            {
+                                                                "type": "input",
+                                                                "void": true,
+                                                                "attributes": {
+                                                                    "type": "text",
+                                                                    "id": "4mzRK",
+                                                                    "name": "Will your event feature a vegetarian menu, or do you prefer non-vegetarian options?",
+                                                                    "required": true
+                                                                }
+                                                            }
+                                                        ]
+                                                    },
+                                                    {
+                                                        "attributes": {
+                                                            "id": "LmIeO"
+                                                        },
+                                                        "components": [
+                                                            {
+                                                                "type": "text",
+                                                                "attributes": {
+                                                                    "id": "foXvd"
+                                                                },
+                                                                "components": [
+                                                                    {
+                                                                        "type": "textnode",
+                                                                        "content": "What date and time are you considering for your event?"
+                                                                    },
+                                                                    {
+                                                                        "tagName": "br",
+                                                                        "void": true
+                                                                    }
+                                                                ]
+                                                            },
+                                                            {
+                                                                "type": "input",
+                                                                "void": true,
+                                                                "attributes": {
+                                                                    "type": "text",
+                                                                    "id": "TmpVM",
+                                                                    "name": "What date and time are you considering for your event?"
+                                                                }
+                                                            }
+                                                        ]
+                                                    },
+                                                    {
+                                                        "attributes": {
+                                                            "id": "ESB9m"
+                                                        },
+                                                        "components": [
+                                                            {
+                                                                "type": "text",
+                                                                "attributes": {
+                                                                    "id": "P5RSp"
+                                                                },
+                                                                "components": [
+                                                                    {
+                                                                        "type": "textnode",
+                                                                        "content": "What type of event are you planning (e.g., wedding, corporate event, party)?"
+                                                                    },
+                                                                    {
+                                                                        "tagName": "br",
+                                                                        "void": true
+                                                                    }
+                                                                ]
+                                                            },
+                                                            {
+                                                                "type": "input",
+                                                                "void": true,
+                                                                "attributes": {
+                                                                    "type": "text",
+                                                                    "id": "6Bmmo",
+                                                                    "name": "What type of event are you planning (e.g., wedding, corporate event, party)?"
+                                                                }
+                                                            }
+                                                        ]
+                                                    },
+                                                    {
+                                                        "attributes": {
+                                                            "id": "bBi5x"
+                                                        },
+                                                        "components": [
+                                                            {
+                                                                "type": "text",
+                                                                "attributes": {
+                                                                    "id": "CTzJ6"
+                                                                },
+                                                                "components": [
+                                                                    {
+                                                                        "type": "textnode",
+                                                                        "content": "How many guests are you expecting to attend?"
+                                                                    },
+                                                                    {
+                                                                        "tagName": "br",
+                                                                        "void": true
+                                                                    }
+                                                                ]
+                                                            },
+                                                            {
+                                                                "type": "input",
+                                                                "void": true,
+                                                                "attributes": {
+                                                                    "type": "text",
+                                                                    "id": "dURAT",
+                                                                    "name": "How many guests are you expecting to attend?"
+                                                                }
+                                                            }
+                                                        ]
+                                                    },
+                                                    {
+                                                        "attributes": {
+                                                            "id": "iu5x1"
+                                                        },
+                                                        "components": [
+                                                            {
+                                                                "type": "button",
+                                                                "attributes": {
+                                                                    "type": "submit",
+                                                                    "id": "idcqj"
+                                                                },
+                                                                "text": "Book",
+                                                                "components": [
+                                                                    {
+                                                                        "type": "textnode",
+                                                                        "content": "Book"
                                                                     }
                                                                 ]
                                                             }

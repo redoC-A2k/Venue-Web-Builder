@@ -327,6 +327,83 @@
             "style": {
                 "width": "100%"
             }
+        },
+        {
+            "selectors": [
+                "#ibz2g"
+            ],
+            "style": {
+                "font-size": "1.5rem",
+                "font-weight": "500",
+                "margin": "0px 0px 1rem 0px",
+                "text-align": "center",
+                "font-family": "Verdana, Geneva, sans-serif",
+                "padding": "10px 10px 10px 10px",
+                "background-color": "#ffffff"
+            }
+        },
+        {
+            "selectors": [
+                "#influ"
+            ],
+            "style": {
+                "background-color": "rgba(194,221,114,0.34)",
+                "height": "auto",
+                "padding": "20px 20px 20px 20px",
+                "width": "75%",
+                "display": "block",
+                "margin": "0px auto 0px auto"
+            }
+        },
+        {
+            "selectors": [
+                "#iugr5"
+            ],
+            "style": {
+                "margin": "0px 0px 2rem 0px"
+            }
+        },
+        {
+            "selectors": [
+                "#i6vff"
+            ],
+            "style": {
+                "height": "auto",
+                "width": "auto"
+            }
+        },
+        {
+            "selectors": [
+                "#ih1uh"
+            ],
+            "style": {
+                "padding": "0px 0px 0px 0px",
+                "margin": "3rem 0px 0px 0px"
+            }
+        },
+        {
+            "selectors": [
+                "#idcqj"
+            ],
+            "style": {
+                "padding": "10px 15px 10px 15px",
+                "font-family": "Tahoma, Geneva, sans-serif",
+                "letter-spacing": "1.5px",
+                "border-radius": "10px 10px 10px 10px",
+                "box-shadow": "0px 0px 15px 0.5px rgba(0,0,0,0.64) ",
+                "border": "0px solid black",
+                "transition": "box-shadow 0.2s ease, background-color 0.2s ease"
+            }
+        },
+        {
+            "selectors": [
+                "#idcqj"
+            ],
+            "style": {
+                "background-color": "#85df5f",
+                "box-shadow": "0px 0px 1px 0px black "
+            },
+            "state": "hover"
         }
     ],
     "pages": [
@@ -696,24 +773,152 @@
                                                         ]
                                                     }
                                                 ]
-                                            },
+                                            }
+                                        ]
+                                    }
+                                ]
+                            },
+                            {
+                                "name": "Row",
+                                "droppable": ".gjs-cell",
+                                "resizable": {
+                                    "tl": 0,
+                                    "tc": 0,
+                                    "tr": 0,
+                                    "cl": 0,
+                                    "cr": 0,
+                                    "bl": 0,
+                                    "br": 0,
+                                    "minDim": 1
+                                },
+                                "classes": [
+                                    {
+                                        "name": "gjs-row",
+                                        "private": 1
+                                    }
+                                ],
+                                "attributes": {
+                                    "id": "ih1uh"
+                                },
+                                "components": [
+                                    {
+                                        "name": "Cell",
+                                        "draggable": ".gjs-row",
+                                        "resizable": {
+                                            "tl": 0,
+                                            "tc": 0,
+                                            "tr": 0,
+                                            "cl": 0,
+                                            "cr": 1,
+                                            "bl": 0,
+                                            "br": 0,
+                                            "minDim": 1,
+                                            "bc": 0,
+                                            "currentUnit": 1,
+                                            "step": 0.2
+                                        },
+                                        "classes": [
+                                            {
+                                                "name": "gjs-cell",
+                                                "private": 1
+                                            }
+                                        ],
+                                        "attributes": {
+                                            "id": "i6vff"
+                                        },
+                                        "components": [
                                             {
                                                 "type": "text",
                                                 "attributes": {
-                                                    "id": "il1b8"
+                                                    "id": "ibz2g"
                                                 },
                                                 "components": [
                                                     {
                                                         "type": "textnode",
-                                                        "content": "Why Wait , Book Now"
-                                                    },
+                                                        "content": "Check Date"
+                                                    }
+                                                ]
+                                            },
+                                            {
+                                                "name": "Row",
+                                                "droppable": ".gjs-cell",
+                                                "resizable": {
+                                                    "tl": 0,
+                                                    "tc": 0,
+                                                    "tr": 0,
+                                                    "cl": 0,
+                                                    "cr": 0,
+                                                    "bl": 0,
+                                                    "br": 0,
+                                                    "minDim": 1
+                                                },
+                                                "classes": [
                                                     {
-                                                        "tagName": "br",
-                                                        "void": true
+                                                        "name": "gjs-row",
+                                                        "private": 1
+                                                    }
+                                                ],
+                                                "attributes": {
+                                                    "id": "iugr5"
+                                                },
+                                                "components": [
+                                                    {
+                                                        "name": "Cell",
+                                                        "draggable": ".gjs-row",
+                                                        "resizable": {
+                                                            "tl": 0,
+                                                            "tc": 0,
+                                                            "tr": 0,
+                                                            "cl": 0,
+                                                            "cr": 1,
+                                                            "bl": 0,
+                                                            "br": 0,
+                                                            "minDim": 1,
+                                                            "bc": 0,
+                                                            "currentUnit": 1,
+                                                            "step": 0.2
+                                                        },
+                                                        "classes": [
+                                                            {
+                                                                "name": "gjs-cell",
+                                                                "private": 1
+                                                            }
+                                                        ],
+                                                        "attributes": {
+                                                            "id": "influ"
+                                                        },
+                                                        "components": [
+                                                            {
+                                                                "type": "calendar",
+                                                                "classes": [
+                                                                    "fcCalendar"
+                                                                ],
+                                                                "attributes": {
+                                                                    "style": "min-width:10%;min-height:30px;",
+                                                                    "data-gjs-editable": "false"
+                                                                }
+                                                            }
+                                                        ]
                                                     }
                                                 ]
                                             }
                                         ]
+                                    }
+                                ]
+                            },
+                            {
+                                "type": "text",
+                                "attributes": {
+                                    "id": "il1b8"
+                                },
+                                "components": [
+                                    {
+                                        "type": "textnode",
+                                        "content": "Why Wait , Book Now"
+                                    },
+                                    {
+                                        "tagName": "br",
+                                        "void": true
                                     }
                                 ]
                             },
@@ -802,7 +1007,7 @@
                                                                     "type": "text",
                                                                     "id": "iehcr",
                                                                     "name": "question",
-                                                                    "required":true
+                                                                    "required": true
                                                                 }
                                                             }
                                                         ]
@@ -818,11 +1023,11 @@
                                                                     "type": "submit",
                                                                     "id": "idcqj"
                                                                 },
-                                                                "text": "Book",
+                                                                "text": "BOOK NOW",
                                                                 "components": [
                                                                     {
                                                                         "type": "textnode",
-                                                                        "content": "Book"
+                                                                        "content": "BOOK NOW"
                                                                     }
                                                                 ]
                                                             }
