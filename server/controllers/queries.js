@@ -31,35 +31,29 @@ exports.getQueriesForVenue = async (req, res) => {
 // TODO: test this , by adding one more document besides punam-mahal
 exports.deleteAllOldQueries = async (req, res) => {
     try {
-        const allDocs = await db.collection("queries").get();
-        let date = dayjs().subtract(365, 'day');
+        const allVenues = await db.collection("queries").get();
+        let oneYearBackDate = dayjs().subtract(365, 'day');
         let bulkWriter = db.bulkWriter();
-        allDocs.forEach(doc => {
-            // console.dir(doc.id+" - ",{depth:null});
-            // console.dir(doc.data(),{depth:null});
-            let newQueriesMap = {}
-            let queriesMap = doc.data().queriesmap;
-            let found = false;
-            for (let queryDateStr in queriesMap) {
-                let queryDateArr = queryDateStr.split('-');
-                let queryDate = dayjs(new Date(Number(queryDateArr[2]), Number(queryDateArr[1]) - 1, Number(queryDateArr[0])))
-                if (queryDate < date) {
-                    console.log(queryDate.date() + "-" + (queryDate.month() + 1) + "-" + queryDate.year())
-                    found = true;
-                }
-                else {
-                    newQueriesMap[queryDateStr] = queriesMap[queryDateStr]
-                }
-            }
-            if (found)
-                bulkWriter.update(doc.ref, { queriesmap: newQueriesMap });
+        let venuesCollectionPromiseArr = []
+        allVenues.forEach(doc => {
+            venuesCollectionPromiseArr.push(db.collection('queries/' + doc.id + '/queries').get())
         })
-        let response = await bulkWriter.close()
+        let venuesCollectionArr = await Promise.all(venuesCollectionPromiseArr)
+        venuesCollectionArr.forEach(venue => {
+            venue.docs.forEach(doc => {
+                // console.log(dayjs(Number(doc.id)).toISOString()," - ",doc.data())
+                if (dayjs(Number(doc.id)).unix() < oneYearBackDate.unix()) {
+                    bulkWriter.delete(doc.ref)
+                }
+            })
+        })
+        let response = await bulkWriter.flush()
         console.log("Bulk writer commit : " + response)
+        await bulkWriter.close()
         res.status(200).json("All old queries deleted")
     } catch (error) {
         console.log("Error while deleting all old queries : " + error)
-        res.status(500).json("Unable to delete old queries")
+        // res.status(500).json("Unable to delete old queries")
     }
 }
 
@@ -74,7 +68,7 @@ exports.postQueryMail = async (req, res) => {
             endDate: req.body.endDate,
         }
         const isColliding = await isEventColliding(newEvent, setup.slug)
-        
+
         if (isColliding)
             return res.status(409).json("Event is colliding with another event")
 
