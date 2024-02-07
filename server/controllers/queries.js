@@ -47,13 +47,13 @@ exports.deleteAllOldQueries = async (req, res) => {
                 }
             })
         })
-        let response = await bulkWriter.flush()
-        console.log("Bulk writer commit : " + response)
-        await bulkWriter.close()
-        res.status(200).json("All old queries deleted")
+        await bulkWriter.flush().then(() => {
+            console.log("Executed all queries")
+            res.status(200).json("All old queries deleted")
+        })
     } catch (error) {
         console.log("Error while deleting all old queries : " + error)
-        // res.status(500).json("Unable to delete old queries")
+        res.status(500).json("Unable to delete old queries")
     }
 }
 
