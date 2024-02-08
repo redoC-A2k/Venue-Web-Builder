@@ -59,32 +59,31 @@ function Editor(props) {
                 },
                 pluginsOpts: {
                     [grapesjs_blocks_basic]: {
-                        blocks:['column1', 'column2', 'column3', 'column3-7', 'text', 'link', 'image']
+                        blocks: ['column1', 'column2', 'column3', 'column3-7', 'text', 'link', 'image']
                     },
                     [grapesjs_plugin_forms]: {},
                     [CarouselPlugin]: {},
                     [grapesjs_navbar_plugin]: {},
                     [CalendarPlugin]: {
                         aspectRatio: 1.77,
-                        functionEnv: {
-                            slug: stepsData.slug
-                        },
-                        events: async function (info, successCallback, failureCallback) {
-                            try {
-                                let response = fetch(process.env.REACT_APP_HOSTNAME + `/venue/${slug}/events?start=${info.startStr}&end=${info.endStr}`, {
-                                    method: 'GET',
-                                    headers: {
-                                        "Content-Type": 'application/json',
-                                    }
-                                })
-                                response = await (await response).json()
-                                successCallback(response)
-                            } catch (error) {
-                                console.log(error)
-                                failureCallback(error?.response)
-                            }
-                            // failureCallback()
-                        },
+                        // events: function (info, successCallback, failureCallback) {
+                        //     fetch(process.env.REACT_APP_HOSTNAME + `/venue/${slug}/events?start=${info.startStr}&end=${info.endStr}`, {
+                        //         method: 'GET',
+                        //         headers: {
+                        //             "Content-Type": 'application/json',
+                        //         }
+                        //     }).then(response => response.json())
+                        //         .then(data => {
+                        //             console.log(data)
+                        //             successCallback(data)
+                        //         }).catch((error) => {
+                        //             console.log(error)
+                        //             failureCallback(error?.response)
+                        //         })
+
+                        //     // failureCallback()
+                        // },
+                        events:process.env.REACT_APP_HOSTNAME + `/venue/${slug}/events`,
                         eventContent: (info) => {
                             const title = info.event.title
                             const start = info.event.start
