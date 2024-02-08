@@ -2,11 +2,9 @@ import { useContext, useEffect, useRef, useState } from "react";
 import { Calendar } from '@fullcalendar/core'
 import dayGridPlugin from '@fullcalendar/daygrid'
 import timeGridPlugin from '@fullcalendar/timegrid'
-import listPlugin from '@fullcalendar/list'
 import { months, years } from "../utils/calendar";
 import axios from "axios";
 import { hideLoader, showLoader } from "../utils/loader";
-import { auth } from "../firebase";
 import { useNavigate } from "react-router-dom";
 import toast from 'react-hot-toast'
 
@@ -48,7 +46,7 @@ const Events = (props) => {
         showLoader()
         async function initEvents() {
             try {
-                if (user != undefined) {
+                if (user !== undefined) {
                     let token = await user.getIdToken()
                     let events = await axios.get(process.env.REACT_APP_HOSTNAME + "/venue/events", {
                         headers: {
@@ -96,8 +94,8 @@ const Events = (props) => {
                 hideLoader()
             }
         }
-
         initEvents()
+        //eslint-disable-next-line react-hooks/exhaustive-deps
     }, [user, stepsData])
 
     // ------- FullCalendar methods -------
@@ -151,7 +149,7 @@ const Events = (props) => {
 
     function handleChange(e) {
         setFormData({ ...formData, [e.target.name]: e.target.value })
-        if (e.target.value != "")
+        if (e.target.value !== "")
             setErrors({ ...errors, [e.target.name]: "" })
         else {
             let name = e.target.name

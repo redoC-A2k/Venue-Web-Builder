@@ -5,7 +5,7 @@ function Logout(){
     const navigate = useNavigate();
     const logout = () => {
         auth.signOut().then(() => {
-            navigate('/logout')
+            navigate('/login')
         }).catch((error) => {
             console.log(error)
         })

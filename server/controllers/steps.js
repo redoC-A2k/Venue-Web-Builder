@@ -14,8 +14,8 @@ exports.postStepsData = async (req, res) => {
 }
 
 exports.getStepsData = async (req, res) => {
-    const steps = (await db.collection("setup").doc(req.uid).get()).data()
-    if (!steps) {
+    const steps = (await db.collection("setup").doc(req.uid).get())
+    if(!steps.exists){
         return res.status(404).json({ steps: false })
     } else {
         return res.status(201).json({

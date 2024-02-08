@@ -356,37 +356,37 @@ const Steps = (props) => {
     const navigate = useNavigate()
     const { user, stepsData } = useContext(globalContext)
     useEffect(() => {
-        async function initSteps() {
-            try {
-                hideLoader()
-                console.log(user)
-                if (user != null) {
-                    let token = await user.getIdToken();
-                    let response = await axios.get(hostname + "/venue/web/steps", {
-                        headers: {
-                            'Content-Type': 'application/json',
-                            Authorization: token
-                        }
-                    })
-                    hideLoader()
-                    if (response.status === 201) {
-                        navigate('/')
-                        // toast("Steps can only be filled once",{duration: 5000,icon: "✅"})
-                        toast.success("Steps can only be filled once", { duration: 5000 })
-                    }
-                }
-            } catch (error) {
-                if (error.response && error.response.data)
-                    console.log(error.response.data)
-                else console.log(error)
-                if (error.response && error.response.status == 401) {
-                    navigate('/login')
-                    window.location.reload()
-                }
+        try {
+            hideLoader()
+            if (stepsData !== null && stepsData !== undefined && stepsData.steps === true) {
+                navigate('/')
+                toast.success("Steps can only be filled once", { duration: 5000 })
+            }
+            // if (stepsData != null) {
+            //     let token = await user.getIdToken();
+            //     let response = await axios.get(hostname + "/venue/web/steps", {
+            //         headers: {
+            //             'Content-Type': 'application/json',
+            //             Authorization: token
+            //         }
+            //     })
+            //     hideLoader()
+            //     if (response.status === 201) {
+            //         navigate('/')
+            //         // toast("Steps can only be filled once",{duration: 5000,icon: "✅"})
+            //         toast.success("Steps can only be filled once", { duration: 5000 })
+            //     }
+            // }
+        } catch (error) {
+            if (error.response && error.response.data)
+                console.log(error.response.data)
+            else console.log(error)
+            if (error.response && error.response.status == 401) {
+                navigate('/login')
+                window.location.reload()
             }
         }
-        if (user)
-            initSteps()
+
     }, [user])
 
     const [formData, setFormData] = useState({

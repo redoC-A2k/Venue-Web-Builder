@@ -7,8 +7,8 @@ import Queries from './Screens/Queries.jsx';
 import { Toaster } from 'react-hot-toast';
 import Logout from './Screens/Logout.jsx';
 import Events from './Screens/Events.jsx';
-import {  useEffect, useState } from 'react';
-import {  hideLoader, showLoader } from './utils/loader.js';
+import { useEffect, useState } from 'react';
+import { hideLoader, showLoader } from './utils/loader.js';
 
 import { createContext } from 'react'
 import { auth } from './firebase.js';
@@ -25,7 +25,7 @@ function App() {
         showLoader()
         auth.onAuthStateChanged(async (firebaseUser) => {
             try {
-                if (firebaseUser != undefined) {
+                if (firebaseUser !== null && firebaseUser !== undefined) {
                     let token = await firebaseUser.getIdToken();
                     let response = await axios.get(process.env.REACT_APP_HOSTNAME + "/venue/web/steps", {
                         headers: {
@@ -34,6 +34,7 @@ function App() {
                         }
                     })
                     setStepsData(response.data)
+                    console.log(response.data)
                     if (response.data.steps === false)
                         navigate("/steps")
                     setUser(firebaseUser)
@@ -42,10 +43,15 @@ function App() {
                     navigate("/login")
                 }
             } catch (error) {
-                console.log(error)
-                navigate("/login")
+                if (error?.response?.status === 404 && error?.response?.data?.steps === false) {
+                    navigate('/steps')
+                } else {
+                    console.log(error)
+                    navigate("/login")
+                }
             }
         })
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [])
     return (
         <>
@@ -70,7 +76,7 @@ function App() {
                     }
                 }}
             />
-            <globalContext.Provider value={{ user, stepsData }}>
+            <globalContext.Provider value={{ user, stepsData, setStepsData, setUser }}>
                 <Routes>
                     <Route exact path="/login" element={<Login />} />
                     <Route exact path='/steps' element={<Steps />} />

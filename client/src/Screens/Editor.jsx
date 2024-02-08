@@ -1,4 +1,4 @@
-import { useContext, useEffect, useRef, useState } from "react";
+import { useContext, useEffect } from "react";
 import grapesjs from 'grapesjs';
 import 'grapesjs/dist/css/grapes.min.css'
 import { Link, useNavigate } from "react-router-dom";
@@ -15,7 +15,6 @@ import { globalContext } from '../App'
 
 let editor = undefined;
 function Editor(props) {
-    const [preview, setPreview] = useState(false)
     const endpoint = process.env.REACT_APP_HOSTNAME + '/venue/owner/web'
     function handleTab(i) {
         let list = document.getElementById("tabhead");
@@ -37,9 +36,10 @@ function Editor(props) {
     const { user, stepsData } = useContext(globalContext)
     // console.log("rendering editor")
     useEffect(() => {
-        if (stepsData != undefined && stepsData.step === false)
+        console.log("stepsData : ",stepsData)
+        if (stepsData !== undefined && stepsData.step === false)
             navigate('/steps')
-        if (editor == undefined && user != undefined && stepsData != undefined) {
+        if (editor === undefined && user !== undefined && stepsData !== undefined) {
             console.log("editor init")
             let slug = stepsData.slug
             editor = grapesjs.init({
@@ -83,7 +83,7 @@ function Editor(props) {
 
                         //     // failureCallback()
                         // },
-                        events:process.env.REACT_APP_HOSTNAME + `/venue/${slug}/events`,
+                        events: process.env.REACT_APP_HOSTNAME + `/venue/${slug}/events`,
                         eventContent: (info) => {
                             const title = info.event.title
                             const start = info.event.start
@@ -249,7 +249,6 @@ function Editor(props) {
             });
             editor.on('run:preview', async () => {
                 // console.log("preview")
-                await setPreview(true)
                 let topnav = document.querySelector('#editor div.main div.topnav')
                 topnav.style.display = "none"
                 topnav.style.height = "0"
@@ -259,7 +258,6 @@ function Editor(props) {
                 main.style.width = "100%"
             })
             editor.on('stop:preview', async () => {
-                await setPreview(false)
                 let topnav = document.querySelector('#editor div.main div.topnav')
                 topnav.style.display = "flex"
                 topnav.style.height = "3.6rem"
@@ -272,7 +270,7 @@ function Editor(props) {
             editor.Storage.add('remote', {
                 async load() {
                     try {
-                        if (user != undefined) {
+                        if (user !== undefined) {
                             let token = await user.getIdToken()
                             let response = await axios.get(endpoint, {
                                 headers: {
@@ -296,7 +294,7 @@ function Editor(props) {
 
                 async store(edData) {
                     try {
-                        if (user != undefined) {
+                        if (user !== undefined) {
                             if (user != null) {
                                 let token = await user.getIdToken();
                                 let message = await axios.post(endpoint, edData, {
@@ -328,7 +326,7 @@ function Editor(props) {
                 }
             })
         }
-
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [user, stepsData])
 
     async function publish() {

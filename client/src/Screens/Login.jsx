@@ -10,11 +10,12 @@ import { globalContext } from "../App.js";
 const Login = (props) => {
     let navigate = useNavigate()
     let countryCodeSize = 6;
-    const { user, stepsData } = useContext(globalContext)
+    const { user, stepsData, setUser } = useContext(globalContext)
     useEffect(() => {
         try {
             hideLoader()
-            if (user) {
+            console.log(stepsData)
+            if (user && stepsData !== undefined && stepsData.steps !== false) {
                 console.log("user is signedin")
                 navigate('/')
             }
@@ -55,18 +56,19 @@ const Login = (props) => {
     let validateOtp = (e) => {
         e.preventDefault()
         showLoader()
-        window.confirmationResult.confirm(formData.otp).then((result) => {
+        window.confirmationResult.confirm(formData.otp).then(async (result) => {
             // User signed in successfully.
             console.log("user signedin successfullly")
             const user = result.user;
-            console.log(user)
-            hideLoader()
-            navigate('/')
+            setUser(user)
         }).catch((error) => {
-            console.log(error)
-            // User couldn't sign in (bad verification code?)
-            console.log("user could not sign in")
-            hideLoader()
+            if (error.response && error.response.status === 404 && error.response.data!==undefined && error.response.data.steps === false) {
+                navigate('/steps')
+            } else {
+                console.log(error)
+                // User couldn't sign in (bad verification code?)
+                console.log("user could not sign in")
+            }
         })
     }
     let phoneChange = (e) => {
@@ -76,7 +78,7 @@ const Login = (props) => {
         } else setErrors({ ...errors, phone: '' })
     }
     let countryCodeChange = (e) => {
-        if (e.target.value == "") {
+        if (e.target.value === "") {
             setErrors({ ...errors, countryCode: '' })
             setFormData({ ...formData, countryCode: e.target.value })
         } else {
