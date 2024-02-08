@@ -25,7 +25,10 @@ exports.getWebsiteBySlug = async (req, res) => {
 ${data.css}
 </style>
 <script src="https://cdn.jsdelivr.net/npm/@splidejs/splide@4.1.4/dist/js/splide.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.9/index.global.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/dayjs@1/dayjs.min.js"></script>
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@splidejs/splide@4.1.4/dist/css/splide.min.css">
+<link rel="stylesheet" href="${process.env.CLIENT_URL}/canvas.css">
 </head>
 <body>
 ${data.html}
