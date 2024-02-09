@@ -40,8 +40,8 @@ exports.publishWebsite = async (req, res) => {
         setup.published = true;
         await Promise.all([
             db.collection("website").doc(setup.slug).set(req.body),
-            db.collection("queries").doc(setup.slug).set(),
-            db.collection("events").doc(setup.slug).set(),
+            db.collection("queries").doc(setup.slug).set({}),
+            db.collection("events").doc(setup.slug).set({}),
             db.collection("setup").doc(req.uid).update(setup)
         ])
     } else {

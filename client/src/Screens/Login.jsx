@@ -13,7 +13,6 @@ const Login = (props) => {
     const { user, stepsData, setUser } = useContext(globalContext)
     useEffect(() => {
         try {
-            hideLoader()
             console.log(stepsData)
             if (user && stepsData !== undefined && stepsData.steps !== false) {
                 console.log("user is signedin")

@@ -419,7 +419,7 @@ form.myform span {
 }
 
 #steps div.container div.step.photos {
-  max-height: 75%;
+  height: 78vh;
   overflow-y: scroll;
 }
 

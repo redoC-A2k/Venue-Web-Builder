@@ -8,16 +8,7 @@
     "start": "nodemon app.js",
     "prod": "pm2 start app.js && pm2 logs --lines 100000"
   },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/ayushjipatel/Venue-Web-Builder-Backend.git"
-  },
-  "author": "",
-  "license": "ISC",
-  "bugs": {
-    "url": "https://github.com/ayushjipatel/Venue-Web-Builder-Backend/issues"
-  },
-  "homepage": "https://github.com/ayushjipatel/Venue-Web-Builder-Backend#readme",
+  "author": "Afshan Ahmed Khan",
   "dependencies": {
     "body-parser": "^1.20.2",
     "cors": "^2.8.5",

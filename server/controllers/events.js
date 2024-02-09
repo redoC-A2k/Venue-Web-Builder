@@ -24,8 +24,7 @@ exports.getCalendarEvents = async (req, res) => {
     } else {
         const setup = (await db.collection("setup").doc(req.uid).get()).data()
         try {
-            let eventsDoc = await db.collection("events").doc(setup.slug).get()
-            if (!eventsDoc.exists)
+            if (!setup.published)
                 return res.status(422).json("Website not published !")
 
             let today = dayjs().unix() * 1000

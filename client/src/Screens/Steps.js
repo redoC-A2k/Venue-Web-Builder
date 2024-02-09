@@ -63,12 +63,13 @@ function Step2(props) {
         if (text.length == 0) {
             setErrors("Slug cannot be empty")
             return false;
+        } else if (!/^[a-zA-Z-]*$/.test(text)) {
+            setErrors("Slug should only contain alphabets and '-'")
+            return false;
         } else if (text.length < 5) {
             setErrors("Slug should be atleast 5 characters long")
             return false;
-        }
-        // TODO: Only allow a-zA-Z0-9-
-        else {
+        } else {
             setErrors("")
             return true;
         }
@@ -357,7 +358,6 @@ const Steps = (props) => {
     const { user, stepsData } = useContext(globalContext)
     useEffect(() => {
         try {
-            hideLoader()
             if (stepsData !== null && stepsData !== undefined && stepsData.steps === true) {
                 navigate('/')
                 toast.success("Steps can only be filled once", { duration: 5000 })

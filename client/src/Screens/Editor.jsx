@@ -1,4 +1,4 @@
-import { useContext, useEffect } from "react";
+import { useContext, useEffect, useState } from "react";
 import grapesjs from 'grapesjs';
 import 'grapesjs/dist/css/grapes.min.css'
 import { Link, useNavigate } from "react-router-dom";
@@ -13,8 +13,8 @@ import toast from 'react-hot-toast'
 import { globalContext } from '../App'
 
 
-let editor = undefined;
 function Editor(props) {
+    const [geditor, setGEditor] = useState()
     const endpoint = process.env.REACT_APP_HOSTNAME + '/venue/owner/web'
     function handleTab(i) {
         let list = document.getElementById("tabhead");
@@ -36,10 +36,10 @@ function Editor(props) {
     const { user, stepsData } = useContext(globalContext)
     // console.log("rendering editor")
     useEffect(() => {
-        console.log("stepsData : ",stepsData)
         if (stepsData !== undefined && stepsData.step === false)
             navigate('/steps')
-        if (editor === undefined && user !== undefined && stepsData !== undefined) {
+        if (geditor === undefined && user !== undefined && stepsData !== undefined) {
+            let editor;
             console.log("editor init")
             let slug = stepsData.slug
             editor = grapesjs.init({
@@ -270,6 +270,7 @@ function Editor(props) {
             editor.Storage.add('remote', {
                 async load() {
                     try {
+                        showLoader()
                         if (user !== undefined) {
                             let token = await user.getIdToken()
                             let response = await axios.get(endpoint, {
@@ -324,15 +325,17 @@ function Editor(props) {
                     }
                     // console.log("wrapper run")
                 }
-            })
+            });
+
+            setGEditor(editor)
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [user, stepsData])
+    }, [user, stepsData]);
 
     async function publish() {
         let formData = {
-            html: editor.getHtml(),
-            css: editor.getCss(),
+            html: geditor.getHtml(),
+            css: geditor.getCss(),
         }
         showLoader();
         try {

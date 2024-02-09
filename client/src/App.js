@@ -39,9 +39,9 @@ function App() {
                         navigate("/steps")
                     setUser(firebaseUser)
                 } else {
-                    hideLoader()
                     navigate("/login")
                 }
+                hideLoader()
             } catch (error) {
                 if (error?.response?.status === 404 && error?.response?.data?.steps === false) {
                     navigate('/steps')
@@ -49,6 +49,7 @@ function App() {
                     console.log(error)
                     navigate("/login")
                 }
+                hideLoader()
             }
         })
         // eslint-disable-next-line react-hooks/exhaustive-deps

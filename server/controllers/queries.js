@@ -14,8 +14,7 @@ const queryResponseTemplate = handlebars.compile(fs.readFileSync(path.join(__dir
 
 exports.getQueriesForVenue = async (req, res) => {
     const setup = (await db.collection("setup").doc(req.uid).get()).data()
-    let queriesSnap = await db.collection("queries").doc(setup.slug).get()
-    if (!queriesSnap.exists)
+    if (!setup.published)
         return res.status(422).json("Website not published !")
 
     let queriesCollection = db.collection('queries/' + setup.slug + '/queries')
@@ -72,10 +71,8 @@ exports.postQueryMail = async (req, res) => {
         if (isColliding)
             return res.status(409).json("Event is colliding with another event")
 
-        const [order, slugWeb] = await Promise.all([
-            initPayment(req.body.token),
-            db.collection('website').doc(setup.slug).get()
-        ])
+        const order = await initPayment(req.body.token)
+           
         const emailHtml = queryResponseTemplate({
             slug: setup.slug,
             endDate: dayjs(req.body.endDate).format('DD-MM-YYYY'),
@@ -89,7 +86,7 @@ exports.postQueryMail = async (req, res) => {
             // quote: req.body.quote.replace(/\n/g, "\\n"),
             quote: req.body.quote,
         })
-        if (!slugWeb.exists) {
+        if (!setup.published) {
             return res.status(422).json("Website not published !")
         }
         await Promise.all([

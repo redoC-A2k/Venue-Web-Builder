@@ -9,7 +9,7 @@ exports.postStepsData = async (req, res) => {
     let response = await db.collection("setup").doc(req.uid).set(req.body)
     console.log(response)
     let editorData = getTemplate(req.body)
-    response = await db.collection("editor").doc(decodedToken.uid).set({ editorData })
+    response = await db.collection("editor").doc(req.uid).set({ editorData })
     res.status(200).json({ message: "submitted the form" })
 }
 
@@ -20,9 +20,9 @@ exports.getStepsData = async (req, res) => {
     } else {
         return res.status(201).json({
             steps: true,
-            slug: steps.slug,
-            email: steps.email,
-            name: steps.name,
+            slug: steps.data().slug,
+            email: steps.data().email,
+            name: steps.data().name,
         })
     }
 }

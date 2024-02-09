@@ -5,6 +5,13 @@ function Logout(){
     const navigate = useNavigate();
     const logout = () => {
         auth.signOut().then(() => {
+            localStorage.clear()
+            indexedDB.databases().then((databases) => {
+                databases.forEach((db) => {
+                    indexedDB.deleteDatabase(db.name)
+                })
+            })
+            window.location.reload()
             navigate('/login')
         }).catch((error) => {
             console.log(error)

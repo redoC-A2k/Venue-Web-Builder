@@ -4,6 +4,7 @@ import { hideLoader, showLoader } from '../utils/loader'
 import { globalContext } from '../App'
 import dayjs from 'dayjs'
 import toast from 'react-hot-toast'
+import { useNavigate } from 'react-router-dom'
 
 const Queries = (props) => {
     const [queries, setQueries] = useState([])
@@ -30,6 +31,8 @@ const Queries = (props) => {
         quote: "Please enter remarks / cost break down structure",
         token: "Please enter token amount"
     })
+    
+    const navigate = useNavigate()
 
     useEffect(() => {
         showLoader()
@@ -45,6 +48,10 @@ const Queries = (props) => {
                 setQueries(response.data)
                 hideLoader()
             } catch (error) {
+                if(error.response && error.response.status === 422){
+                    navigate('/')
+                    toast.error("Website is not published")
+                }
                 console.log(error)
                 hideLoader()
             }

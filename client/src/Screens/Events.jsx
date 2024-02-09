@@ -22,7 +22,6 @@ const Events = (props) => {
     const [year, setYear] = useState(date.getFullYear());
     const [initialView, setInitialView] = useState('dayGridMonth')
     const endpoint = process.env.REACT_APP_HOSTNAME + '/venue/events';
-    let navigate = useNavigate()
 
     const [formData, setFormData] = useState({
         title: "Booked for an event",
@@ -40,8 +39,10 @@ const Events = (props) => {
         endDate: "Please enter event end date",
     })
 
+    const navigate = useNavigate()
     const [sortedEvents, setSortedEvents] = useState([])
     const { user, stepsData } = useContext(globalContext)
+    
     useEffect(() => {
         showLoader()
         async function initEvents() {
@@ -90,6 +91,10 @@ const Events = (props) => {
                     hideLoader()
                 }
             } catch (error) {
+                if (error.response && error.response.status === 422) {
+                    navigate('/')
+                    toast.error("Website is not published")
+                }
                 console.log(error)
                 hideLoader()
             }
@@ -244,7 +249,7 @@ const Events = (props) => {
                                         <div className="mb-2" key={ind}>
                                             <li data-toggle="tooltip" title={event.title}><span onClick={() => handleGoTo(event.start)}>{event.title}</span></li>
                                             <small><span style={{ color: "rgba(var(--primary-grey-1),0.7)" }}>{dayjs(event.start).format("DD-MM-YYYY")}</span><pre style={{ display: "inline" }}> </pre> {dayjs(event.start).format("hh:mm A")}</small>
-                                            <br/>
+                                            <br />
                                             <small><span style={{ color: "rgba(var(--primary-grey-1),0.7)" }}>{dayjs(event.end).format("DD-MM-YYYY")}</span><pre style={{ display: "inline" }}> </pre> {dayjs(event.end).format("hh:mm A")}</small>
                                         </div>
                                     )
